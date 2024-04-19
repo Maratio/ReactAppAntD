@@ -1,0 +1,7 @@
+stages:
+  - testing
+
+unit-tests:
+  stage: testing
+  script:
+    - exit 0
