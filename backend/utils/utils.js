@@ -15,8 +15,8 @@ function paginateResults(data, page, limit) {
       limit: limit,
     };
   }
-  results.data = data.slice(startIndex, endIndex);
+  results.posts = data.slice(startIndex, endIndex);
   return results;
 }
 
-exports.module = paginateResults;
+exports.paginateResults = paginateResults;
