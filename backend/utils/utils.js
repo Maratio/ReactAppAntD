@@ -1,4 +1,4 @@
-export function paginateResults(data, page, limit) {
+function paginateResults(data, page, limit) {
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
@@ -18,3 +18,5 @@ export function paginateResults(data, page, limit) {
   results.data = data.slice(startIndex, endIndex);
   return results;
 }
+
+exports.module = paginateResults;
