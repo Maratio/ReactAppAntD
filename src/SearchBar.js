@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { BACKEND_URL } from "./constants";
 
 function SearchBar({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
@@ -11,7 +12,7 @@ function SearchBar({ onSearch }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (searchTerm.trim() !== '') {
-      axios.get(`http://localhost:5000/api/posts/search?term=${searchTerm}`)
+      axios.get(`${BACKEND_URL}/api/posts/search?term=${searchTerm}`)
         .then(response => {
           onSearch(response.data);
         })

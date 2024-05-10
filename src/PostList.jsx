@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
+import { BACKEND_URL, MAIN_PAGE_IMG_URL } from "./constants";
 
 function PostList({
   posts, setPosts,
@@ -14,7 +15,7 @@ function PostList({
   }, []);
 
   const fetchData = (selectedPage) => {
-    axios.get(`http://localhost:5000/api/posts?page=${selectedPage}`)
+    axios.get(`${BACKEND_URL}/api/posts?page=${selectedPage}`)
       .then(response => {
         setPosts(response.data.posts);
         setPageCount(response.data.next ? selectedPage + 1 : selectedPage);
@@ -30,7 +31,7 @@ function PostList({
 
 
   const handleDeletePost = (id) => {
-    axios.delete(`http://localhost:5000/api/posts/${id}`)
+    axios.delete(`${BACKEND_URL}/api/posts/${id}`)
       .then(response => {
         console.log('Пост успешно удален');
         // Обновить список постов после удаления
@@ -51,10 +52,10 @@ function PostList({
       <div>
         <h2 style={{ textAlign: 'center' }}>Посты</h2>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}>
-          <img src="https://images.squarespace-cdn.com/content/v1/52efdac1e4b07964224912f6/1699038430505-M7G76IJADCW8JKDAGC76/Screenshot+2023-11-03+at+12.06.42+PM.png?format=2500w" alt="Красивая картинка" style={{ width: '40%' }} />
+          <img src={MAIN_PAGE_IMG_URL} alt="Красивая картинка" style={{ width: '40%' }} />
         </div>
         <ul style={{ listStyle: 'none', padding: 0 }}>
-          {posts.map(post => (
+          {posts?.map(post => (
             <li key={post.id} style={{ marginBottom: '2rem', padding: '1rem', border: '1px solid #ccc' }}>
               <h3>{post.title}</h3>
               <img src={post.url} alt="Изображение" style={{ width: '200px', height: '200px', marginBottom: '1rem' }} />

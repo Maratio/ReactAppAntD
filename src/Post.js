@@ -1,13 +1,14 @@
     import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+    import { BACKEND_URL } from "./constants";
 
 function Post() {
   const [post, setPost] = useState(null);
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/posts/${id}`)
+    axios.get(`${BACKEND_URL}/api/posts/${id}`)
       .then(response => {
         setPost(response.data);
       })
