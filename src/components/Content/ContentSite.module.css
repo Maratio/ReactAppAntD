@@ -1,0 +1,17 @@
+.content {
+  text-align: center;
+  color: #fff;
+  background-color: #d17a7a;
+  /* background-color: #0958d9; */
+}
+
+.card{
+  height: auto;
+  width: auto;
+}
+
+.img{
+  height: 100px;
+  width: 100px;
+}
+
