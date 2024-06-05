@@ -1,22 +1,38 @@
-import React from 'react';
+import React from "react";
 import { Menu } from "antd";
 import {
-    ContainerOutlined,
-    DesktopOutlined,
-    MailOutlined,
-    PieChartOutlined,
-  } from "@ant-design/icons";
+  ContainerOutlined,
+  DesktopOutlined,
+  MailOutlined,
+  PieChartOutlined,
+} from "@ant-design/icons";
 
-const items = [
+const MenuSite = ({ selectedMenuItem }) => {
+  const items = [
     {
       key: "1",
-      icon: <PieChartOutlined />,
-      label: "Option 1",
+      icon: (
+        <PieChartOutlined
+          // onClick={() => {
+          //   selectedMenuItem("Путешествия");
+          // }}
+        />
+      ),
+      label: "Путешествия",
+      onClick: () => selectedMenuItem("Путешествия")
     },
     {
       key: "2",
-      icon: <DesktopOutlined />,
-      label: "Option 2",
+      icon: (
+        <DesktopOutlined
+          // onClick={() => {
+          //   selectedMenuItem("Отзывы");
+          // }}
+        />
+      ),
+      label: "Отчеты",
+      onClick: () => selectedMenuItem("Отчеты")
+
     },
     {
       key: "3",
@@ -30,16 +46,15 @@ const items = [
     },
   ];
 
-const MenuSite = () => {
-    return (
-        <Menu
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        theme="light"
-        items={items}
-      />
-    );
+  return (
+    <Menu
+      defaultSelectedKeys={["1"]}
+      defaultOpenKeys={["sub1"]}
+      mode="inline"
+      theme="light"
+      items={items}
+    />
+  );
 };
 
 export default MenuSite;

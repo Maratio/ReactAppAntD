@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React from "react";
 import { Button } from "antd";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 
@@ -12,7 +12,6 @@ export const BtnMenuSite = ({collapsed, handlerCollapsed}) => {
       }}
     >
       {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      {console.log(typeof setCollapsed)}
     </Button>
   );
 };

@@ -1,15 +1,17 @@
 import React from "react";
 import classes from "./CardTrip.module.css";
+import { Button } from "antd";
 import { Card } from "antd";
 const { Meta } = Card;
 
 
-const CardTrip = (props) => {
+
+const CardPost = (props) => {
   return (
     <Card      
       hoverable
       style={{
-        width: 340,
+        width: 240,
       }}
       cover={
         <img
@@ -18,9 +20,10 @@ const CardTrip = (props) => {
         />
       }
     >
-      <Meta title={props.post.title} description={props.post.body} />
+      <Meta title={"N" + props.post.id + ". " + props.post.title} description={props.post.body} />
+      <Button danger>Удалить отчет</Button>
     </Card>
   );
 };
 
-export default CardTrip;
+export default CardPost;

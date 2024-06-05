@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {BtnMenuSite} from '../UI/Button/BtnMenuSite.jsx'
+import { BtnMenuSite } from "../UI/Button/BtnMenuSite.jsx";
 import { Layout } from "antd";
 import MenuSite from "../Menu/MenuSite.jsx";
 
@@ -13,16 +13,21 @@ const siderStyle = {
   position: "sticky",
 };
 
-export const SiderSite = () => {
-  const [collapsed, setCollapsed] = useState(true);
-  // console.log(typeof setCollapsed)
-  const handlerCollapsed = () => setCollapsed(!collapsed)
+export const SiderSite = ({ selectedSiderMenuItem }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const selectedMenuItem = (name) => {
+    selectedSiderMenuItem(name);
+  };
+  const handlerCollapsed = () => setCollapsed(!collapsed);
 
   return (
     <Sider trigger={null} collapsible collapsed={collapsed} style={siderStyle}>
       <div style={{ width: "auto" }}>
-        <BtnMenuSite handlerCollapsed={handlerCollapsed} collapsed={collapsed} />
-        <MenuSite/>
+        <BtnMenuSite
+          handlerCollapsed={handlerCollapsed}
+          collapsed={collapsed}
+        />
+        <MenuSite selectedMenuItem={selectedMenuItem} />
       </div>
     </Sider>
   );

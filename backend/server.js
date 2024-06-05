@@ -6,13 +6,37 @@ const { paginateResults } = require('./utils/utils');
 const comments = require('./db/db.comments.json');
 
 
+// const app = express();
+// const PORT = process.env.PORT || 5003;
+
+// app.use(cors());
+// app.use(express.json());
+
+// app.use(express.static(path.join(__dirname, 'my-blog/build')));
+
 const app = express();
-const PORT = process.env.PORT || 5003;
+const PORT = process.env.PORT || 5002;
+const POSTS_DB_PATH = path.join(__dirname, './db/db.posts.json')
 
 app.use(cors());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'my-blog/build')));
+
+// Получить все посты
+
+app.get('/api/posts', (req, res) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const posts = JSON.parse(data).posts;
+    res.json(posts);
+  });
+});
+
 
 // // Получить все посты
 // app.get('/api/posts', (req, res) => {

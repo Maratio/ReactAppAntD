@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutSite } from '../Layout/LayoutSite.jsx'
+import { LayoutSite } from './components/Layout/LayoutSite.jsx'
 
 const App = () => {
 return (
