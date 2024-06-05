@@ -18,8 +18,8 @@ const MenuSite = ({ selectedMenuItem }) => {
           // }}
         />
       ),
-      label: "Путешествия",
-      onClick: () => selectedMenuItem("Путешествия")
+      label: "Маршруты",
+      onClick: () => selectedMenuItem("Маршруты")
     },
     {
       key: "2",

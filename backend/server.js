@@ -15,13 +15,17 @@ const comments = require('./db/db.comments.json');
 // app.use(express.static(path.join(__dirname, 'my-blog/build')));
 
 const app = express();
+
 const PORT = process.env.PORT || 5002;
 const POSTS_DB_PATH = path.join(__dirname, './db/db.posts.json')
+const TRIPS_DB_PATH = path.join(__dirname, './db/db.routes.json')
+
 
 app.use(cors());
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, 'my-blog/build')));
+
 
 // Получить все посты
 
@@ -32,7 +36,21 @@ app.get('/api/posts', (req, res) => {
       res.status(500).send('Ошибка сервера');
       return;
     }
+    console.error('Ошибка чтения файла:', err)
     const posts = JSON.parse(data).posts;
+    res.json(posts);
+  });
+});
+
+// Получить все маршруты
+app.get('/api/routes', (req, res) => {
+  fs.readFile(TRIPS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const posts = JSON.parse(data).routes;
     res.json(posts);
   });
 });

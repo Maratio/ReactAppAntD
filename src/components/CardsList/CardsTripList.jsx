@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import CardTrip from "../Card/CardTrip";
-import data from "../../data.json";
+
 import classes from "./CardsTripList.module.css";
 import PaginationSite from "../UI/Pagination/PaginationSite";
+import { BACKEND_URL } from "../../constants.js";
+
 
 const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -15,17 +17,23 @@ const CardsTripList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  function getTrip({ limit = 5, page = 1 }) {
+  function getPost({ limit = 5, page = 1}, data) {
     return {
-      recCount: data.posts.length,
-      trips: data.posts.slice((page - 1) * limit, page * limit),
+      recCount: data.length,
+      trips: data.slice((page - 1) * limit, page * limit),
     };
   }
 
   useEffect(() => {
-    const response = getTrip({ page: pageCurrent, limit: pageSize });
-    setPageTripsList(response.trips);
-    setRecCount(response.recCount);
+    fetch(`${BACKEND_URL}/api/routes?`).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          const response = getPost({ page: pageCurrent, limit: pageSize },data);
+          setPageTripsList(response.trips);
+          setRecCount(response.recCount);
+        });
+      }
+    });
   }, [pageCurrent, pageSize]);
 
   return (

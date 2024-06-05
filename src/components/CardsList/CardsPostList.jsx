@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CardPost from "../Card/CardPost.jsx";
-import post from "../../db.posts.json";
 import classes from "./CardsTripList.module.css";
 import PaginationSite from "../UI/Pagination/PaginationSite";
 import { Button } from "antd";
@@ -18,33 +17,36 @@ const CardsPostList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  function getPost({ limit = 5, page = 1}, data) {
+  function getPagesPost({ limit = 5, page = 1}, data) {
     return {
       recCount: data.length,
       tripPosts: data.slice((page - 1) * limit, page * limit),
     };
   }
 
-  useEffect(() => {
-    fetch(`${BACKEND_URL}/api/posts?`).then((response) => {
+  function getPosts(){
+    fetch(`${BACKEND_URL}/api/posts?`, {method: 'GET'}).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
           console.log(data);
-          const response = getPost({ page: pageCurrent, limit: pageSize },data);
+          const response = getPagesPost({ page: pageCurrent, limit: pageSize },data);
           setPagePostsList(response.tripPosts);
           setRecCount(response.recCount);
-          // setPagePostsList(data.routeList);
-          // setRecCount(data.recCount);
         });
       }
-    });
-  }, [pageCurrent, pageSize]);
+  })
+}
 
-  // useEffect(() => {
-  //   const response = getPost({ page: pageCurrent, limit: pageSize });
-  //   setPagePostsList(response.tripPosts);
-  //   setRecCount(response.recCount);
-  // }, [pageCurrent, pageSize]);
+const delPostFromListCard = (postId) => {
+  console.log('privvvvveee');
+  fetch(`${BACKEND_URL}/api/posts/${postId}?`, {method: 'DELETE'}).then((response) => {
+        if (response.status === 204) {;
+          getPosts()
+        }
+})
+}
+
+  useEffect(getPosts,[pageCurrent, pageSize])
 
   return (
     <div>
@@ -59,7 +61,7 @@ const CardsPostList = () => {
       <div className={classes._}>
         {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
-            <CardPost post={{ userId, id, url, title, body }} />
+            <CardPost delPostFromListCard = {delPostFromListCard} post={{ userId, id, url, title, body }} />
           </div>
         ))}
         <PaginationSite

@@ -4,9 +4,8 @@ import { Button } from "antd";
 import { Card } from "antd";
 const { Meta } = Card;
 
+const CardPost = ({post, delPostFromListCard}) => {
 
-
-const CardPost = (props) => {
   return (
     <Card      
       hoverable
@@ -16,12 +15,12 @@ const CardPost = (props) => {
       cover={
         <img
           alt="example"
-          src={props.post.url}
+          src={post.url}
         />
       }
     >
-      <Meta title={"N" + props.post.id + ". " + props.post.title} description={props.post.body} />
-      <Button danger>Удалить отчет</Button>
+      <Meta title={"N" + post.id + ". " + post.title} description={post.body} />
+      <Button onClick={() => delPostFromListCard(post.id, post.userId)} danger>Удалить отчет</Button>
     </Card>
   );
 };

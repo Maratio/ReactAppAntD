@@ -9,7 +9,7 @@ const { Content } = Layout;
 export const ContentSite = ({ selectComponent }) => {
   function getComponent() {
     switch (selectComponent) {
-      case "Путешествия":
+      case "Маршруты":
         return <ListCardsTrip />;
       case "Отчеты":
         return <ListCardsPost />;
