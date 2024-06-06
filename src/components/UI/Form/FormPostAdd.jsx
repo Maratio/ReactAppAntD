@@ -25,17 +25,16 @@ const SubmitButton = ({ form, children, closeModal }) => {
   );
 };
 
-
 const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
   const [form] = Form.useForm();
 
   return (
     <Form
-    form={form}
-    name="validateOnly" 
-    layout="vertical" 
-    autoComplete="off"
-    initialValues={{
+      form={form}
+      name="validateOnly"
+      layout="vertical"
+      autoComplete="off"
+      initialValues={{
         remember: true,
       }}
       onFinish={saveInfoAddPost}
@@ -57,7 +56,6 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
         rules={[
           {
             required: true,
-
           },
         ]}
       >

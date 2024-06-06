@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import FormPostAdd from "../Form/FormPostAdd.jsx";
 
-const ModalPostAdd = ({saveInfoAddPost}) => {
+const ModalPostAdd = ({ saveInfoAddPost }) => {
   const [open, setOpen] = useState(false);
 
   const closeModal = () => {
     setOpen(false);
   };
-
 
   return (
     <>
@@ -25,7 +24,10 @@ const ModalPostAdd = ({saveInfoAddPost}) => {
         onCancel={() => setOpen(false)}
         width={1000}
       >
-        <FormPostAdd saveInfoAddPost={saveInfoAddPost} closeModal={closeModal} />
+        <FormPostAdd
+          saveInfoAddPost={saveInfoAddPost}
+          closeModal={closeModal}
+        />
       </Modal>
     </>
   );

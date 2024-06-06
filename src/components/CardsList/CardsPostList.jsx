@@ -25,33 +25,33 @@ const CardsPostList = () => {
   }
 
   function getPosts() {
-    fetch(`${BACKEND_URL}/api/posts?`, { method: "GET" }).then((response) => {
-      if (response.status === 200) {
-        response.json().then((data) => {
-          console.log(data);
-          const response = getPagesPost(
-            { page: pageCurrent, limit: pageSize },
-            data
-          );
-          setPagePostsList(response.tripPosts);
-          setRecCount(response.recCount);
-        });
-      }
-    });
+    fetch(`${BACKEND_URL}/api/posts?`, { method: "GET" })
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((data) => {
+            const response = getPagesPost(
+              { page: pageCurrent, limit: pageSize },
+              data
+            );
+            setPagePostsList(response.tripPosts);
+            setRecCount(response.recCount);
+          });
+        }
+      })
+      .catch((err) => console.error(err + ">>>>>"));
   }
 
   const delPostFromListCard = (postId) => {
-    fetch(`${BACKEND_URL}/api/posts/${postId}?`, { method: "DELETE" }).then(
-      (response) => {
+    fetch(`${BACKEND_URL}/api/posts/${postId}?`, { method: "DELETE" })
+      .then((response) => {
         if (response.status === 204) {
           getPosts();
         }
-      }
-    );
+      })
+      .catch((err) => console.error(err + ">>>>>"));
   };
 
   const saveInfoAddPost = ({ Title, Description, Img_url }) => {
-    console.log(Title, Description, Img_url);
     fetch(`${BACKEND_URL}/api/posts?`, {
       method: "POST",
       headers: {
@@ -63,11 +63,13 @@ const CardsPostList = () => {
         body: Description,
         url: Img_url,
       }),
-    }).then((response) => {
-      if (response.status === 201) {
-        getPosts();
-      }
-    });
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          getPosts();
+        }
+      })
+      .catch((err) => console.error(err + ">>>>>"));
   };
 
   useEffect(getPosts, [pageCurrent, pageSize]);

@@ -138,8 +138,8 @@ app.post('/api/posts', (req, res) => {
     const postIdList = posts.map((item) => item.id)
     const postUserIdList = posts.map((item) => item.userId)
 
-    postIdList.sort((a,b) => +b - +a )
-    postUserIdList.sort((a,b) => +a - +b )
+    postIdList.sort((a, b) => +b - +a)
+    postUserIdList.sort((a, b) => +a - +b)
 
 
     function generatorUserId() {
@@ -148,12 +148,12 @@ app.post('/api/posts', (req, res) => {
         if (id !== userId) {
           return id
         }
-        id++ 
+        id++
       }
     }
 
     const newPost = {
-      userId:generatorUserId(),
+      userId: generatorUserId(),
       id: postIdList[0] + 1,
       url: req.body.url,
       title: req.body.title,
