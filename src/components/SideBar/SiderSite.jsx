@@ -15,9 +15,7 @@ const siderStyle = {
 
 export const SiderSite = ({ selectedSiderMenuItem }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const selectedMenuItem = (name) => {
-    selectedSiderMenuItem(name);
-  };
+
   const handlerCollapsed = () => setCollapsed(!collapsed);
 
   return (
@@ -27,7 +25,7 @@ export const SiderSite = ({ selectedSiderMenuItem }) => {
           handlerCollapsed={handlerCollapsed}
           collapsed={collapsed}
         />
-        <MenuSite selectedMenuItem={selectedMenuItem} />
+        <MenuSite selectedMenuItem={selectedSiderMenuItem} />
       </div>
     </Sider>
   );

@@ -36,7 +36,6 @@ app.get('/api/posts', (req, res) => {
       res.status(500).send('Ошибка сервера');
       return;
     }
-    console.error('Ошибка чтения файла:', err)
     const posts = JSON.parse(data).posts;
     res.json(posts);
   });
@@ -62,7 +61,7 @@ app.get('/api/routes', (req, res) => {
 //     const limit = parseInt(req.query.limit) || 10;
 //     const startIndex = (page - 1) * limit;
 //     const endIndex = page * limit;
-  
+
 //     fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
 //       if (err) {
 //         console.error('Ошибка чтения файла:', err);
@@ -88,22 +87,22 @@ app.get('/api/routes', (req, res) => {
 //     });
 //   });
 
-  // Получить все посты с пагинацией
-app.get('/api/posts', (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
+// Получить все посты с пагинацией
+// app.get('/api/posts', (req, res) => {
+//   const page = parseInt(req.query.page) || 1;
+//   const limit = parseInt(req.query.limit) || 10;
 
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
-    if (err) {
-      console.error('Ошибка чтения файла:', err);
-      res.status(500).send('Ошибка сервера');
-      return;
-    }
-    const posts = JSON.parse(data).posts;
-    const paginatedResults = paginateResults(posts, page, limit);
-    res.json(paginatedResults);
-  });
-});
+//   fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+//     if (err) {
+//       console.error('Ошибка чтения файла:', err);
+//       res.status(500).send('Ошибка сервера');
+//       return;
+//     }
+//     const posts = JSON.parse(data).posts;
+//     const paginatedResults = paginateResults(posts, page, limit);
+//     res.json(paginatedResults);
+//   });
+// });
 
 
 
@@ -126,7 +125,7 @@ app.get('/api/posts/:id', (req, res) => {
   });
 });
 
-// Создать новый пост
+// Создать новый пост!!!!!!!!!!!!!!!
 app.post('/api/posts', (req, res) => {
   fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
     if (err) {
@@ -134,12 +133,33 @@ app.post('/api/posts', (req, res) => {
       res.status(500).send('Ошибка сервера');
       return;
     }
+
     const posts = JSON.parse(data).posts;
+    const postIdList = posts.map((item) => item.id)
+    const postUserIdList = posts.map((item) => item.userId)
+
+    postIdList.sort((a,b) => +b - +a )
+    postUserIdList.sort((a,b) => +a - +b )
+
+
+    function generatorUserId() {
+      let id = 1
+      for (let userId of postUserIdList) {
+        if (id !== userId) {
+          return id
+        }
+        id++ 
+      }
+    }
+
     const newPost = {
-      id: posts.length + 1,
+      userId:generatorUserId(),
+      id: postIdList[0] + 1,
+      url: req.body.url,
       title: req.body.title,
       body: req.body.body
     };
+
     posts.push(newPost);
     fs.writeFile(path.join(__dirname, './db/db.posts.json'), JSON.stringify({ posts }), 'utf8', err => {
       if (err) {
@@ -149,7 +169,7 @@ app.post('/api/posts', (req, res) => {
       }
       res.status(201).json(newPost);
     });
-  });
+  })
 });
 
 // Обновить существующий пост
@@ -210,14 +230,14 @@ app.delete('/api/posts/:id', (req, res) => {
 // // Добавляем маршрут для поиска
 // app.get('/api/posts/search', (req, res) => {
 //     const searchTerm = req.query.term.toLowerCase();
-  
+
 //     fs.readFile(path.join(__dirname, 'db.json'), 'utf8', (err, data) => {
 //       if (err) {
 //         console.error('Ошибка чтения файла:', err);
 //         res.status(500).send('Ошибка сервера');
 //         return;
 //       }
-  
+
 //       const posts = JSON.parse(data).posts;
 //       const searchResults = posts.filter(post => post.title.toLowerCase().includes(searchTerm) || post.body.toLowerCase().includes(searchTerm));
 //       res.json(searchResults);

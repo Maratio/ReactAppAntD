@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./ContentSite.module.css";
 import { Layout } from "antd";
-import ListCardsTrip from "../CardsList/CardsTripList";
-import ListCardsPost from "../CardsList/CardsPostList";
+import CardsTripList from "../CardsList/CardsTripList";
+import CardsPostList from "../CardsList/CardsPostList";
 
 const { Content } = Layout;
 
@@ -10,11 +10,11 @@ export const ContentSite = ({ selectComponent }) => {
   function getComponent() {
     switch (selectComponent) {
       case "Маршруты":
-        return <ListCardsTrip />;
+        return <CardsTripList />;
       case "Отчеты":
-        return <ListCardsPost />;
+        return <CardsPostList />;
       default:
-        return <ListCardsTrip />;
+        return <CardsTripList />;
     }
   }
 

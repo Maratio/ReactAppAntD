@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import CardPost from "../Card/CardPost.jsx";
 import classes from "./CardsTripList.module.css";
 import PaginationSite from "../UI/Pagination/PaginationSite";
-import { Button } from "antd";
-import { Flex } from "antd";
+import ModalPostAdd from "../UI/Modal/ModalPostAdd.jsx";
+
 import { BACKEND_URL } from "../../constants.js";
 
 const CardsPostList = () => {
@@ -17,51 +17,73 @@ const CardsPostList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  function getPagesPost({ limit = 5, page = 1}, data) {
+  function getPagesPost({ limit = 5, page = 1 }, data) {
     return {
       recCount: data.length,
       tripPosts: data.slice((page - 1) * limit, page * limit),
     };
   }
 
-  function getPosts(){
-    fetch(`${BACKEND_URL}/api/posts?`, {method: 'GET'}).then((response) => {
+  function getPosts() {
+    fetch(`${BACKEND_URL}/api/posts?`, { method: "GET" }).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
           console.log(data);
-          const response = getPagesPost({ page: pageCurrent, limit: pageSize },data);
+          const response = getPagesPost(
+            { page: pageCurrent, limit: pageSize },
+            data
+          );
           setPagePostsList(response.tripPosts);
           setRecCount(response.recCount);
         });
       }
-  })
-}
+    });
+  }
 
-const delPostFromListCard = (postId) => {
-  console.log('privvvvveee');
-  fetch(`${BACKEND_URL}/api/posts/${postId}?`, {method: 'DELETE'}).then((response) => {
-        if (response.status === 204) {;
-          getPosts()
+  const delPostFromListCard = (postId) => {
+    fetch(`${BACKEND_URL}/api/posts/${postId}?`, { method: "DELETE" }).then(
+      (response) => {
+        if (response.status === 204) {
+          getPosts();
         }
-})
-}
+      }
+    );
+  };
 
-  useEffect(getPosts,[pageCurrent, pageSize])
+  const saveInfoAddPost = ({ Title, Description, Img_url }) => {
+    console.log(Title, Description, Img_url);
+    fetch(`${BACKEND_URL}/api/posts?`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: Title,
+        body: Description,
+        url: Img_url,
+      }),
+    }).then((response) => {
+      if (response.status === 201) {
+        getPosts();
+      }
+    });
+  };
+
+  useEffect(getPosts, [pageCurrent, pageSize]);
 
   return (
     <div>
       <div className={classes.btns_block}>
-        <Flex gap="small">
-          <Button type="primary">Добавить отчет</Button>
-        </Flex>
-        {/* <button>Privet</button>
-        <button>Privet</button>
-        <button>Privet</button> */}
+        <ModalPostAdd saveInfoAddPost={saveInfoAddPost} />
       </div>
       <div className={classes._}>
         {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
-            <CardPost delPostFromListCard = {delPostFromListCard} post={{ userId, id, url, title, body }} />
+            <CardPost
+              delPostFromListCard={delPostFromListCard}
+              post={{ userId, id, url, title, body }}
+            />
           </div>
         ))}
         <PaginationSite
