@@ -13,9 +13,6 @@ const MenuSite = ({ selectedMenuItem }) => {
       key: "1",
       icon: (
         <PieChartOutlined
-          // onClick={() => {
-          //   selectedMenuItem("Путешествия");
-          // }}
         />
       ),
       label: "Маршруты",
@@ -25,9 +22,6 @@ const MenuSite = ({ selectedMenuItem }) => {
       key: "2",
       icon: (
         <DesktopOutlined
-          // onClick={() => {
-          //   selectedMenuItem("Отзывы");
-          // }}
         />
       ),
       label: "Отчеты",
