@@ -9,7 +9,7 @@ const CardTrip = (props) => {
     <Card      
       hoverable
       style={{
-        width: 240,
+        width: 340,
       }}
       cover={
         <img
