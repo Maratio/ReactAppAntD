@@ -6,7 +6,7 @@ const PaginationSite = ({ paginationParam }) => {
   return (
     <div className={classes.paginationWrapper}>
       <Pagination
-        className={classes.pagination}
+        itemActiveColorDisabled={'#ff0617'}
         showSizeChanger={true}
         pageSizeOptions={[3, 6, 9]}
         total={paginationParam.recCount}
