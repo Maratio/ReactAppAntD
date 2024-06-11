@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import CardTrip from "../Card/CardTrip";
-
 import classes from "./CardsTripList.module.css";
 import PaginationSite from "../UI/Pagination/PaginationSite";
 import { BACKEND_URL } from "../../constants.js";

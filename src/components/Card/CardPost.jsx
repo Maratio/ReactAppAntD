@@ -1,26 +1,30 @@
 import React from "react";
 import classes from "./CardTrip.module.css";
-import { Button } from "antd";
+import { EditOutlined, DeleteOutlined, StarOutlined } from "@ant-design/icons";
 import { Card } from "antd";
+import { Rate } from "antd";
 const { Meta } = Card;
 
-const CardPost = ({post, delPostFromListCard}) => {
-
+const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
   return (
-    <Card      
+    <Card
+      className={classes.card}
+      size="small"
+      extra={<Rate />}
       hoverable
-      style={{
-        width: 240,
-      }}
-      cover={
-        <img
-          alt="example"
-          src={post.url}
-        />
-      }
+      cover={<img alt="example" src={post.url} />}
+      actions={[
+        <EditOutlined onClick={() => getUserIdEditPost(post.id)} key="edit" />,
+        <DeleteOutlined onClick={() => deletePost(post.id)} key="delete" />,
+      ]}
     >
-      <Meta title={"N" + post.id + ". " + post.title} description={post.body} />
-      <Button onClick={() => delPostFromListCard(post.id, post.userId)} danger>Удалить отчет</Button>
+      <div className={classes.body}>
+        <Meta
+          className={classes.meta}
+          title={"N" + post.id + ". " + post.title}
+          description={post.body}
+        />
+      </div>
     </Card>
   );
 };

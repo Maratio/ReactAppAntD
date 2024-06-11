@@ -25,19 +25,18 @@ const SubmitButton = ({ form, children, closeModal }) => {
   );
 };
 
-const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
-  const [formAdd] = Form.useForm();
-
+const FormPostUpdate = ({ closeModal, updatePost }) => {
+  const [formUpdate] = Form.useForm();
   return (
     <Form
-      form={formAdd}
+      form={formUpdate}
       name="validateOnly"
       layout="vertical"
       autoComplete="off"
       initialValues={{
         remember: true,
       }}
-      onFinish={saveInfoAddPost}
+      onFinish={updatePost}
     >
       <Form.Item
         name="Title"
@@ -61,20 +60,9 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="Img_url"
-        label="Img_url"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButton closeModal={closeModal} form={formAdd}>
+          <SubmitButton closeModal={closeModal} form={formUpdate}>
             Submit
           </SubmitButton>
           <Button htmlType="reset">Reset</Button>
@@ -84,4 +72,4 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
   );
 };
 
-export default FormPostAdd;
+export default FormPostUpdate;

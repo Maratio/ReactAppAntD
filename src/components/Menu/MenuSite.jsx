@@ -11,22 +11,15 @@ const MenuSite = ({ selectedMenuItem }) => {
   const items = [
     {
       key: "1",
-      icon: (
-        <PieChartOutlined
-        />
-      ),
+      icon: <PieChartOutlined />,
       label: "Маршруты",
-      onClick: () => selectedMenuItem("Маршруты")
+      onClick: () => selectedMenuItem("Маршруты"),
     },
     {
       key: "2",
-      icon: (
-        <DesktopOutlined
-        />
-      ),
-      label: "Отчеты",
-      onClick: () => selectedMenuItem("Отчеты")
-
+      icon: <DesktopOutlined />,
+      label: "Заметки",
+      onClick: () => selectedMenuItem("Заметки"),
     },
     {
       key: "3",
