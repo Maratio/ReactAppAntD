@@ -9,7 +9,7 @@
   padding-bottom: 1rem;
 }
 
-.btns_block {
+.btns-block {
   margin: 0px;
   display: flex;
   justify-content: left;
@@ -17,4 +17,18 @@
   flex-wrap: wrap;
   background-color: transparent;
   padding-bottom: 0px;
+  height: 32px;
+}
+
+.text-block {
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: transparent;
+  padding-bottom: 0px;
+  height: 32px;
+  font-family: 'Times New Roman', Times, serif;
+  font-style: oblique;
 }

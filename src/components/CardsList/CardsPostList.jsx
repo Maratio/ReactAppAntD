@@ -110,7 +110,7 @@ const CardsPostList = () => {
 
   return (
     <div>
-      <div className={classes.btns_block}>
+      <div className={classes["btns-block"]}>
         <ModalPostAdd saveInfoAddPost={saveInfoAddPost} />
       </div>
       <ModalPostUpdate

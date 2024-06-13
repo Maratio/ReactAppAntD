@@ -1,4 +1,5 @@
 import React from "react";
+import classes from "./MenuSite.module.css";
 import { Menu } from "antd";
 import {
   ContainerOutlined,
@@ -35,6 +36,7 @@ const MenuSite = ({ selectedMenuItem }) => {
 
   return (
     <Menu
+    className={classes.menu}
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1"]}
       mode="inline"

@@ -40,12 +40,17 @@ const CardsTripList = () => {
   useEffect(getTripsServer, [pageCurrent, pageSize]);
 
   return (
-    <div className={classes._}>
+    <div >
+      <div className={classes['text-block']}>
+      <h2>Посетите наши маршруты и поделитесь впечатлениями в разделе Заметки</h2>
+      </div>
+      <div className={classes._}>
       {pageTripsList.map(({ userId, id, url, title, body }) => (
         <div key={id}>
           <CardTrip post={{ userId, id, url, title, body }} />
         </div>
       ))}
+      
       <PaginationSite
         paginationParam={{
           pageCurrent,
@@ -54,6 +59,7 @@ const CardsTripList = () => {
           onChange: handleChangePaginator,
         }}
       />
+      </div>
     </div>
   );
 };

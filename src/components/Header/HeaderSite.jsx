@@ -7,7 +7,7 @@ const { Header } = Layout;
 export const HeaderSite = () => {
   return (
     <Header className={classes.header}>
-      <h1>Мой проект</h1>
+      <h1>Путешествуй по нашим маршрутам</h1>
     </Header>
   );
 };
