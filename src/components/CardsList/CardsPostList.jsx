@@ -59,10 +59,6 @@ const CardsPostList = () => {
     setPostIdFromCard(postId);
   };
 
-  const resetEnableUpdateFormPost = (value) => {
-    setEnableUpdateFormPost(value);
-  };
-
   const updatePost = ({ Title, Description }) => {
     fetch(`${BACKEND_URL}/api/posts/${postIdFromCard}?`, {
       method: "PUT",
@@ -114,7 +110,7 @@ const CardsPostList = () => {
         <ModalPostAdd saveInfoAddPost={saveInfoAddPost} />
       </div>
       <ModalPostUpdate
-        resetEnableUpdateFormPost={resetEnableUpdateFormPost}
+        resetEnableUpdateFormPost={() => setEnableUpdateFormPost(false)}
         enableUpdateFormPost={enableUpdateFormPost}
         updatePost={updatePost}
       />

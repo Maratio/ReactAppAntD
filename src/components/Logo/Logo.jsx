@@ -6,7 +6,7 @@ export default function Logo() {
       <img
         className={classes.image}
         src={
-          'https://kartinki.pibig.info/uploads/posts/2023-04/1681984069_kartinki-pibig-info-p-kartinki-svyazannie-s-turizmom-arti-instag-33.png'
+          'https://papik.pro/grafic/uploads/posts/2023-04/1681547548_papik-pro-p-turfirmi-logotip-vektor-1.png'
         }
         alt="logo"
       />

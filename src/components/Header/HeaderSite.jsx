@@ -27,7 +27,7 @@ const menuItems = [
 export const HeaderSite = ({ authUser, onLogin, onLogout }) => {
   const userName = authUser
     ? `${authUser.firstName} ${authUser.lastName}`
-    : "Вы странник";
+    : "Вы гость";
 
   const buttonCaption = authUser ? "Выйти" : "Войти";
 

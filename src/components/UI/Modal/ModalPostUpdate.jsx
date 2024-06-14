@@ -1,4 +1,3 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
 
@@ -7,32 +6,22 @@ const ModalPostUpdate = ({
   enableUpdateFormPost,
   updatePost,
 }) => {
-  const [open, setOpen] = useState(false);
-
-  const setOpenModal = () => {
-    if (enableUpdateFormPost) setOpen(true);
-  };
-
-  const closeModal = () => {
-    setOpen(false);
-  };
-
-  useEffect(() => setOpenModal(), [enableUpdateFormPost]);
-  useLayoutEffect(() => resetEnableUpdateFormPost(false));
-
   return (
     <>
       <Modal
         title="Обнови данные по Заметке"
         centered
-        open={open}
+        open={enableUpdateFormPost}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        onOk={() => resetEnableUpdateFormPost()}
+        onCancel={() => resetEnableUpdateFormPost()}
         width={1000}
       >
-        <FormPostUpdate updatePost={updatePost} closeModal={closeModal} />
+        <FormPostUpdate
+          updatePost={updatePost}
+          closeModal={resetEnableUpdateFormPost}
+        />
       </Modal>
     </>
   );

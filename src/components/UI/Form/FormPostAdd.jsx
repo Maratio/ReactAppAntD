@@ -15,7 +15,7 @@ const SubmitButton = ({ form, children, closeModal }) => {
   }, [form, values]);
   return (
     <Button
-      onClick={() => closeModal()}
+      onClick={() => closeModal(false)}
       type="primary"
       htmlType="submit"
       disabled={!submittable}
@@ -27,7 +27,6 @@ const SubmitButton = ({ form, children, closeModal }) => {
 
 const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
   const [formAdd] = Form.useForm();
-
   return (
     <Form
       form={formAdd}

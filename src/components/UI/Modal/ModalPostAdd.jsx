@@ -6,10 +6,6 @@ import FormPostAdd from "../Form/FormPostAdd.jsx";
 const ModalPostAdd = ({ saveInfoAddPost }) => {
   const [open, setOpen] = useState(false);
 
-  const closeModal = () => {
-    setOpen(false);
-  };
-
   return (
     <>
       <Button
@@ -31,7 +27,7 @@ const ModalPostAdd = ({ saveInfoAddPost }) => {
       >
         <FormPostAdd
           saveInfoAddPost={saveInfoAddPost}
-          closeModal={closeModal}
+          closeModal={() => setOpen()}
         />
       </Modal>
     </>
