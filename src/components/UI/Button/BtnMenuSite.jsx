@@ -8,7 +8,6 @@ export const BtnMenuSite = ({ collapsed, handlerCollapsed }) => {
       type="primary"
       onClick={() => handlerCollapsed()}
       style={{
-        // marginBottom: 10,
         bottom: 34
       }}
     >

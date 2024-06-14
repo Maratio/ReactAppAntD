@@ -20,7 +20,7 @@ const ModalPostAdd = ({ saveInfoAddPost }) => {
         Добавить Заметку
       </Button>
       <Modal
-        title="Заполни данные и добавь отчет"
+        title="Заполни данные и добавь Заметку"
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
