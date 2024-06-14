@@ -124,9 +124,11 @@ app.put('/api/posts/:id', (req, res) => {
       return;
     }
     const updatedPost = {
+      userId: posts[postIndex].userId,
       id: postId,
+      url: posts[postIndex].url,
       title: req.body.title,
-      body: req.body.body
+      body: req.body.body    
     };
     posts[postIndex] = updatedPost;
     fs.writeFile(path.join(__dirname, './db/db.posts.json'), JSON.stringify({ posts }), 'utf8', err => {
