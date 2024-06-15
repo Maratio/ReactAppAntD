@@ -21,12 +21,3 @@
   color: rgb(29, 178, 228);
 }
 
-.vertical {
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.vertical .item {
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid gray;
-}

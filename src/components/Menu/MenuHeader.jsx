@@ -2,11 +2,10 @@ import React from "react";
 import classes from "./MenuHeader.module.css";
 import cn from "classnames";
 
-const MenuHeader = ({ className, items, vertical }) => {
-  const cnMenu = cn(classes.menu, { [classes.vertical]: vertical }, className);
-
+const MenuHeader = ({items}) => {
+  const cnMenu = cn(classes.menu);
   return (
-    <ul className={cnMenu}>
+    <ul className={cnMenu} >
       {items.map((item) => (
         <li key={item.name} className={classes.item}>
           <a className={classes.link} href={"#privet"}>
