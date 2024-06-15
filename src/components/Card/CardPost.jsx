@@ -10,7 +10,7 @@ const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
     <Card
       className={classes.card}
       size="small"
-      extra={<Rate />}
+      extra={<Rate value={Math.ceil(Math.random()*5)} />}
       hoverable
       cover={<img alt="example" src={post.url} />}
       actions={[
