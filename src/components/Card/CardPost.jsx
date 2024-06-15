@@ -22,7 +22,7 @@ const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
         <Meta
           className={classes.meta}
           title={"N" + post.id + ". " + post.title}
-          description={post.body}
+          description={post.body.length > 120 ? post.body.slice(0,120) + '...' : post.body}
         />
       </div>
     </Card>

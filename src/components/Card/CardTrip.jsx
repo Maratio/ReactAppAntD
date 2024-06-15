@@ -13,8 +13,9 @@ const CardTrip = (props) => {
       <Meta
         className={classes.meta}
         title={props.post.title}
-        description={props.post.body}
-      />
+        description={props.post.body.length > 120 ? props.post.body.slice(0,120) + '...' : props.post.body}
+
+/>
     </Card>
   );
 };
