@@ -1,16 +1,20 @@
 import React from "react";
-import classes from "./CardTrip.module.css";
+import classes from "./Card.module.css";
 import { EditOutlined, DeleteOutlined, StarOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
+import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 
 const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
+  const navigate = useNavigate();
+
   return (
     <Card
+      onClick={() => navigate(`/posts/${post.id}`)}
       className={classes.card}
       size="small"
-      extra={<Rate value={Math.ceil(Math.random()*5)} />}
+      extra={<Rate value={Math.ceil(Math.random() * 5)} />}
       hoverable
       cover={<img alt="example" src={post.url} />}
       actions={[
@@ -22,7 +26,9 @@ const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
         <Meta
           className={classes.meta}
           title={"N" + post.id + ". " + post.title}
-          description={post.body.length > 120 ? post.body.slice(0,120) + '...' : post.body}
+          description={
+            post.body.length > 120 ? post.body.slice(0, 120) + "..." : post.body
+          }
         />
       </div>
     </Card>

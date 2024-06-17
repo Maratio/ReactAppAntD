@@ -42,6 +42,25 @@ app.get('/api/routes', (req, res) => {
   });
 });
 
+// Получить один маршрут по ID
+app.get('/api/routes/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  fs.readFile(TRIPS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const posts = JSON.parse(data).routes;
+    const post = posts.find(post => post.id === postId);
+    if (!post) {
+      res.status(404).send('Пост не найден');
+      return;
+    }
+    res.json(post);
+  });
+});
+
 // Получить один пост по ID
 app.get('/api/posts/:id', (req, res) => {
   const postId = parseInt(req.params.id);

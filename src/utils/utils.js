@@ -1,7 +1,4 @@
 
-
-
-
 // function paginateResults(data, page, limit) {
 //   const startIndex = (page - 1) * limit;
 //   const endIndex = page * limit;

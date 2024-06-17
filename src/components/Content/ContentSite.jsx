@@ -1,22 +1,34 @@
-import React from "react";
-import classes from "./ContentSite.module.css";
-import { Layout } from "antd";
-import CardsTripList from "../CardsList/CardsTripList";
-import CardsPostList from "../CardsList/CardsPostList";
+// import React from "react";
+// import classes from "./ContentSite.module.css";
+// import { Layout } from "antd";
+// // import { useLocation } from "react-router-dom";
 
-const { Content } = Layout;
+// // import ContentSiteNotAuth from "./ContentSiteNotAuth";
+// // import CardsTripList from "../CardsList/CardsTripList";
+// // import CardsPostList from "../CardsList/CardsPostList";
+// // import ModalLogin from "../UI/Modal/ModalLogin";
 
-export const ContentSite = ({ selectComponent }) => {
-  function getComponent() {
-    switch (selectComponent) {
-      case "Маршруты":
-        return <CardsTripList />;
-      case "Заметки":
-        return <CardsPostList />;
-      default:
-        return <CardsTripList />;
-    }
-  }
+// const { Content } = Layout;
 
-  return <Content className={classes.content}>{getComponent()}</Content>;
-};
+// export const ContentSite = () => {
+
+  // const location = useLocation()
+  // console.log(location.pathname);
+
+  // function getComponent() {
+  //   switch (location.pathname) {
+  //     case "/":
+  //       return <ContentSiteNotAuth/>;
+  //     case "/trips":
+  //       return <CardsTripList />;
+  //     case "/posts":
+  //       return <CardsPostList />;
+  //       case "/login":
+  //       return <ModalLogin open={true}/>;
+  //     default:
+  //       return <CardsTripList />;
+  //   }
+  // }
+
+//   return <Content className={classes.content}></Content>;
+// };

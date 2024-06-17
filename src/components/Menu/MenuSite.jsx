@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
 import { Menu } from "antd";
 import {
@@ -8,24 +9,27 @@ import {
   PieChartOutlined,
 } from "@ant-design/icons";
 
-const MenuSite = ({ selectedMenuItem }) => {
+const MenuSite = () => {
+  const navigate = useNavigate()
+
   const items = [
     {
       key: "1",
-      icon: <PieChartOutlined />,
+      icon: <PieChartOutlined/>,
       label: "Маршруты",
-      onClick: () => selectedMenuItem("Маршруты"),
+      onClick:() => navigate('/trips'),
+
     },
     {
       key: "2",
       icon: <DesktopOutlined />,
       label: "Заметки",
-      onClick: () => selectedMenuItem("Заметки"),
+      onClick:() => navigate('/posts'),
     },
     {
       key: "3",
       icon: <ContainerOutlined />,
-      label: "Option 3",
+      label: "Фото",
     },
     {
       key: "4",
@@ -36,7 +40,7 @@ const MenuSite = ({ selectedMenuItem }) => {
 
   return (
     <Menu
-    className={classes.menu}
+      className={classes.menu}
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1"]}
       mode="inline"

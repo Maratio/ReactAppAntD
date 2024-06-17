@@ -1,8 +1,13 @@
 import React from "react";
+import classes from "../Content/ContentSite.module.css";
 import { HeaderSite } from "../Header/HeaderSite.jsx";
 import { FooterSite } from "../Footer/FooterSite.jsx";
 import { Flex, Layout } from "antd";
-import LayoutSiderAndContent from "./LayoutSiderAndContent.jsx";
+// import LayoutSiderAndContent from "./LayoutSiderAndContent.jsx";
+import { Outlet } from "react-router-dom";
+import { SiderSite } from "../SideBar/SiderSite.jsx";
+import { Content } from "antd/es/layout/layout.js";
+// import { ContentSite } from "../Content/ContentSite.jsx";
 
 const layoutStyle = {
   borderRadius: 8,
@@ -18,7 +23,10 @@ export const LayoutSite = () => {
       <Layout style={layoutStyle}>
         <HeaderSite />
         <Layout>
-          <LayoutSiderAndContent />
+          <SiderSite />
+          <Content className={classes.content}>
+          <Outlet />
+          </Content> 
         </Layout>
         <FooterSite />
       </Layout>

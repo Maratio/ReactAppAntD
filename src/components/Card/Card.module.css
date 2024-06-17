@@ -50,3 +50,29 @@
   height: 50vh;
   margin: 0 auto;
 }
+
+.bodyDetail{
+  height: 100%;
+  width: 100%;
+  /* overflow: hidden; */
+}
+
+.metaDetail{
+  height: 100%;
+  width: 100%;
+}
+
+.cardDetail{
+ padding: 10px;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+.cardDetail img {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
