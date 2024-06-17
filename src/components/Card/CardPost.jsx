@@ -1,12 +1,12 @@
 import React from "react";
 import classes from "./Card.module.css";
-import { EditOutlined, DeleteOutlined, StarOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Meta } = Card;
 
-const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
+const CardPost = ({ post, deletePost }) => {
   const navigate = useNavigate();
 
   return (
@@ -18,8 +18,20 @@ const CardPost = ({ post, deletePost, getUserIdEditPost }) => {
       hoverable
       cover={<img alt="example" src={post.url} />}
       actions={[
-        <EditOutlined onClick={() => getUserIdEditPost(post.id)} key="edit" />,
-        <DeleteOutlined onClick={() => deletePost(post.id)} key="delete" />,
+        <EditOutlined
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/posts/${post.id}/update`);
+          }}
+          key="edit"
+        />,
+        <DeleteOutlined
+          onClick={(e) => {
+            e.stopPropagation();
+            deletePost(post.id);
+          }}
+          key="delete"
+        />,
       ]}
     >
       <div className={classes.body}>

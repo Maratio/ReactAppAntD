@@ -32,3 +32,8 @@
   font-family: 'Times New Roman', Times, serif;
   font-style: oblique;
 }
+
+.btn-add{
+  background: #1677ff;
+  height: 34px;
+}

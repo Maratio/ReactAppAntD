@@ -1,20 +1,14 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
-import classes from "./ModalPostAdd.module.css";
+import { Modal } from "antd";
 import FormPostAdd from "../Form/FormPostAdd.jsx";
+import { useNavigate } from "react-router-dom";
 
-const ModalPostAdd = ({ saveInfoAddPost }) => {
-  const [open, setOpen] = useState(false);
+const ModalPostAdd = () => {
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
 
   return (
     <>
-      <Button
-        className={classes["btn-add"]}
-        type="primary"
-        onClick={() => setOpen(true)}
-      >
-        Добавить Заметку
-      </Button>
       <Modal
         title="Заполни данные и добавь Заметку"
         centered
@@ -22,13 +16,13 @@ const ModalPostAdd = ({ saveInfoAddPost }) => {
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
         onOk={() => setOpen(false)}
-        onCancel={() => setOpen(false)}
+        onCancel={() => {
+          setOpen(false);
+          navigate("/posts");
+        }}
         width={1000}
       >
-        <FormPostAdd
-          saveInfoAddPost={saveInfoAddPost}
-          closeModal={() => setOpen()}
-        />
+        <FormPostAdd closeModal={() => setOpen()} />
       </Modal>
     </>
   );

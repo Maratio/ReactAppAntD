@@ -7,6 +7,8 @@ import CardsPostList from "../components/CardsList/CardsPostList.jsx";
 import ContentSiteNotAuth from '../components/Content/ContentSiteNotAuth.jsx';
 import CardPostDetail from '../components/Card/CardPostDetail.jsx';
 import CardTripDetail from '../components/Card/CardTripDetail.jsx';
+import ModalPostAdd from '../components/UI/Modal/ModalPostAdd.jsx';
+import ModalPostUpdate from '../components/UI/Modal/ModalPostUpdate.jsx';
 
 
 export const spareRoutes = [
@@ -24,4 +26,10 @@ export const authRoutes = [
   { path: '/trips/:id', element: <CardTripDetail/> },
   { path: '/posts', element: <CardsPostList /> },
   { path: '/posts/:id', element: <CardPostDetail /> },
+  { path: '/posts/new', element: <ModalPostAdd /> },
+  { path: '/posts/update', element: <ModalPostUpdate /> },
+  { path: '/posts/:id/update', element: <ModalPostUpdate /> },
+
+
+
 ]

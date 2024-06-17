@@ -1,5 +1,7 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
+import { BACKEND_URL } from "../../../constants";
+import { useNavigate, useParams } from "react-router-dom";
 const SubmitButton = ({ form, children, closeModal }) => {
   const [submittable, setSubmittable] = React.useState(false);
 
@@ -15,7 +17,7 @@ const SubmitButton = ({ form, children, closeModal }) => {
   }, [form, values]);
   return (
     <Button
-      onClick={() => closeModal()}
+      onClick={() => closeModal(false)}
       type="primary"
       htmlType="submit"
       disabled={!submittable}
@@ -25,8 +27,32 @@ const SubmitButton = ({ form, children, closeModal }) => {
   );
 };
 
-const FormPostUpdate = ({ closeModal, updatePost }) => {
+const FormPostUpdate = ({ closeModal }) => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+
   const [formUpdate] = Form.useForm();
+
+  const updatePost = ({ Title, Description }) => {
+    fetch(`${BACKEND_URL}/api/posts/${id}?`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: Title,
+        body: Description,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          navigate("/posts");
+        }
+      })
+      .catch((err) => console.error("error >>>>>", err));
+  };
+
   return (
     <Form
       form={formUpdate}

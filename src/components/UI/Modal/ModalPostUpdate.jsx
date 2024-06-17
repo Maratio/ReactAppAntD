@@ -1,27 +1,27 @@
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const ModalPostUpdate = ({
-  resetEnableUpdateFormPost,
-  enableUpdateFormPost,
-  updatePost,
-}) => {
+const ModalPostUpdate = () => {
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
   return (
     <>
       <Modal
         title="Обнови данные по Заметке"
         centered
-        open={enableUpdateFormPost}
+        open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => resetEnableUpdateFormPost()}
-        onCancel={() => resetEnableUpdateFormPost()}
+        onOk={() => setOpen(false)}
+        onCancel={() => {
+          setOpen(false);
+          navigate("/posts");
+        }}
         width={1000}
       >
-        <FormPostUpdate
-          updatePost={updatePost}
-          closeModal={resetEnableUpdateFormPost}
-        />
+        <FormPostUpdate closeModal={() => setOpen()} />
       </Modal>
     </>
   );

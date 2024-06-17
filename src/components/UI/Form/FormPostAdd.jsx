@@ -1,5 +1,8 @@
 import React from "react";
+
 import { Button, Form, Input, Space } from "antd";
+import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../../../constants";
 const SubmitButton = ({ form, children, closeModal }) => {
   const [submittable, setSubmittable] = React.useState(false);
 
@@ -25,7 +28,30 @@ const SubmitButton = ({ form, children, closeModal }) => {
   );
 };
 
-const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
+const FormPostAdd = ({ closeModal }) => {
+  const navigate = useNavigate();
+
+  const saveInfoAddPost = ({ Title, Description, Img_url }) => {
+    fetch(`${BACKEND_URL}/api/posts?`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: Title,
+        body: Description,
+        url: Img_url,
+      }),
+    })
+      .then((response) => {
+        if (response.status === 201) {
+          navigate("/posts");
+        }
+      })
+      .catch((err) => console.error("error >>>>>", err));
+  };
+
   const [formAdd] = Form.useForm();
   return (
     <Form

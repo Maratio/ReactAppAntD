@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import CardPost from "../Card/CardPost.jsx";
 import classes from "./CardsTripList.module.css";
 import PaginationSite from "../UI/Pagination/PaginationSite";
-import ModalPostAdd from "../UI/Modal/ModalPostAdd.jsx";
-
 import { BACKEND_URL } from "../../constants.js";
-import ModalPostUpdate from "../UI/Modal/ModalPostUpdate.jsx";
+import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const CardsPostList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
-  const [enableUpdateFormPost, setEnableUpdateFormPost] = useState(false);
-  const [postIdFromCard, setPostIdFromCard] = useState(0);
+  const navigate = useNavigate();
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
@@ -54,71 +52,23 @@ const CardsPostList = () => {
       .catch((err) => console.error("error >>>>>", err));
   };
 
-  const getUserIdEditPost = (postId) => {
-    setEnableUpdateFormPost(true);
-    setPostIdFromCard(postId);
-  };
-
-  const updatePost = ({ Title, Description }) => {
-    fetch(`${BACKEND_URL}/api/posts/${postIdFromCard}?`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: Title,
-        body: Description,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          getPosts();
-        }
-      })
-      .catch((err) => console.error("error >>>>>", err));
-  };
-
-  useEffect(getPosts, [pageCurrent, pageSize]);
-
-  const saveInfoAddPost = ({ Title, Description, Img_url }) => {
-    fetch(`${BACKEND_URL}/api/posts?`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: Title,
-        body: Description,
-        url: Img_url,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          getPosts();
-        }
-      })
-      .catch((err) => console.error("error >>>>>", err));
-  };
-
   useEffect(getPosts, [pageCurrent, pageSize]);
 
   return (
     <div>
       <div className={classes["btns-block"]}>
-        <ModalPostAdd saveInfoAddPost={saveInfoAddPost} />
+        <Button
+          className={classes["btn-add"]}
+          type="primary"
+          onClick={() => navigate("/posts/new")}
+        >
+          Добавить Заметку
+        </Button>
       </div>
-      <ModalPostUpdate
-        resetEnableUpdateFormPost={() => setEnableUpdateFormPost(false)}
-        enableUpdateFormPost={enableUpdateFormPost}
-        updatePost={updatePost}
-      />
       <div className={classes._}>
         {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
             <CardPost
-              getUserIdEditPost={getUserIdEditPost}
               deletePost={deletePost}
               post={{ userId, id, url, title, body }}
             />
