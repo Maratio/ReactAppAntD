@@ -11,7 +11,7 @@ const ModalPostUpdate = () => {
   return (
     <>
       <Modal
-        title="Обнови данные по Заметке"
+        title={`Обнови данные по Заметке #${id}`}
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
