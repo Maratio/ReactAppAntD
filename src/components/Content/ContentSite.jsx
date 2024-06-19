@@ -1,34 +1,40 @@
-// import React from "react";
-// import classes from "./ContentSite.module.css";
-// import { Layout } from "antd";
-// // import { useLocation } from "react-router-dom";
+import React from "react";
+import classes from "./ContentSite.module.css";
+import { useAuth } from "../../castomHooks/useAuth";
 
-// // import ContentSiteNotAuth from "./ContentSiteNotAuth";
-// // import CardsTripList from "../CardsList/CardsTripList";
-// // import CardsPostList from "../CardsList/CardsPostList";
-// // import ModalLogin from "../UI/Modal/ModalLogin";
+const ContentSite = () => {
+  const auth = useAuth();
+  return (
+    <div className={classes["content-auth"]}>
+      {
+        auth.user ? (
+          <h2>
+            {" "}
+            Приветствуем, {auth.user} !
+            <br />
+            Дерзайте! Для Вас доступны разделы в боковом Меню!
+            <br />
+            Добро пожаловать на сайт, который побудит Вас забыть обо всех
+            ограничениях и отправиться в увлекательный мир путешествий. Наша
+            миссия состоит в том, чтобы вдохновлять людей покорять отдаленные
+            уголки планеты, узнавать новые культуры и исследовать прекрасное. Не
+            нужно бояться перейти черту, а мы поможем Вам осуществить свою
+            мечту. Наш сайт предоставляет актуальную информацию о самых
+            интересных и необычных местах, чтобы каждое путешествие стало для
+            вас настоящим приключением.
+          </h2>
+        ) : (
+          <h2>
+            Для погружения в удивительный мир наших Маршрутов, пожалуйста
+            Авторизируйтесь!
+            <br />
+            После авторизации Вам будет доступен контент разделов в боковом Меню
+          </h2>
+        )
+        //
+      }
+    </div>
+  );
+};
 
-// const { Content } = Layout;
-
-// export const ContentSite = () => {
-
-  // const location = useLocation()
-  // console.log(location.pathname);
-
-  // function getComponent() {
-  //   switch (location.pathname) {
-  //     case "/":
-  //       return <ContentSiteNotAuth/>;
-  //     case "/trips":
-  //       return <CardsTripList />;
-  //     case "/posts":
-  //       return <CardsPostList />;
-  //       case "/login":
-  //       return <ModalLogin open={true}/>;
-  //     default:
-  //       return <CardsTripList />;
-  //   }
-  // }
-
-//   return <Content className={classes.content}></Content>;
-// };
+export default ContentSite;

@@ -1,36 +1,12 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { BACKEND_URL } from "../../../constants";
-import { useNavigate, useParams } from "react-router-dom";
-const SubmitButton = ({ form, children, closeModal }) => {
-  const [submittable, setSubmittable] = React.useState(false);
+import { useNavigate} from "react-router-dom";
+import SubmitButtonForm from "../Button/SubmitButtonForm";
 
-  // Watch all values
-  const values = Form.useWatch([], form);
-  React.useEffect(() => {
-    form
-      .validateFields({
-        validateOnly: true,
-      })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
-  }, [form, values]);
-  return (
-    <Button
-      onClick={() => closeModal(false)}
-      type="primary"
-      htmlType="submit"
-      disabled={!submittable}
-    >
-      {children}
-    </Button>
-  );
-};
 
-const FormPostUpdate = ({ closeModal }) => {
+const FormPostUpdate = ({ closeModal, id }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
-
   const [formUpdate] = Form.useForm();
 
   const updatePost = ({ Title, Description }) => {
@@ -47,7 +23,7 @@ const FormPostUpdate = ({ closeModal }) => {
     })
       .then((response) => {
         if (response.status === 200) {
-          navigate("/posts");
+          navigate(`/posts/${id}`);
         }
       })
       .catch((err) => console.error("error >>>>>", err));
@@ -88,9 +64,9 @@ const FormPostUpdate = ({ closeModal }) => {
       </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButton closeModal={closeModal} form={formUpdate}>
+          <SubmitButtonForm closeModal={closeModal} form={formUpdate}>
             Submit
-          </SubmitButton>
+          </SubmitButtonForm>
           <Button htmlType="reset">Reset</Button>
         </Space>
       </Form.Item>

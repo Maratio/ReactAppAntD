@@ -8,6 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5002;
 const POSTS_DB_PATH = path.join(__dirname, './db/db.posts.json')
 const TRIPS_DB_PATH = path.join(__dirname, './db/db.routes.json')
+const PHOTOS_DB_PATH = path.join(__dirname, './db/db.photos.json')
 
 
 app.use(cors());
@@ -42,6 +43,19 @@ app.get('/api/routes', (req, res) => {
   });
 });
 
+// Получить все фотографии
+app.get('/api/photos', (req, res) => {
+  fs.readFile(PHOTOS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const posts = JSON.parse(data).photos;
+    res.json(posts);
+  });
+});
+
 // Получить один маршрут по ID
 app.get('/api/routes/:id', (req, res) => {
   const postId = parseInt(req.params.id);
@@ -61,10 +75,84 @@ app.get('/api/routes/:id', (req, res) => {
   });
 });
 
+// Получить одно фото по ID
+app.get('/api/photos/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  fs.readFile(PHOTOS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const posts = JSON.parse(data).photos;
+    const post = posts.find(post => post.id === postId);
+    if (!post) {
+      res.status(404).send('Пост не найден');
+      return;
+    }
+    res.json(post);
+  });
+});
+
+// Создать новое фото
+app.post('/api/photos', (req, res) => {
+  fs.readFile(PHOTOS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+
+    const photos = JSON.parse(data).photos;
+    const postIdList = photos.map((item) => item.id)
+    postIdList.sort((a, b) => Number(b) - Number(a))
+
+    const newPost = {
+      id: postIdList[0] + 1,
+      url: req.body.url,
+      title: req.body.title,
+      albumId: Math.ceil(Math.random() * 3)
+    };
+
+    photos.push(newPost);
+    fs.writeFile(PHOTOS_DB_PATH, JSON.stringify({ photos }), 'utf8', err => {
+      if (err) {
+        console.error('Ошибка записи файла:', err);
+        res.status(500).send('Ошибка сервера');
+        return;
+      }
+      res.status(201).json(newPost);
+    });
+  })
+});
+
+// Удалить фото
+app.delete('/api/photos/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  fs.readFile(PHOTOS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    let photos = JSON.parse(data).photos;
+    photos = photos.filter(post => post.id !== postId);
+    fs.writeFile(PHOTOS_DB_PATH, JSON.stringify({ photos }), 'utf8', err => {
+      if (err) {
+        console.error('Ошибка записи файла:', err);
+        res.status(500).send('Ошибка сервера');
+        return;
+      }
+      res.status(204).send();
+    });
+  });
+});
+
+
 // Получить один пост по ID
 app.get('/api/posts/:id', (req, res) => {
   const postId = parseInt(req.params.id);
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Ошибка чтения файла:', err);
       res.status(500).send('Ошибка сервера');
@@ -82,7 +170,7 @@ app.get('/api/posts/:id', (req, res) => {
 
 // Создать новый пост
 app.post('/api/posts', (req, res) => {
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Ошибка чтения файла:', err);
       res.status(500).send('Ошибка сервера');
@@ -116,7 +204,7 @@ app.post('/api/posts', (req, res) => {
     };
 
     posts.push(newPost);
-    fs.writeFile(path.join(__dirname, './db/db.posts.json'), JSON.stringify({ posts }), 'utf8', err => {
+    fs.writeFile(POSTS_DB_PATH, JSON.stringify({ posts }), 'utf8', err => {
       if (err) {
         console.error('Ошибка записи файла:', err);
         res.status(500).send('Ошибка сервера');
@@ -130,7 +218,7 @@ app.post('/api/posts', (req, res) => {
 // Обновить существующий пост
 app.put('/api/posts/:id', (req, res) => {
   const postId = parseInt(req.params.id);
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Ошибка чтения файла:', err);
       res.status(500).send('Ошибка сервера');
@@ -147,10 +235,10 @@ app.put('/api/posts/:id', (req, res) => {
       id: postId,
       url: posts[postIndex].url,
       title: req.body.title,
-      body: req.body.body    
+      body: req.body.body
     };
     posts[postIndex] = updatedPost;
-    fs.writeFile(path.join(__dirname, './db/db.posts.json'), JSON.stringify({ posts }), 'utf8', err => {
+    fs.writeFile(POSTS_DB_PATH, JSON.stringify({ posts }), 'utf8', err => {
       if (err) {
         console.error('Ошибка записи файла:', err);
         res.status(500).send('Ошибка сервера');
@@ -164,7 +252,7 @@ app.put('/api/posts/:id', (req, res) => {
 // Удалить пост
 app.delete('/api/posts/:id', (req, res) => {
   const postId = parseInt(req.params.id);
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Ошибка чтения файла:', err);
       res.status(500).send('Ошибка сервера');
@@ -172,7 +260,7 @@ app.delete('/api/posts/:id', (req, res) => {
     }
     let posts = JSON.parse(data).posts;
     posts = posts.filter(post => post.id !== postId);
-    fs.writeFile(path.join(__dirname, './db/db.posts.json'), JSON.stringify({ posts }), 'utf8', err => {
+    fs.writeFile(POSTS_DB_PATH, JSON.stringify({ posts }), 'utf8', err => {
       if (err) {
         console.error('Ошибка записи файла:', err);
         res.status(500).send('Ошибка сервера');
@@ -182,6 +270,8 @@ app.delete('/api/posts/:id', (req, res) => {
     });
   });
 });
+
+
 
 // Получить результаты поиска с пагинацией
 app.get('/api/posts/search', (req, res) => {

@@ -22,7 +22,7 @@ const ModalPostAdd = () => {
         }}
         width={1000}
       >
-        <FormPostAdd closeModal={() => setOpen()} />
+        <FormPostAdd closeModal={() => setOpen(false)} />
       </Modal>
     </>
   );

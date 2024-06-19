@@ -1,11 +1,13 @@
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 const ModalPostUpdate = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const { id } = useParams();
+
   return (
     <>
       <Modal
@@ -17,11 +19,11 @@ const ModalPostUpdate = () => {
         onOk={() => setOpen(false)}
         onCancel={() => {
           setOpen(false);
-          navigate("/posts");
+          navigate(`/posts/${id}`);
         }}
         width={1000}
       >
-        <FormPostUpdate closeModal={() => setOpen()} />
+        <FormPostUpdate closeModal={() => setOpen(false)} id = {id} />
       </Modal>
     </>
   );

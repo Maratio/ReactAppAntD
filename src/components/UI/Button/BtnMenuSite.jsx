@@ -8,7 +8,7 @@ export const BtnMenuSite = ({ collapsed, handlerCollapsed }) => {
       type="primary"
       onClick={() => handlerCollapsed()}
       style={{
-        bottom: 34
+        bottom: 34,
       }}
     >
       {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}

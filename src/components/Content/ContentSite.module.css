@@ -1,4 +1,6 @@
 .content {
+  height: 100%;
+  width: 100%;
   text-align: center;
   color: #fff;
   background-image: url("https://thailand-good.ru/wp-content/uploads/b/9/3/b9397cde5b8701cf5ecbe8733430a1e0.jpeg");
@@ -15,4 +17,19 @@
 .img {
   height: 100px;
   width: 100px;
+}
+
+.content-auth,
+.contacts,
+.profile,
+.about {
+  min-height: 100vh;
+}
+
+.layout {
+  border-radius: 8 !important;
+  overflow: hidden !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  min-height: 100vh !important;
 }

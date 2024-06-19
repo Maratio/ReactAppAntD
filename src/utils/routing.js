@@ -1,35 +1,38 @@
 
 import CardsTripList from '../components/CardsList/CardsTripList.jsx'
 import CardsPostList from "../components/CardsList/CardsPostList.jsx";
-// import CardTrip from '../components/Card/CardTrip'
-// import CardPost from '../components/Card/CardPost'
-// import ModalLogin from '../components/UI/Modal/ModalLogin.jsx'
-import ContentSiteNotAuth from '../components/Content/ContentSiteNotAuth.jsx';
 import CardPostDetail from '../components/Card/CardPostDetail.jsx';
 import CardTripDetail from '../components/Card/CardTripDetail.jsx';
 import ModalPostAdd from '../components/UI/Modal/ModalPostAdd.jsx';
 import ModalPostUpdate from '../components/UI/Modal/ModalPostUpdate.jsx';
+import ModalLogin from '../components/UI/Modal/ModalLogin.jsx';
+import ContentSite from '../components/Content/ContentSite.jsx';
+import CardsFototList from '../components/CardsList/CardsFotoList.jsx';
+import CardFotoDetail from '../components/Card/CardFotoDetail.jsx';
+import ModalFotoAdd from '../components/UI/Modal/ModalFotoAdd.jsx';
+import About from '../routes/About.jsx';
+import Contacts from '../routes/Contacts.jsx';
+import Profile from '../routes/Profile.jsx';
 
 
 export const spareRoutes = [
-  { path: '/', element: <ContentSiteNotAuth />},
-  //   { path: '/register', element: <Register /> },
-  // { path: '/',  element: <ContentSiteNotAuth />},
-  //   { path: '/about', element: <About /> },
-  //   { path: '/contacts', element: <Contacts /> },
+  { path: '/', element: <ContentSite /> },
+  { path: '/login', element: <ModalLogin /> },
+  { path: '/about', element: <About /> },
+  { path: '/contacts', element: <Contacts /> },
+  { path: '/profile', element: <Profile /> },
+
 ]
 
-//  element: <ContentSiteNotAuth />  , element: <CardsTripList />  element: <ModalLogin /> 
 
 export const authRoutes = [
   { path: '/trips', element: <CardsTripList /> },
-  { path: '/trips/:id', element: <CardTripDetail/> },
+  { path: '/trips/:id', element: <CardTripDetail /> },
   { path: '/posts', element: <CardsPostList /> },
   { path: '/posts/:id', element: <CardPostDetail /> },
   { path: '/posts/new', element: <ModalPostAdd /> },
-  { path: '/posts/update', element: <ModalPostUpdate /> },
   { path: '/posts/:id/update', element: <ModalPostUpdate /> },
-
-
-
+  { path: '/photos', element: <CardsFototList /> },
+  { path: '/photos/:id', element: <CardFotoDetail /> },
+  { path: '/photos/new', element: <ModalFotoAdd /> },
 ]

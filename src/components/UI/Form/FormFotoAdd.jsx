@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../../../constants";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 
-const FormPostAdd = ({ closeModal }) => {
+const FormFotoAdd = ({ closeModal }) => {
   const navigate = useNavigate();
 
-  const saveInfoAddPost = ({ Title, Description, Img_url }) => {
-    fetch(`${BACKEND_URL}/api/posts?`, {
+  const saveInfoAddFoto = ({ Title, Img_url }) => {
+    fetch(`${BACKEND_URL}/api/photos?`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -16,13 +16,12 @@ const FormPostAdd = ({ closeModal }) => {
       },
       body: JSON.stringify({
         title: Title,
-        body: Description,
         url: Img_url,
       }),
     })
       .then((response) => {
         if (response.status === 201) {
-          navigate("/posts");
+          navigate("/photos");
         }
       })
       .catch((err) => console.error("error >>>>>", err));
@@ -38,22 +37,11 @@ const FormPostAdd = ({ closeModal }) => {
       initialValues={{
         remember: true,
       }}
-      onFinish={saveInfoAddPost}
+      onFinish={saveInfoAddFoto}
     >
       <Form.Item
         name="Title"
         label="Title"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="Description"
-        label="Description"
         rules={[
           {
             required: true,
@@ -85,4 +73,4 @@ const FormPostAdd = ({ closeModal }) => {
   );
 };
 
-export default FormPostAdd;
+export default FormFotoAdd;

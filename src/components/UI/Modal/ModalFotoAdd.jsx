@@ -1,15 +1,16 @@
+import React, { useState } from "react";
 import { Modal } from "antd";
-import FormLogin from "../Form/FormLogin";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import FormFotoAdd from "../Form/FormFotoAdd.jsx";
 
-export default function ModalLogin() {
+const ModalFotoAdd = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+
   return (
     <>
       <Modal
-        title="Введите логин и пароль"
+        title="Заполни данные и добавь Фото"
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
@@ -17,12 +18,14 @@ export default function ModalLogin() {
         onOk={() => setOpen(false)}
         onCancel={() => {
           setOpen(false);
-          navigate("/");
+          navigate("/photos");
         }}
-        width={500}
+        width={1000}
       >
-        <FormLogin closeModal={() => setOpen(false)} />
+        <FormFotoAdd closeModal={() => setOpen(false)} />
       </Modal>
     </>
   );
-}
+};
+
+export default ModalFotoAdd;

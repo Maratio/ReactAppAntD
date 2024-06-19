@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CardPost from "../Card/CardPost.jsx";
 import classes from "./CardsTripList.module.css";
-import PaginationSite from "../UI/Pagination/PaginationSite";
+import PaginationSite from "../UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteCardCall,
-  getCardsCall,
-} from "../../utils/utils.js";
+import { deleteCardCall, getCardsCall } from "../../utils/utils.js";
+import CardFoto from "../Card/CardFoto.jsx";
 
-const CardsPostList = () => {
+const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
@@ -21,7 +18,7 @@ const CardsPostList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const card = "posts";
+  const card = "photos";
 
   function getPosts() {
     getCardsCall(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
@@ -46,17 +43,17 @@ const CardsPostList = () => {
         <Button
           className={classes["btn-add"]}
           type="primary"
-          onClick={() => navigate("/posts/new")}
+          onClick={() => navigate("/photos/new")}
         >
-          Добавить Заметку
+          Добавить Фото
         </Button>
       </div>
       <div className={classes._}>
-        {pagePostsList.map(({ userId, id, url, title, body }) => (
+        {pagePostsList.map(({ id, url, albumId, title }) => (
           <div key={id}>
-            <CardPost
+            <CardFoto
               deletePost={deletePost}
-              post={{ userId, id, url, title, body }}
+              post={{ id, url, albumId, title }}
             />
           </div>
         ))}
@@ -73,4 +70,4 @@ const CardsPostList = () => {
   );
 };
 
-export default CardsPostList;
+export default CardsFototList;

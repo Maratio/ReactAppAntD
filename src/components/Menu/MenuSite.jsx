@@ -3,38 +3,40 @@ import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
 import { Menu } from "antd";
 import {
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  PieChartOutlined,
+  CompassOutlined,
+  CameraOutlined,
+  HomeOutlined,
+  FormOutlined,
 } from "@ant-design/icons";
 
 const MenuSite = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const items = [
     {
       key: "1",
-      icon: <PieChartOutlined/>,
-      label: "Маршруты",
-      onClick:() => navigate('/trips'),
-
+      icon: <HomeOutlined />,
+      label: "Главная",
+      onClick: () => navigate("/"),
     },
     {
       key: "2",
-      icon: <DesktopOutlined />,
-      label: "Заметки",
-      onClick:() => navigate('/posts'),
+      icon: <CompassOutlined />,
+      label: "Маршруты",
+      onClick: () => navigate("/trips"),
     },
     {
       key: "3",
-      icon: <ContainerOutlined />,
-      label: "Фото",
+      icon: <FormOutlined />,
+      label: "Заметки",
+      onClick: () => navigate("/posts"),
     },
     {
       key: "4",
-      icon: <MailOutlined />,
-      label: "Option 4",
+      icon: <CameraOutlined />,
+      label: "Фото",
+      onClick: () => navigate("/photos"),
+
     },
   ];
 

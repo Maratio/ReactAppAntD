@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import classes from "./Card.module.css";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { deleteCardDetailCall, getCardDetail } from "../../utils/utils.js";
 const { Meta } = Card;
-const card = "posts";
+const card = "photos";
 
-const CardPostDetail = () => {
+const CardFotoDetail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [dataPost, setDataPost] = useState("");
@@ -31,12 +31,6 @@ const CardPostDetail = () => {
       hoverable
       cover={<img alt="example" src={dataPost.url} />}
       actions={[
-        <EditOutlined
-          onClick={() => {
-            navigate(`/posts/${id}/update`);
-          }}
-          key="edit"
-        />,
         <DeleteOutlined onClick={() => deletePost(id)} key="delete" />,
       ]}
     >
@@ -51,4 +45,4 @@ const CardPostDetail = () => {
   );
 };
 
-export default CardPostDetail;
+export default CardFotoDetail;
