@@ -58,7 +58,7 @@ export const HeaderSite = () => {
           <Button
             className={classes.btnLogin}
             type="primary"
-            onClick={() => auth.signout(() => navigate("/"))}
+            onClick={() => auth.signout(() => navigate("/login"))}
           >
             {buttonCaption}
           </Button>

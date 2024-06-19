@@ -13,14 +13,17 @@ import ModalFotoAdd from '../components/UI/Modal/ModalFotoAdd.jsx';
 import About from '../routes/About.jsx';
 import Contacts from '../routes/Contacts.jsx';
 import Profile from '../routes/Profile.jsx';
+import NotFound from '../routes/NotFound.jsx';
 
 
 export const spareRoutes = [
+  { path: '*', element: <NotFound/> },
   { path: '/', element: <ContentSite /> },
   { path: '/login', element: <ModalLogin /> },
   { path: '/about', element: <About /> },
   { path: '/contacts', element: <Contacts /> },
   { path: '/profile', element: <Profile /> },
+
 
 ]
 

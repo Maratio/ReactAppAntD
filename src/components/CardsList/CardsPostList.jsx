@@ -41,7 +41,7 @@ const CardsPostList = () => {
   useEffect(getPosts, [pageCurrent, pageSize]);
 
   return (
-    <div>
+    <div className={classes.content}>
       <div className={classes["btns-block"]}>
         <Button
           className={classes["btn-add"]}
