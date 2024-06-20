@@ -1,21 +1,22 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
+import classes from "./ModalPostAdd.module.css";
 import FormPostAdd from "../Form/FormPostAdd.jsx";
 
 const ModalPostAdd = ({ saveInfoAddPost }) => {
   const [open, setOpen] = useState(false);
 
-  const closeModal = () => {
-    setOpen(false);
-  };
-
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
-        Добавить отчет
+      <Button
+        className={classes["btn-add"]}
+        type="primary"
+        onClick={() => setOpen(true)}
+      >
+        Добавить Заметку
       </Button>
       <Modal
-        title="Заполни данные и добавь отчет"
+        title="Заполни данные и добавь Заметку"
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
@@ -26,7 +27,7 @@ const ModalPostAdd = ({ saveInfoAddPost }) => {
       >
         <FormPostAdd
           saveInfoAddPost={saveInfoAddPost}
-          closeModal={closeModal}
+          closeModal={() => setOpen()}
         />
       </Modal>
     </>

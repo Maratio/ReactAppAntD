@@ -1,0 +1,23 @@
+.menu {
+  position: relative;
+  right: 50px;
+  margin: 0;
+  display: flex;
+  gap: 1rem;
+  font-size: 1.2rem;
+  color: white;
+}
+
+.item {
+  display: inline-block;
+}
+
+.link {
+  font-weight: bold;
+  color: #1677ff;
+}
+
+.link:hover {
+  color: rgb(29, 178, 228);
+}
+

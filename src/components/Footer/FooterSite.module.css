@@ -1,9 +1,9 @@
-.footer{
+.footer {
   width: 100%;
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
-  color: blue;
-  background-color: bisque;
+  color: #1677ff;
+  background-color: rgb(177, 194, 157);
   text-align: center;
 }

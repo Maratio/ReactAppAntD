@@ -11,7 +11,7 @@ export const ContentSite = ({ selectComponent }) => {
     switch (selectComponent) {
       case "Маршруты":
         return <CardsTripList />;
-      case "Отчеты":
+      case "Заметки":
         return <CardsPostList />;
       default:
         return <CardsTripList />;

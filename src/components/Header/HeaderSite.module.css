@@ -1,12 +1,21 @@
-.header{
-    position: sticky;
-    top: 0;
-    width: 100%;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    color: blue;
-    background-color: bisque;
-    text-align: center;
-    /* text-align: center; */
+.header {
+  position: relative !important;
+  background-color: rgb(177, 194, 157);
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  color: #1677ff;
+  position: absolute;
+  width: 100%;
+  padding: 0 !important;
+}
+
+.user {
+  color: white;
+}
+
+.btnLogin {
+  background-color: #1677ff;
+  color: white;
+  height: 34px;
 }

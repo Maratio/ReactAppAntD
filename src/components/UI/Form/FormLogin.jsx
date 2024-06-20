@@ -15,7 +15,7 @@ const SubmitButton = ({ form, children, closeModal }) => {
   }, [form, values]);
   return (
     <Button
-      onClick={() => closeModal(false)}
+      onClick={() => closeModal()}
       type="primary"
       htmlType="submit"
       disabled={!submittable}
@@ -25,55 +25,49 @@ const SubmitButton = ({ form, children, closeModal }) => {
   );
 };
 
-const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
-  const [formAdd] = Form.useForm();
+const FormLogin = ({ saveInfoLogin, closeModal }) => {
+  const [formLogin] = Form.useForm();
+
   return (
     <Form
-      form={formAdd}
+      form={formLogin}
       name="validateOnly"
       layout="vertical"
       autoComplete="off"
       initialValues={{
         remember: true,
       }}
-      onFinish={saveInfoAddPost}
+      onFinish={saveInfoLogin}
     >
       <Form.Item
-        name="Title"
-        label="Title"
+        key="userName"
+        name="userName"
+        label="Имя пользователя"
         rules={[
           {
             required: true,
+            message: "Введите имя пользователя!",
           },
         ]}
       >
         <Input />
       </Form.Item>
       <Form.Item
-        name="Description"
-        label="Description"
+        key="password"
+        label="Пароль"
+        name="password"
         rules={[
           {
             required: true,
+            message: "Введите пароль!",
           },
         ]}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="Img_url"
-        label="Img_url"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
+        <Input.Password />
       </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButton closeModal={closeModal} form={formAdd}>
+          <SubmitButton closeModal={closeModal} form={formLogin}>
             Submit
           </SubmitButton>
           <Button htmlType="reset">Reset</Button>
@@ -83,4 +77,4 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
   );
 };
 
-export default FormPostAdd;
+export default FormLogin;

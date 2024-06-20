@@ -3,22 +3,19 @@ import classes from "./CardTrip.module.css";
 import { Card } from "antd";
 const { Meta } = Card;
 
-
 const CardTrip = (props) => {
   return (
-    <Card      
+    <Card
+      className={classes.card}
       hoverable
-      style={{
-        width: 340,
-      }}
-      cover={
-        <img
-          alt="example"
-          src={props.post.url}
-        />
-      }
+      cover={<img alt="example" src={props.post.url} />}
     >
-      <Meta title={props.post.title} description={props.post.body} />
+      <Meta
+        className={classes.meta}
+        title={props.post.title}
+        description={props.post.body.length > 120 ? props.post.body.slice(0,120) + '...' : props.post.body}
+
+/>
     </Card>
   );
 };

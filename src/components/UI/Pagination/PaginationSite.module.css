@@ -1,9 +1,7 @@
 .paginationWrapper {
-    background-color: lightgray;
-    display: flex;
-    justify-content: end;
-}
-
-.pagination {
-    right: 0;
+  position: absolute; 
+  left: 0;
+  right: 0;
+  bottom: 0; 
+  height: 40px;
 }
