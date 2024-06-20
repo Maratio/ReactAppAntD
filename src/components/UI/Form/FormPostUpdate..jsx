@@ -1,15 +1,13 @@
-import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { BACKEND_URL } from "../../../constants";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 
-
-const FormPostUpdate = ({ closeModal, id }) => {
+const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const navigate = useNavigate();
   const [formUpdate] = Form.useForm();
 
-  const updatePost = ({ Title, Description }) => {
+  const updatePost = ({ Title, Description, Img_url }) => {
     fetch(`${BACKEND_URL}/api/posts/${id}?`, {
       method: "PUT",
       headers: {
@@ -19,6 +17,7 @@ const FormPostUpdate = ({ closeModal, id }) => {
       body: JSON.stringify({
         title: Title,
         body: Description,
+        url: Img_url,
       }),
     })
       .then((response) => {
@@ -29,6 +28,7 @@ const FormPostUpdate = ({ closeModal, id }) => {
       .catch((err) => console.error("error >>>>>", err));
   };
 
+  console.log(dataPost);
   return (
     <Form
       form={formUpdate}
@@ -36,7 +36,9 @@ const FormPostUpdate = ({ closeModal, id }) => {
       layout="vertical"
       autoComplete="off"
       initialValues={{
-        remember: true,
+        Title: `${dataPost.title}`,
+        Description: `${dataPost.body}`,
+        Img_url: `${dataPost.url}`,
       }}
       onFinish={updatePost}
     >
@@ -54,6 +56,17 @@ const FormPostUpdate = ({ closeModal, id }) => {
       <Form.Item
         name="Description"
         label="Description"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="Img_url"
+        label="Img_url"
         rules={[
           {
             required: true,

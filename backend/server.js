@@ -233,7 +233,7 @@ app.put('/api/posts/:id', (req, res) => {
     const updatedPost = {
       userId: posts[postIndex].userId,
       id: postId,
-      url: posts[postIndex].url,
+      url: req.body.url,
       title: req.body.title,
       body: req.body.body
     };

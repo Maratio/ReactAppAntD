@@ -1,12 +1,21 @@
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getCardDetail } from "../../../utils/utils.js";
+const card = "posts";
 
 const ModalPostUpdate = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const { id } = useParams();
+  const [dataPost, setDataPost] = useState(false);
+
+  function getPost() {
+    getCardDetail(card, setDataPost, id);
+  }
+
+  useEffect(getPost, [id]);
 
   return (
     <>
@@ -23,7 +32,15 @@ const ModalPostUpdate = () => {
         }}
         width={1000}
       >
-        <FormPostUpdate closeModal={() => setOpen(false)} id = {id} />
+        {dataPost ? (
+          <FormPostUpdate
+            closeModal={() => setOpen(false)}
+            id={id}
+            dataPost={dataPost}
+          />
+        ) : (
+          <></>
+        )}
       </Modal>
     </>
   );
