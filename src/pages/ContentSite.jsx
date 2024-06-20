@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./ContentSite.module.css";
-import { useAuth } from "../../castomHooks/useAuth";
+import { useAuth } from "../castomHooks/useAuth";
 
 const ContentSite = () => {
   const auth = useAuth();

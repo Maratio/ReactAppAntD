@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import CardPost from "../Card/CardPost.jsx";
-import classes from "./CardsTripList.module.css";
-import PaginationSite from "../UI/Pagination/PaginationSite";
+import CardPost from "../components/Card/CardPost.jsx";
+import classes from "./CardsList.module.css";
+import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteCardCall,
-  getCardsCall,
-} from "../../utils/utils.js";
+import { deleteCardCall, getCardsCall } from "../utils/utils.js";
 
 const CardsPostList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -50,8 +47,9 @@ const CardsPostList = () => {
         >
           Добавить Заметку
         </Button>
+        <h2>Смотрите, добавляйте, редактируйте, удаляйте Заметки</h2>
       </div>
-      <div className={classes._}>
+      <div className={classes.list}>
         {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
             <CardPost

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import classes from "./CardsTripList.module.css";
-import PaginationSite from "../UI/Pagination/PaginationSite.jsx";
+import classes from "./CardsList.module.css";
+import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCardCall, getCardsCall } from "../../utils/utils.js";
-import CardFoto from "../Card/CardFoto.jsx";
+import { deleteCardCall, getCardsCall } from "../utils/utils.js";
+import CardFoto from "../components/Card/CardFoto.jsx";
 
 const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -47,8 +47,9 @@ const CardsFototList = () => {
         >
           Добавить Фото
         </Button>
+        <h2>Смотрите и добавляйте фотографии своих Маршрутов</h2>
       </div>
-      <div className={classes._}>
+      <div className={classes.list}>
         {pagePostsList.map(({ id, url, albumId, title }) => (
           <div key={id}>
             <CardFoto

@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../Content/ContentSite.module.css";
+import classes from "../../pages/ContentSite.module.css";
 import { HeaderSite } from "../Header/HeaderSite.jsx";
 import { FooterSite } from "../Footer/FooterSite.jsx";
 import { Flex, Layout } from "antd";

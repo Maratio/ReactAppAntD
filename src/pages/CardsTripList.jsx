@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import CardTrip from "../Card/CardTrip";
-import classes from "./CardsTripList.module.css";
-import PaginationSite from "../UI/Pagination/PaginationSite";
-import { getCardsCall } from "../../utils/utils";
+import CardTrip from "../components/Card/CardTrip";
+import classes from "./CardsList.module.css";
+import PaginationSite from "../components/UI/Pagination/PaginationSite";
+import { getCardsCall } from "../utils/utils";
 
 const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -29,7 +29,7 @@ const CardsTripList = () => {
           Посетите наши маршруты и поделитесь впечатлениями в разделе Заметки
         </h2>
       </div>
-      <div className={classes._}>
+      <div className={classes.list}>
         {pageTripsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
             <CardTrip post={{ userId, id, url, title, body }} />

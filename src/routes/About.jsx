@@ -1,5 +1,5 @@
 import React from "react";
-import classes from "../components/Content/ContentSite.module.css";
+import classes from "../pages/ContentSite.module.css";
 import { Card, Space, Typography } from "antd";
 const { Text } = Typography;
 

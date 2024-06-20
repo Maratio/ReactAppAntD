@@ -1,4 +1,4 @@
-import classes from "../components/Content/ContentSite.module.css";
+import classes from "../pages/ContentSite.module.css";
 
 const NotFound = () => {
   return (

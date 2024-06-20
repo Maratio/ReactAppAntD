@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Card.module.css";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
