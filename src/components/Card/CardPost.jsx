@@ -39,7 +39,7 @@ const CardPost = ({ post, deletePost }) => {
           className={classes.meta}
           title={"N" + post.id + ". " + post.title}
           description={
-            post.body.length > 120 ? post.body.slice(0, 120) + "..." : post.body
+            post?.body?.length > 120 ? post.body.slice(0, 120) + "..." : post.body
           }
         />
       </div>

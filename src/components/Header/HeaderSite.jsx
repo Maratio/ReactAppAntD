@@ -21,7 +21,7 @@ const menuHeaderItems = [
 ];
 
 const menuHeaderAuthItems = [
-  menuHeaderItems,
+  ...menuHeaderItems,
   {
     name: "Профиль",
     url: "profile",
@@ -41,7 +41,7 @@ export const HeaderSite = () => {
       <Logo />
       <Space>
         {auth.user ? (
-          <MenuHeader items={menuHeaderAuthItems.flat()} />
+          <MenuHeader items={menuHeaderAuthItems} />
         ) : (
           <MenuHeader items={menuHeaderItems} />
         )}

@@ -18,7 +18,7 @@ const CardTrip = (props) => {
         className={classes.meta}
         title={props.post.title}
         description={
-          props.post.body.length > 120
+          props.post?.body?.length > 120
             ? props.post.body.slice(0, 120) + "..."
             : props.post.body
         }

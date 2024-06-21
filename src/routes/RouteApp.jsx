@@ -11,7 +11,6 @@ const RouteApp = () => {
       <BrowserRouter>
         <Routes>
           <Route element={<LayoutSite />}>
-            
             {spareRoutes.map((route) => (
             <Route element={route.element} path={route.path} key={route.path} />
           ))}
@@ -19,8 +18,6 @@ const RouteApp = () => {
             {authRoutes.map((route) => (
             <Route element={<RequireAuth>{route.element}</RequireAuth>} path={route.path} key={route.path} />
           ))}
-
-            {/* <Route element={<NotFound />} path="*" /> */}
           </Route>
         </Routes>
       </BrowserRouter>
