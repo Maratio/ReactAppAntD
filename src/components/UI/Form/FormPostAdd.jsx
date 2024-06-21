@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { addCardCall } from "../../../utils/fetch";
 const card = "posts";
+const placeholderUrl =
+  "Поддерживает протоколы ftp|http|https, формат фото jpg|png|gif|raw|tiff|bmp|psd";
+const patternUrl =
+  /^(ftp|http|https):\/\/[^ "]*\.(jpg|png|gif|raw|tiff|bmp|psd)$/;
 
 const FormPostAdd = ({ closeModal }) => {
   const navigate = useNavigate();
@@ -52,12 +56,11 @@ const FormPostAdd = ({ closeModal }) => {
         rules={[
           {
             required: true,
-            pattern:
-              /^(ftp|http|https):\/\/[^ "]*\.(jpg|png|gif|raw|tiff|bmp|psd)$/,
+            pattern: patternUrl,
           },
         ]}
       >
-        <Input placeholder="Поддерживает протоколы ftp|http|https, формат фото jpg|png|gif|raw|tiff|bmp|psd"/>
+        <Input placeholder={placeholderUrl} />
       </Form.Item>
       <Form.Item>
         <Space>

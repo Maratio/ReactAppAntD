@@ -6,7 +6,6 @@ const SubmitButtonForm = ({ form, children, closeModal }) => {
 
   // Watch all values
   React.useEffect(() => {
-    console.log("j");
     form
       .validateFields({
         validateOnly: true,
