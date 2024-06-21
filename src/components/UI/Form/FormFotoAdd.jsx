@@ -41,10 +41,11 @@ const FormFotoAdd = ({ closeModal }) => {
         rules={[
           {
             required: true,
+            pattern: /^(ftp|http|https):\/\/[^ "]*\.(jpg|png|gif|raw|tiff|bmp|psd)$/
           },
         ]}
       >
-        <Input />
+        <Input placeholder="Поддерживает протоколы ftp|http|https, формат фото jpg|png|gif|raw|tiff|bmp|psd" />
       </Form.Item>
       <Form.Item>
         <Space>

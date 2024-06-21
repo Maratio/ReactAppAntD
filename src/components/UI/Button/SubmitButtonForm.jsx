@@ -1,19 +1,19 @@
 import React from "react";
-import { Button, Form } from "antd";
+import { Button} from "antd";
 
 const SubmitButtonForm = ({ form, children, closeModal }) => {
   const [submittable, setSubmittable] = React.useState(false);
 
   // Watch all values
-  const values = Form.useWatch([], form);
   React.useEffect(() => {
+    console.log("j");
     form
       .validateFields({
         validateOnly: true,
       })
       .then(() => setSubmittable(true))
       .catch(() => setSubmittable(false));
-  }, [form, values]);
+  }, [form]);
   return (
     <Button
       onClick={() => closeModal(false)}

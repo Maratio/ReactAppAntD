@@ -3,14 +3,14 @@ import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { addCardCall } from "../../../utils/fetch";
-const card = "posts"
+const card = "posts";
 
 const FormPostAdd = ({ closeModal }) => {
   const navigate = useNavigate();
 
-  function addPost({ Title, Img_url, Description}){
-    addCardCall(Title, Img_url, navigate, card , Description )
-  } 
+  function addPost({ Title, Img_url, Description }) {
+    addCardCall(Title, Img_url, navigate, card, Description);
+  }
 
   const [formAdd] = Form.useForm();
   return (
@@ -52,10 +52,12 @@ const FormPostAdd = ({ closeModal }) => {
         rules={[
           {
             required: true,
+            pattern:
+              /^(ftp|http|https):\/\/[^ "]*\.(jpg|png|gif|raw|tiff|bmp|psd)$/,
           },
         ]}
       >
-        <Input />
+        <Input placeholder="Поддерживает протоколы ftp|http|https, формат фото jpg|png|gif|raw|tiff|bmp|psd"/>
       </Form.Item>
       <Form.Item>
         <Space>
