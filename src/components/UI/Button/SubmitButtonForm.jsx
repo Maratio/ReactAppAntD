@@ -16,7 +16,7 @@ const SubmitButtonForm = ({ form, children, closeModal }) => {
   }, [form, values]);
   return (
     <Button
-      onClick={() => closeModal()}
+      onClick={() => closeModal(false)}
       type="primary"
       htmlType="submit"
       disabled={!submittable}

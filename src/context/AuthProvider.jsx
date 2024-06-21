@@ -5,7 +5,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const signin = (user, callback) => {
-      console.log("vi avtorizovani");
       setUser(user);
       callback();
   };

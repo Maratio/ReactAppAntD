@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardTrip from "../components/Card/CardTrip";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite";
-import { getCardsCall } from "../utils/utils";
+import { getCardsCall } from "../utils/fetch";
 
 const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);

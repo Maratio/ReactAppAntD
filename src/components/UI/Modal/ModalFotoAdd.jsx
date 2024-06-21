@@ -22,7 +22,7 @@ const ModalFotoAdd = () => {
         }}
         width={1000}
       >
-        <FormFotoAdd closeModal={() => setOpen(false)} />
+        <FormFotoAdd closeModal={setOpen} />
       </Modal>
     </>
   );

@@ -21,7 +21,7 @@ export default function ModalLogin() {
         }}
         width={500}
       >
-        <FormLogin closeModal={() => setOpen(false)} />
+        <FormLogin closeModal={setOpen} />
       </Modal>
     </>
   );

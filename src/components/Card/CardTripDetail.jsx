@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card } from "antd";
 import classes from "./Card.module.css";
-import { getCardDetail } from "../../utils/utils.js";
+import { getCardDetail } from "../../utils/fetch";
 
 const { Meta } = Card;
 const card = "routes";

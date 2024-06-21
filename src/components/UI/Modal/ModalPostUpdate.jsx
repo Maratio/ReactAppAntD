@@ -2,7 +2,7 @@ import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getCardDetail } from "../../../utils/utils.js";
+import { getCardDetail } from "../../../utils/fetch.js";
 const card = "posts";
 
 const ModalPostUpdate = () => {
@@ -34,7 +34,7 @@ const ModalPostUpdate = () => {
       >
         {dataPost ? (
           <FormPostUpdate
-            closeModal={() => setOpen(false)}
+            closeModal={setOpen}
             id={id}
             dataPost={dataPost}
           />

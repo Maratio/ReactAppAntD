@@ -1,34 +1,16 @@
 import { Button, Form, Input, Space } from "antd";
-import { BACKEND_URL } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
+import { updateCardCall } from "../../../utils/fetch";
 
 const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const navigate = useNavigate();
   const [formUpdate] = Form.useForm();
 
-  const updatePost = ({ Title, Description, Img_url }) => {
-    fetch(`${BACKEND_URL}/api/posts/${id}?`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: Title,
-        body: Description,
-        url: Img_url,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          navigate(`/posts/${id}`);
-        }
-      })
-      .catch((err) => console.error("error >>>>>", err));
-  };
+  function updatePost({ Title, Description, Img_url }){
+    updateCardCall(Title, Description, Img_url, navigate, id )
+  }
 
-  console.log(dataPost);
   return (
     <Form
       form={formUpdate}

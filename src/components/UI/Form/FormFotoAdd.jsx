@@ -1,32 +1,17 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import { BACKEND_URL } from "../../../constants";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
+import { addCardCall } from "../../../utils/fetch";
+const card = "photos"
 
 const FormFotoAdd = ({ closeModal }) => {
   const navigate = useNavigate();
 
-  const saveInfoAddFoto = ({ Title, Img_url }) => {
-    fetch(`${BACKEND_URL}/api/photos?`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: Title,
-        url: Img_url,
-      }),
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          navigate("/photos");
-        }
-      })
-      .catch((err) => console.error("error >>>>>", err));
-  };
-
+  function addFoto({ Title, Img_url}){
+    addCardCall(Title, Img_url, navigate ,card)
+  } 
+  
   const [formAdd] = Form.useForm();
   return (
     <Form
@@ -37,7 +22,7 @@ const FormFotoAdd = ({ closeModal }) => {
       initialValues={{
         remember: true,
       }}
-      onFinish={saveInfoAddFoto}
+      onFinish={addFoto}
     >
       <Form.Item
         name="Title"

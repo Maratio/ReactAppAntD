@@ -4,7 +4,7 @@ import classes from "./Card.module.css";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
-import { deleteCardDetailCall, getCardDetail } from "../../utils/utils.js";
+import { deleteCardDetailCall, getCardDetail } from "../../utils/fetch";
 const { Meta } = Card;
 const card = "posts";
 

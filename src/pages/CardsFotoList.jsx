@@ -3,7 +3,7 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCardCall, getCardsCall } from "../utils/utils.js";
+import { deleteCardCall, getCardsCall } from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
 
 const CardsFototList = () => {
