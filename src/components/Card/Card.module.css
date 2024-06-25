@@ -22,24 +22,22 @@
 }
 
 .bodyDetail{
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
+  
 }
 
 .metaDetail{
-  height: 100%;
-  width: 100%;
+  height: auto;
+  width: auto;
 }
 
 .cardDetail{
-  height: 100%;
-  width: 100%;
+ width: 50vw;
 }
 
 .cardDetail img {
-  height: 100%;
-  width: 100%;
-  margin: 0 auto;
+ height: 50vh;
 }
 
 

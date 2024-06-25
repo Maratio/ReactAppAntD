@@ -6,7 +6,7 @@ export const BtnMenuSite = ({ collapsed, handlerCollapsed }) => {
   return (
     <Button
       type="primary"
-      onClick={() => handlerCollapsed()}
+      onClick={handlerCollapsed}
       style={{
         bottom: 34,
       }}

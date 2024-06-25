@@ -1,16 +1,21 @@
-import { BACKEND_URL } from "../constants.js"
+import { BACKEND_URL } from "../utils/constants"
+const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+}
 
-export function deleteCardCall(card, postId, setPagePostsList, setRecCount, pageCurrent, pageSize) {
+
+export function deleteCard(card, postId, setPagePostsList, setRecCount, pageCurrent, pageSize) {
     fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
         .then((response) => {
             if (response.status === 204) {
-                getCardsCall(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
+                getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
             }
         })
         .catch((err) => console.error("error >>>>>", err));
 };
 
-export function getCardsCall(card, setPagePostsList, setRecCount, pageCurrent, pageSize) {
+export function getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize) {
     fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
         .then((response) => {
             if (response.status === 200) {
@@ -46,7 +51,7 @@ export function getCardDetail(card, setDataPost, id) {
         .catch((err) => console.error("error >>>>>", err));
 }
 
-export function deleteCardDetailCall(id, card, navigate) {
+export function deleteCardDetail(id, card, navigate) {
     fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "DELETE" })
         .then((response) => {
             if (response.status === 204) {
@@ -56,34 +61,28 @@ export function deleteCardDetailCall(id, card, navigate) {
         .catch((err) => console.error("error >>>>>", err));
 };
 
-export function addCardCall(Title, Img_url, navigate, card, Description = "") {
-    fetch(`${BACKEND_URL}/api/${card}?`, {
+export function addCard(req) {
+    fetch(`${BACKEND_URL}/api/${req.card}?`, {
         method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
-            title: Title,
-            body: Description,
-            url: Img_url,
+            title: req.Title,
+            body: req.Description,
+            url: req.Img_url,
         }),
     })
         .then((response) => {
             if (response.status === 201) {
-                navigate(`/${card}`)
+                req.navigate(-1)
             }
         })
         .catch((err) => console.error("error >>>>>", err));
 };
 
-export function updateCardCall(Title, Description, Img_url, navigate, id) {
+export function updateCard(Title, Description, Img_url, navigate, id) {
     fetch(`${BACKEND_URL}/api/posts/${id}?`, {
         method: "PUT",
-        headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify({
             title: Title,
             body: Description,
@@ -92,7 +91,7 @@ export function updateCardCall(Title, Description, Img_url, navigate, id) {
     })
         .then((response) => {
             if (response.status === 200) {
-                navigate(`/posts/${id}`);
+                navigate(-1);
             }
         })
         .catch((err) => console.error("error >>>>>", err));

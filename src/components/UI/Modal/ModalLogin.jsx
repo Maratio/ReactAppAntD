@@ -6,6 +6,10 @@ import { useState } from "react";
 export default function ModalLogin() {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate("/");
+  };
   return (
     <>
       <Modal
@@ -14,11 +18,8 @@ export default function ModalLogin() {
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => setOpen(false)}
-        onCancel={() => {
-          setOpen(false);
-          navigate("/");
-        }}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={500}
       >
         <FormLogin closeModal={setOpen} />

@@ -6,10 +6,16 @@ const { Meta } = Card;
 
 const CardTrip = (props) => {
   const navigate = useNavigate();
+  const description =
+    props.post?.body?.length > 120
+      ? props.post.body.slice(0, 120) + "..."
+      : props.post.body;
+
+  const handleDetailTrip = () => navigate(`/trips/${props.post.id}`);
 
   return (
     <Card
-      onClick={() => navigate(`/trips/${props.post.id}`)}
+      onClick={handleDetailTrip}
       className={classes.card}
       hoverable
       cover={<img alt="example" src={props.post.url} />}
@@ -17,11 +23,7 @@ const CardTrip = (props) => {
       <Meta
         className={classes.meta}
         title={props.post.title}
-        description={
-          props.post?.body?.length > 120
-            ? props.post.body.slice(0, 120) + "..."
-            : props.post.body
-        }
+        description={description}
       />
     </Card>
   );

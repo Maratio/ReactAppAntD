@@ -1,11 +1,11 @@
 import React from "react";
 import classes from "./HeaderSite.module.css";
 import { Layout } from "antd";
-import { Button, Space, Typography } from "antd";
+import { Space, Typography } from "antd";
 import Logo from "../Logo/Logo";
 import MenuHeader from "../Menu/MenuHeader";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../castomHooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../customHooks/useAuth";
 
 const { Header } = Layout;
 
@@ -31,10 +31,11 @@ const menuHeaderAuthItems = [
 export const HeaderSite = () => {
   const auth = useAuth();
   const navigate = useNavigate();
+  const handleLogout = () => auth.signout(() => navigate("/"));
 
   const userName = auth.user ? auth.user : "Вы гость";
 
-  const buttonCaption = auth.user ? "Выйти" : "Войти";
+  const linkCaption = auth.user ? "Выйти" : "Войти";
 
   return (
     <Header className={classes.header}>
@@ -46,22 +47,14 @@ export const HeaderSite = () => {
           <MenuHeader items={menuHeaderItems} />
         )}
         <Typography.Text className={classes.user}>{userName}</Typography.Text>
-        {buttonCaption === "Войти" ? (
-          <Button
-            className={classes.btnLogin}
-            type="primary"
-            onClick={() => navigate("/login")}
-          >
-            {buttonCaption}
-          </Button>
+        {linkCaption === "Войти" ? (
+          <Link className={classes.btnLogin} to="/login">
+            {linkCaption}
+          </Link>
         ) : (
-          <Button
-            className={classes.btnLogin}
-            type="primary"
-            onClick={() => auth.signout(() => navigate("/login"))}
-          >
-            {buttonCaption}
-          </Button>
+          <Link className={classes.btnLogin} onClick={handleLogout}>
+            {linkCaption}
+          </Link>
         )}
       </Space>
     </Header>

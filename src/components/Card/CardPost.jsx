@@ -8,39 +8,39 @@ const { Meta } = Card;
 
 const CardPost = ({ post, deletePost }) => {
   const navigate = useNavigate();
+  const title = "N" + post.id + ". " + post.title;
+  const description =
+    post?.body?.length > 120 ? post.body.slice(0, 120) + "..." : post.body;
+
+  const handleDetailPost = () => navigate(`/posts/${post.id}`);
+  const handleDeletePost = (e) => {
+    e.stopPropagation();
+    deletePost(post.id);
+  };
+
+  const handleEditPost = (e) => {
+    e.stopPropagation();
+    navigate(`/posts/${post.id}/update`);
+  };
 
   return (
     <Card
-      onClick={() => navigate(`/posts/${post.id}`)}
+      onClick={handleDetailPost}
       className={classes.card}
       size="small"
       extra={<Rate value={Math.ceil(Math.random() * 5)} />}
       hoverable
       cover={<img alt="example" src={post.url} />}
       actions={[
-        <EditOutlined
-          onClick={(e) => {
-            e.stopPropagation();
-            navigate(`/posts/${post.id}/update`);
-          }}
-          key="edit"
-        />,
-        <DeleteOutlined
-          onClick={(e) => {
-            e.stopPropagation();
-            deletePost(post.id);
-          }}
-          key="delete"
-        />,
+        <EditOutlined onClick={handleEditPost} key="edit" />,
+        <DeleteOutlined onClick={handleDeletePost} key="delete" />,
       ]}
     >
       <div className={classes.body}>
         <Meta
           className={classes.meta}
-          title={"N" + post.id + ". " + post.title}
-          description={
-            post?.body?.length > 120 ? post.body.slice(0, 120) + "..." : post.body
-          }
+          title={title}
+          description={description}
         />
       </div>
     </Card>

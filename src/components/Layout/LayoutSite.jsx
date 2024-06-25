@@ -9,10 +9,10 @@ import { Content } from "antd/es/layout/layout.js";
 
 export const LayoutSite = () => {
   return (
-    <Flex gap="middle" wrap>
+    <Flex gap="middle" wrap style={{minHeight: '100%'}}> 
       <Layout className={classes.layout}>
         <HeaderSite />
-        <Layout>
+        <Layout >
           <SiderSite />
           <Content className={classes.content}>
             <Outlet />

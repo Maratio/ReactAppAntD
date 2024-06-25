@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../../castomHooks/useAuth.js";
+import { useAuth } from "../../../customHooks/useAuth.js";
 import SubmitButtonForm from "../Button/SubmitButtonForm.jsx";
 
 const FormLogin = ({ closeModal }) => {

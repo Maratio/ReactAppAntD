@@ -6,6 +6,10 @@ import FormFotoAdd from "../Form/FormFotoAdd.jsx";
 const ModalFotoAdd = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate(-1);
+  };
 
   return (
     <>
@@ -15,11 +19,8 @@ const ModalFotoAdd = () => {
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => setOpen(false)}
-        onCancel={() => {
-          setOpen(false);
-          navigate("/photos");
-        }}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={1000}
       >
         <FormFotoAdd closeModal={setOpen} />

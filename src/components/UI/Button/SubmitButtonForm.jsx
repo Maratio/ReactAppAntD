@@ -4,6 +4,7 @@ import { Button, Form } from "antd";
 const SubmitButtonForm = ({ form, children, closeModal }) => {
   const [submittable, setSubmittable] = React.useState(false);
   const values = Form.useWatch([], form);
+  const handleModalClose = () => closeModal(false)
 
   // Watch all values
   React.useEffect(() => {
@@ -16,7 +17,7 @@ const SubmitButtonForm = ({ form, children, closeModal }) => {
   }, [form, values]);
   return (
     <Button
-      onClick={() => closeModal(false)}
+      onClick={handleModalClose}
       type="primary"
       htmlType="submit"
       disabled={!submittable}

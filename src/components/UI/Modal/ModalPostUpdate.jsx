@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCardDetail } from "../../../utils/fetch.js";
 const card = "posts";
@@ -15,6 +15,12 @@ const ModalPostUpdate = () => {
     getCardDetail(card, setDataPost, id);
   }
 
+  
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate(-1)
+  };
+
   useEffect(getPost, [id]);
 
   return (
@@ -25,21 +31,12 @@ const ModalPostUpdate = () => {
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => setOpen(false)}
-        onCancel={() => {
-          setOpen(false);
-          navigate(`/posts/${id}`);
-        }}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={1000}
       >
-        {dataPost ? (
-          <FormPostUpdate
-            closeModal={setOpen}
-            id={id}
-            dataPost={dataPost}
-          />
-        ) : (
-          <></>
+        {dataPost && (
+          <FormPostUpdate closeModal={setOpen} id={id} dataPost={dataPost} />
         )}
       </Modal>
     </>

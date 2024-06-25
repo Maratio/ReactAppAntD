@@ -8,33 +8,26 @@ const { Meta } = Card;
 
 const CardFoto = ({ post, deletePost }) => {
   const navigate = useNavigate();
+  const title = "N" + post.id + ". " + post.title;
+  const handleDeleteFoto = (e) => {
+    e.stopPropagation();
+    deletePost(post.id);
+  };
+
+  const handleDetailFoto = () => navigate(`/photos/${post.id}`);
 
   return (
     <Card
-      onClick={() => navigate(`/photos/${post.id}`)}
+      onClick={handleDetailFoto}
       className={classes.card}
       size="small"
       extra={<Rate value={Math.ceil(Math.random() * 5)} />}
       hoverable
       cover={<img alt="example" src={post.url} />}
-      actions={[
-        <DeleteOutlined
-          onClick={(e) => {
-            e.stopPropagation();
-            deletePost(post.id);
-          }}
-          key="delete"
-        />,
-      ]}
+      actions={[<DeleteOutlined onClick={handleDeleteFoto} key="delete" />]}
     >
       <div className={classes.body}>
-        <Meta
-          className={classes.meta}
-          title={"N" + post.id + ". " + post.title}
-          // description={
-          //   post.body.length > 120 ? post.body.slice(0, 120) + "..." : post.body
-          // }
-        />
+        <Meta className={classes.meta} title={title} />
       </div>
     </Card>
   );

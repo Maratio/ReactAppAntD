@@ -2,18 +2,16 @@ import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
-import { addCardCall } from "../../../utils/fetch";
+import { addCard } from "../../../utils/fetch";
+import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
+
 const card = "photos";
-const placeholderUrl =
-  "Поддерживает протоколы ftp|http|https, формат фото jpg|png|gif|raw|tiff|bmp|psd";
-const patternUrl =
-  /^(ftp|http|https):\/\/[^ "]*\.(jpg|png|gif|raw|tiff|bmp|psd)$/;
 
 const FormFotoAdd = ({ closeModal }) => {
   const navigate = useNavigate();
 
   function addFoto({ Title, Img_url }) {
-    addCardCall(Title, Img_url, navigate, card);
+    addCard({Title, Img_url, navigate, card});
   }
 
   const [formAdd] = Form.useForm();
@@ -45,11 +43,11 @@ const FormFotoAdd = ({ closeModal }) => {
         rules={[
           {
             required: true,
-            pattern: patternUrl,
+            pattern: PATTERN_URL,
           },
         ]}
       >
-        <Input placeholder={placeholderUrl} />
+        <Input placeholder={PLACEHOLDER_URL} />
       </Form.Item>
       <Form.Item>
         <Space>

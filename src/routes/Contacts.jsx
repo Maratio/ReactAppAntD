@@ -4,6 +4,7 @@ import { CopyOutlined } from "@ant-design/icons";
 import { Button, Input, InputNumber, Select, Space, Tooltip } from "antd";
 
 const { Option } = Select;
+const adress = "https://ant.design"
 
 const Contacts = () => {
   return (
@@ -15,13 +16,13 @@ const Contacts = () => {
       <Space.Compact block size="small">
         <Input
           style={{ width: "calc(100% - 200px)" }}
-          defaultValue="https://ant.design"
+          defaultValue={adress}
         />
       </Space.Compact>
       <Space.Compact block>
         <Input
           style={{ width: "calc(100% - 200px)" }}
-          defaultValue="https://ant.design"
+          defaultValue={adress}
         />
       </Space.Compact>
       <Space.Compact block>

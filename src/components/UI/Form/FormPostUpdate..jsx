@@ -1,14 +1,14 @@
 import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
-import { updateCardCall } from "../../../utils/fetch";
+import { updateCard } from "../../../utils/fetch";
 
 const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const navigate = useNavigate();
   const [formUpdate] = Form.useForm();
 
   function updatePost({ Title, Description, Img_url }){
-    updateCardCall(Title, Description, Img_url, navigate, id )
+    updateCard(Title, Description, Img_url, navigate, id )
   }
 
   return (

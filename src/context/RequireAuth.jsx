@@ -1,14 +1,14 @@
-import { Navigate, useLocation } from "react-router-dom"
-import { useAuth } from "../castomHooks/useAuth"
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "../customHooks/useAuth";
 
-export const RequireAuth = ({children}) =>{
-    const auth = useAuth()
-    const location = useLocation()
-  
-  
-  if(!auth.user){
-    return <Navigate to = '/login' state={{from: location}} replace/>
+export const RequireAuth = ({ children }) => {
+  const auth = useAuth();
+  const location = useLocation();
+
+  const isAuthSession = !sessionStorage.getItem("user") && !auth.user;
+
+  if (isAuthSession) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
-return children
-}
-  
+  return children;
+};

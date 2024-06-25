@@ -11,32 +11,35 @@ import {
 
 const MenuSite = () => {
   const navigate = useNavigate();
+  const handleSelectHome = () => navigate("/");
+  const handleSelectTrips = () => navigate("/trips");
+  const handleSelectPosts = () => navigate("/posts");
+  const handleSelectPhotos = () => navigate("/photos");
 
   const items = [
     {
       key: "1",
       icon: <HomeOutlined />,
       label: "Главная",
-      onClick: () => navigate("/"),
+      onClick: handleSelectHome,
     },
     {
       key: "2",
       icon: <CompassOutlined />,
       label: "Маршруты",
-      onClick: () => navigate("/trips"),
+      onClick: handleSelectTrips,
     },
     {
       key: "3",
       icon: <FormOutlined />,
       label: "Заметки",
-      onClick: () => navigate("/posts"),
+      onClick: handleSelectPosts,
     },
     {
       key: "4",
       icon: <CameraOutlined />,
       label: "Фото",
-      onClick: () => navigate("/photos"),
-
+      onClick: handleSelectPhotos,
     },
   ];
 

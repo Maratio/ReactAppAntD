@@ -6,6 +6,10 @@ import { useNavigate } from "react-router-dom";
 const ModalPostAdd = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate(-1);
+  };
 
   return (
     <>
@@ -15,11 +19,8 @@ const ModalPostAdd = () => {
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => setOpen(false)}
-        onCancel={() => {
-          setOpen(false);
-          navigate("/posts");
-        }}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={1000}
       >
         <FormPostAdd closeModal={setOpen} />

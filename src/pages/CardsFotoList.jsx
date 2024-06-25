@@ -3,7 +3,7 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCardCall, getCardsCall } from "../utils/fetch";
+import { deleteCard, getCards} from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
 
 const CardsFototList = () => {
@@ -21,13 +21,13 @@ const CardsFototList = () => {
   const card = "photos";
 
   function getPosts() {
-    getCardsCall(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
+    getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
   }
 
-  const deletePost = (postId) => {
-    deleteCardCall(
+  const deletePost = (id) => {
+    deleteCard(
       card,
-      postId,
+      id,
       setPagePostsList,
       setRecCount,
       pageCurrent,

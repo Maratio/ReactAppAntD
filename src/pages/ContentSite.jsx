@@ -1,13 +1,13 @@
 import React from "react";
 import classes from "./ContentSite.module.css";
-import { useAuth } from "../castomHooks/useAuth";
+import { useAuth } from "../customHooks/useAuth";
 
 const ContentSite = () => {
   const auth = useAuth();
   return (
     <div className={classes["content-auth"]}>
       {
-        auth.user ? (
+        auth.user  ? (
           <h2>
             {" "}
             Приветствуем, {auth.user} !
