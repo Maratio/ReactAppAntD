@@ -3,12 +3,14 @@ const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
 const { paginateResults } = require('./utils/utils');
-const comments = require('./db/db.comments.json');
+// const comments = require('./db/db.comments.json');
 const app = express();
 const PORT = process.env.PORT || 5002;
 const POSTS_DB_PATH = path.join(__dirname, './db/db.posts.json')
 const TRIPS_DB_PATH = path.join(__dirname, './db/db.routes.json')
 const PHOTOS_DB_PATH = path.join(__dirname, './db/db.photos.json')
+const COMMENTS_DB_PATH = path.join(__dirname, './db/db.comments.json')
+
 
 
 app.use(cors());
@@ -200,7 +202,8 @@ app.post('/api/posts', (req, res) => {
       id: postIdList[0] + 1,
       url: req.body.url,
       title: req.body.title,
-      body: req.body.body
+      body: req.body.body,
+      rate: req.body.rate
     };
 
     posts.push(newPost);
@@ -235,7 +238,8 @@ app.put('/api/posts/:id', (req, res) => {
       id: postId,
       url: req.body.url,
       title: req.body.title,
-      body: req.body.body
+      body: req.body.body,
+      rate: req.body.rate
     };
     posts[postIndex] = updatedPost;
     fs.writeFile(POSTS_DB_PATH, JSON.stringify({ posts }), 'utf8', err => {
@@ -292,15 +296,117 @@ app.get('/api/posts/search', (req, res) => {
   });
 });
 
+// Получить все комментарии
+app.get('/api/comments', (req, res) => {
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const comments = JSON.parse(data).comments;
+    res.json(comments);
+  });
+});
 
 // Получить комментарии для конкретного поста
 app.get('/api/posts/:postId/comments', (req, res) => {
   const postId = parseInt(req.params.postId);
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
 
-  const postComments = comments.filter(comment => comment.postId === postId);
-
-  res.json(postComments);
+    const comments = JSON.parse(data).comments;
+    const postComments = comments.filter(comment => comment.postId === postId)
+    if (!postComments) {
+      res.status(404).send('Отзывы не найдены');
+      return;
+    }
+    res.json(postComments);
+  });
 });
+
+// Получить один комментарий по ID
+app.get('/api/comments/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const comments = JSON.parse(data).comments;
+    const comment = comments.find(post => post.id === postId);
+    if (!comment) {
+      res.status(404).send('Пост не найден');
+      return;
+    }
+    res.json(comment);
+  });
+});
+
+
+// Создать новый комментарий к посту
+app.post('/api/posts/:postId/comments', (req, res) => {
+  const postId = parseInt(req.params.postId);
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+
+    const comments = JSON.parse(data).comments;
+    const postIdList = comments.map((item) => item.id)
+
+    postIdList.sort((a, b) => Number(b) - Number(a))
+
+    const newComment = {
+      postId,
+      id: postIdList[0] + 1,
+      title: req.body.title,
+      body: req.body.body,
+      rate: req.body.rate
+    };
+
+    comments.push(newComment);
+    fs.writeFile(COMMENTS_DB_PATH, JSON.stringify({ comments }), 'utf8', err => {
+      if (err) {
+        console.error('Ошибка записи файла:', err);
+        res.status(500).send('Ошибка сервера');
+        return;
+      }
+      res.status(201).json(newComment);
+    });
+  })
+});
+
+
+// Удалить комментарий
+app.delete('/api/comments/:id', (req, res) => {
+  const postId = parseInt(req.params.id);
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    let comments = JSON.parse(data).comments;
+    comments = comments.filter(post => post.id !== postId);
+    fs.writeFile(COMMENTS_DB_PATH, JSON.stringify({ comments }), 'utf8', err => {
+      if (err) {
+        console.error('Ошибка записи файла:', err);
+        res.status(500).send('Ошибка сервера');
+        return;
+      }
+      res.status(204).send();
+    });
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

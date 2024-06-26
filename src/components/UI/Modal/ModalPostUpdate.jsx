@@ -10,6 +10,8 @@ const ModalPostUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [dataPost, setDataPost] = useState(false);
+  const title = `Обнови данные по Заметке #${id}`
+
 
   function getPost() {
     getCardDetail(card, setDataPost, id);
@@ -26,7 +28,7 @@ const ModalPostUpdate = () => {
   return (
     <>
       <Modal
-        title={`Обнови данные по Заметке #${id}`}
+        title={title}
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}

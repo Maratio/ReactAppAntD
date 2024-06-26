@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { updateCard } from "../../../utils/fetch";
@@ -7,8 +7,8 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const navigate = useNavigate();
   const [formUpdate] = Form.useForm();
 
-  function updatePost({ Title, Description, Img_url }){
-    updateCard(Title, Description, Img_url, navigate, id )
+  function updatePost({ Rating, Title, Description, Img_url }) {
+    updateCard(Rating, Title, Description, Img_url, navigate, id);
   }
 
   return (
@@ -18,6 +18,7 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
       layout="vertical"
       autoComplete="off"
       initialValues={{
+        Rating: `${dataPost.rate}`,
         Title: `${dataPost.title}`,
         Description: `${dataPost.body}`,
         Img_url: `${dataPost.url}`,
@@ -25,24 +26,27 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
       onFinish={updatePost}
     >
       <Form.Item
-        name="Title"
-        label="Title"
+        name="Rating"
+        label="Rating"
         rules={[
           {
             required: true,
           },
         ]}
       >
+        <Rate count={10} />
+      </Form.Item>
+      <Form.Item
+        name="Title"
+        label="Title"
+        rules={[{ max: 50, required: true }]}
+      >
         <Input />
       </Form.Item>
       <Form.Item
         name="Description"
         label="Description"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        rules={[{ max: 100, required: true }]}
       >
         <Input />
       </Form.Item>
