@@ -9,7 +9,7 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const [formUpdate] = Form.useForm();
 
   function updatePost({ Rating, Title, Description, Img_url }) {
-    updateCard(Rating, Title, Description, Img_url, navigate, id);
+    updateCard({Rating, Title, Description, Img_url, navigate, id});
   }
 
   return (

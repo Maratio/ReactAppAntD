@@ -121,20 +121,20 @@ export function addCardComment(req) {
 };
 
 
-export function updateCard(Rating, Title, Description, Img_url, navigate, id) {
-    fetch(`${BACKEND_URL}/api/posts/${id}?`, {
+export function updateCard(req) {
+    fetch(`${BACKEND_URL}/api/posts/${req.id}?`, {
         method: "PUT",
         headers,
         body: JSON.stringify({
-            title: Title,
-            body: Description,
-            url: Img_url,
-            rate: Rating
+            title: req.Title,
+            body: req.Description,
+            url: req.Img_url,
+            rate: req.Rating
         }),
     })
         .then((response) => {
             if (response.status === 200) {
-                navigate(-1);
+                req.navigate(-1);
             }
         })
         .catch((err) => console.error("error >>>>>", err));

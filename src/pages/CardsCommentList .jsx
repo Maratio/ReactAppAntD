@@ -8,7 +8,7 @@ import {
   getPagesPost,
 } from "../utils/fetch.js";
 import CardComment from "../components/Card/CardComment.jsx";
-import { Button, Space, Select } from "antd";
+import { Button, Space, Select, ConfigProvider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
 const CardsCommentList = () => {
@@ -91,15 +91,26 @@ const CardsCommentList = () => {
         ) : (
           <Space direction="vertical">
             <Space wrap>
-              <Select
-                className={classes.select}
-                placeholder={"Выберите Заметку"}
-                onChange={handleChangeSelect}
-                style={{
-                  width: 200,
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBgContainer: "#1677ff",
+                    colorTextPlaceholder:"#fff",
+                    colorText: "#1677ff",
+                    fontWeightStrong: 600,
+                    lineWidth:0,
+                  },
                 }}
-                options={items}
-              />
+              >
+                <Select
+                  placeholder={"Выберите Заметку"}
+                  onChange={handleChangeSelect}
+                  style={{
+                    width: "auto",
+                  }}
+                  options={items}
+                />
+              </ConfigProvider>
             </Space>
           </Space>
         )}
