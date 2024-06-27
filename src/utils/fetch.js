@@ -4,54 +4,37 @@ const headers = {
     "Content-Type": "application/json",
 }
 
-export function deleteCard(card, postId, navigate, setPagePostsList, setRecCount, pageCurrent, pageSize) {
-    console.log(card, postId);
-    fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
-        .then((response) => {
-            if (response.status === 204) {
-                if (card === "comments" )
-                    navigate(-1)
+export async function deleteCard(card, postId) {
+    try {
+         const response = await fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
+         return response
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
 
-                else
-                 getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
-                   
-            }
-        })
-        .catch((err) => console.error("error >>>>>", err));
 };
 
-export function getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize) {
-    fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
-        .then((response) => {
-            if (response.status === 200) {
-                response.json().then((data) => {
-                    const response = getPagesPost(
-                        { page: pageCurrent, limit: pageSize },
-                        data
-                    );
-                    setPagePostsList(response.tripPosts);
-                    setRecCount(response.recCount);
-                });
-            }
-        })
-        .catch((err) => console.error("error >>>>>", err));
+export async function getCards(card) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
+        const result = await response.json()
+        return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
 }
 
-export function getCardsFilter(card, postId, setPagePostsList, setRecCount, pageCurrent, pageSize) {
-    fetch(`${BACKEND_URL}/api/posts/${postId}/${card}?`, { method: "GET" })
-        .then((response) => {
-            if (response.status === 200) {
-                response.json().then((data) => {
-                    const response = getPagesPost(
-                        { page: pageCurrent, limit: pageSize },
-                        data
-                    );
-                    setPagePostsList(response.tripPosts);
-                    setRecCount(response.recCount);
-                });
-            }
-        })
-        .catch((err) => console.error("error >>>>>", err));
+export async function getCardsFilter(card, postId) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/posts/${postId}/${card}?`, { method: "GET" })
+        const result = await response.json()
+        return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
 }
 
 
@@ -63,7 +46,6 @@ export function getPagesPost({ limit = 5, page = 1 }, data) {
 }
 
 export function getCardDetail(card, setDataPost, id) {
-    console.log(id);
     fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "GET" })
         .then((response) => {
             if (response.status === 200) {

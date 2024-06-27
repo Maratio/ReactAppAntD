@@ -4,7 +4,7 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCard, getCards } from "../utils/fetch";
+import { deleteCard, getCards, getPagesPost } from "../utils/fetch";
 const caption =
   "Смотрите, добавляйте, оставляйте отзывы, редактируйте, удаляйте Заметки по Маршруту";
 
@@ -23,14 +23,26 @@ const CardsPostList = () => {
   const card = "posts";
 
   function getPosts() {
-    getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
-    
+    getCards(card).then((data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    });
   }
 
   const deletePost = (id) => {
-    deleteCard(card, id, navigate, setPagePostsList, setRecCount, pageCurrent, pageSize);
-
+    deleteCard(card, id).then((response) => {
+      if (response.status === 204) {
+        getPosts();
+      }
+    });
   };
+
+  // if (card === "comments")
+  //     navigate(-1)
 
   useEffect(getPosts, [pageCurrent, pageSize]);
 

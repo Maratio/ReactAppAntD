@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CardTrip from "../components/Card/CardTrip";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite";
-import { getCards } from "../utils/fetch";
+import { getCards, getPagesPost } from "../utils/fetch";
 
 const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -17,7 +17,14 @@ const CardsTripList = () => {
   const card = "routes";
 
   const getTrips = () => {
-    getCards(card, setPageTripsList, setRecCount, pageCurrent, pageSize);
+    getCards(card).then((data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPageTripsList(response.tripPosts);
+      setRecCount(response.recCount);
+    });
   };
 
   useEffect(getTrips, [pageCurrent, pageSize]);

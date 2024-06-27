@@ -43,6 +43,8 @@ export const authRoutes = [
   { path: '/comments/:id', element: <CardCommentDetail /> },
   { path: '/posts/:postId/comments', element: <CardsCommentList /> },
   { path: '/comments/:postId/new', element: <ModalCommentAdd /> },
+  { path: '/comments', element: <CardsCommentList /> },
+
 
 
 ]

@@ -2,6 +2,7 @@ import { Button, Form, Input, Space, Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { updateCard } from "../../../utils/fetch";
+import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
 
 const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   const navigate = useNavigate();
@@ -56,10 +57,11 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
         rules={[
           {
             required: true,
+            pattern: PATTERN_URL,
           },
         ]}
       >
-        <Input />
+        <Input placeholder={PLACEHOLDER_URL} />
       </Form.Item>
       <Form.Item>
         <Space>

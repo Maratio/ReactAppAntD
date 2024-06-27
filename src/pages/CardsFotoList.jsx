@@ -3,7 +3,7 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCard, getCards} from "../utils/fetch";
+import { deleteCard, getCards, getPagesPost } from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
 
 const CardsFototList = () => {
@@ -21,18 +21,22 @@ const CardsFototList = () => {
   const card = "photos";
 
   function getPosts() {
-    getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
+    getCards(card).then((data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    });
   }
 
   const deletePost = (id) => {
-    deleteCard(
-      card,
-      id,
-      setPagePostsList,
-      setRecCount,
-      pageCurrent,
-      pageSize
-    );
+    deleteCard(card, id).then((response) => {
+      if (response.status === 204) {
+        getPosts();
+      }
+    });
   };
 
   useEffect(getPosts, [pageCurrent, pageSize]);
