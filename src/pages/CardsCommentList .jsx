@@ -40,22 +40,22 @@ const CardsCommentList = () => {
       });
     } else {
       getCards(card).then((data) => {
+        const arr = data.map((post) => post.postId);
+        console.log(arr);
+        const itemsComment = [...new Set(arr)].map((postId) => {
+          return {
+            key: postId,
+            label: `Заметка #${postId}`,
+            value: `/posts/${postId}/comments`,
+          };
+        });
+        setItems(itemsComment);
         const response = getPagesPost(
           { page: pageCurrent, limit: pageSize },
           data
         );
         setPagePostsList(response.tripPosts);
         setRecCount(response.recCount);
-      });
-      getCards("posts").then((data) => {
-        const itemsComment = data.map(({ id }) => {
-          return {
-            key: id,
-            label: `Заметка #${id}`,
-            value: `/posts/${id}/comments`,
-          };
-        });
-        setItems(itemsComment);
       });
     }
   }
@@ -88,7 +88,8 @@ const CardsCommentList = () => {
         ) : (
           <Space direction="vertical">
             <Space wrap>
-              <Select className={classes.select}
+              <Select
+                className={classes.select}
                 placeholder={"Выберите Заметку"}
                 onChange={handleChangeSelect}
                 style={{
