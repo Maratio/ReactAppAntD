@@ -8,22 +8,23 @@ const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
-  const [pageTripsList, setPageTripsList] = useState([]);
+  const [pagePostsList, setPagePostsList] = useState([]);
+  const card = "routes";
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
-  const card = "routes";
+
+  const updatePostsList = (data) => {
+    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
+    setPagePostsList(response.tripPosts);
+    setRecCount(response.recCount);
+  };
 
   const getTrips = () => {
     getCards(card).then((data) => {
-      const response = getPagesPost(
-        { page: pageCurrent, limit: pageSize },
-        data
-      );
-      setPageTripsList(response.tripPosts);
-      setRecCount(response.recCount);
+      updatePostsList(data);
     });
   };
 
@@ -37,7 +38,7 @@ const CardsTripList = () => {
         </h2>
       </div>
       <div className={classes.list}>
-        {pageTripsList.map(({ userId, id, url, title, body }) => (
+        {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
             <CardTrip post={{ userId, id, url, title, body }} />
           </div>

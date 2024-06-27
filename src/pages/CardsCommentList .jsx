@@ -28,15 +28,16 @@ const CardsCommentList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
+  const updatePostsList = (data) => {
+    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
+    setPagePostsList(response.tripPosts);
+    setRecCount(response.recCount);
+  };
+
   function getComments() {
     if (postId) {
       getCardsFilter(card, postId).then((data) => {
-        const response = getPagesPost(
-          { page: pageCurrent, limit: pageSize },
-          data
-        );
-        setPagePostsList(response.tripPosts);
-        setRecCount(response.recCount);
+        updatePostsList(data);
       });
     } else {
       getCards(card).then((data) => {
@@ -50,12 +51,7 @@ const CardsCommentList = () => {
           };
         });
         setItems(itemsComment);
-        const response = getPagesPost(
-          { page: pageCurrent, limit: pageSize },
-          data
-        );
-        setPagePostsList(response.tripPosts);
-        setRecCount(response.recCount);
+        updatePostsList(data);
       });
     }
   }

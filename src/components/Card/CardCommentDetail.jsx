@@ -32,7 +32,6 @@ const CardCommentDetail = () => {
       className={classes.cardDetail}
       size="small"
       extra={<Rate value={dataPost.rate} count={10} disabled />}
-      hoverable
       actions={[<DeleteOutlined onClick={handleDeleteComment} key="delete" />]}
     >
       <div className={classes.bodyDetail}>

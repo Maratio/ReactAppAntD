@@ -19,7 +19,6 @@ const CardTripDetail = () => {
   return (
     <Card
       className={classes.cardDetail}
-      hoverable
       cover={<img alt="example" src={dataPost.url} />}
     >
       <Meta

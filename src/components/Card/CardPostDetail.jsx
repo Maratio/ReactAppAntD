@@ -41,7 +41,6 @@ const CardPostDetail = () => {
       className={classes.cardDetail}
       size="small"
       extra={<Rate value={dataPost.rate} count={10} disabled />}
-      hoverable
       cover={<img alt="example" src={dataPost.url} />}
       actions={[
         <EditOutlined onClick={handleEditPost} key="edit" />,

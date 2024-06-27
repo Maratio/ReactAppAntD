@@ -29,7 +29,6 @@ const CardFotoDetail = () => {
       className={classes.cardDetail}
       size="small"
       extra={<Rate value={Math.ceil(Math.random() * 5)} />}
-      hoverable
       cover={<img alt="example" src={dataPost.url} />}
       actions={[<DeleteOutlined onClick={() => deletePost(id)} key="delete" />]}
     >

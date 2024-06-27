@@ -12,22 +12,22 @@ const CardsFototList = () => {
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
+  const card = "photos";
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const card = "photos";
+  const updatePostsList = (data) => {
+    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
+    setPagePostsList(response.tripPosts);
+    setRecCount(response.recCount);
+  };
 
   function getPosts() {
     getCards(card).then((data) => {
-      const response = getPagesPost(
-        { page: pageCurrent, limit: pageSize },
-        data
-      );
-      setPagePostsList(response.tripPosts);
-      setRecCount(response.recCount);
+      updatePostsList(data);
     });
   }
 
