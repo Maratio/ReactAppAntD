@@ -1,5 +1,7 @@
 export const PLACEHOLDER_URL =
-    "Протоколы:http|https  Форматы:jpg|png|gif|raw|tiff|bmp|psd";
+    "Поддерживает протоколы: http|https";
+
+    // "Протоколы:http|https  Форматы:jpg|png|gif|raw|tiff|bmp|psd";
 
 export const PATTERN_URL =
     /^(http|https):\/\/[^ "]+$/;

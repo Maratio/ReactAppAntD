@@ -407,6 +407,30 @@ app.delete('/api/comments/:id', (req, res) => {
   });
 });
 
+// Удалить комментарии вместе с постом
+app.delete('/api/comments/:postId/comment', (req, res) => {
+  const postId = parseInt(req.params.postId);
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    let comments = JSON.parse(data).comments;
+    comments = comments.filter(post => post.postId !== postId);
+    fs.writeFile(COMMENTS_DB_PATH, JSON.stringify({ comments }), 'utf8', err => {
+      if (err) {
+        console.error('Ошибка записи файла:', err);
+        res.status(500).send('Ошибка сервера');
+        return;
+      }
+      res.status(204).send();
+    });
+  });
+});
+
+
+
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

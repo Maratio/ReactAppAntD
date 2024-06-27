@@ -15,6 +15,18 @@ export async function deleteCard(card, postId) {
 
 };
 
+export async function deleteCommentsWithPost(postId) {
+    try {
+         const response = await fetch(`${BACKEND_URL}/api/comments/${postId}/comment?`, { method: "DELETE" })
+         const result = await response.json
+         return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
+
+};
+
 export async function getCards(card) {
     try {
         const response = await fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
@@ -62,6 +74,9 @@ export function deleteCardDetail(id, card, navigate) {
         .then((response) => {
             if (response.status === 204) {
                 navigate(-1)
+            }
+            if(card === "posts"){
+                deleteCommentsWithPost(id)
             }
         })
         .catch((err) => console.error("error >>>>>", err));

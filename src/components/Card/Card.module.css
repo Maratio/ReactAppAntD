@@ -33,7 +33,8 @@
 }
 
 .cardDetail{
- width: 50vw;
+ width: 50%;
+ min-height: 100% !important;
 }
 
 .cardDetail img {

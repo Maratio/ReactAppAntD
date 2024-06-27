@@ -8,7 +8,7 @@ import {
   getPagesPost,
 } from "../utils/fetch.js";
 import CardComment from "../components/Card/CardComment.jsx";
-import { Button } from "antd";
+import { Button, Space, Select } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 
 const CardsCommentList = () => {
@@ -19,9 +19,10 @@ const CardsCommentList = () => {
   const navigate = useNavigate();
   const card = "comments";
   const { postId } = useParams();
+  const [items, setItems] = useState([]);
   const caption = `Смотрите, редактируйте, удаляйте, добавляйте ваши Отзывы к Заметке #${postId}`;
-  const captionComments = `Ознокомьтесь со всеми отзывами, для создания отзыва перейдите в Заметки`;
-  
+  const captionComments = `Все Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
+
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
@@ -46,18 +47,32 @@ const CardsCommentList = () => {
         setPagePostsList(response.tripPosts);
         setRecCount(response.recCount);
       });
+      getCards("posts").then((data) => {
+        const itemsComment = data.map(({ id }) => {
+          return {
+            key: id,
+            label: `Заметка #${id}`,
+            value: `/posts/${id}/comments`,
+          };
+        });
+        setItems(itemsComment);
+      });
     }
   }
 
   const deleteComment = (id) => {
     deleteCard(card, id).then((response) => {
       if (response.status === 204) {
-        navigate(-1);
+        getComments();
       }
     });
   };
 
-  useEffect(getComments, [postId,pageCurrent, pageSize]);
+  const handleChangeSelect = (value) => {
+    navigate(value);
+  };
+
+  useEffect(getComments, [postId, pageCurrent, pageSize]);
 
   return (
     <div className={classes.content}>
@@ -71,13 +86,18 @@ const CardsCommentList = () => {
             Добавить Отзыв
           </Button>
         ) : (
-          <Button
-            className={classes["btn-add"]}
-            type="primary"
-            onClick={() => navigate(`/posts`)}
-          >
-            Перейти в Заметки
-          </Button>
+          <Space direction="vertical">
+            <Space wrap>
+              <Select className={classes.select}
+                placeholder={"Выберите Заметку"}
+                onChange={handleChangeSelect}
+                style={{
+                  width: 200,
+                }}
+                options={items}
+              />
+            </Space>
+          </Space>
         )}
         {postId ? <h2>{caption}</h2> : <h2>{captionComments}</h2>}
       </div>

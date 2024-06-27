@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Card.module.css";
-import { EditOutlined, DeleteOutlined, StarOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
@@ -9,10 +9,11 @@ const card = "comments";
 
 const CardComment = ({ post, deletePost }) => {
   const navigate = useNavigate();
-  const title = "Отзыв N" + post.id + ` на Заметку #${post.postId}. ` + post.title;
+  const title =
+    "Отзыв N" + post.id + ` на Заметку #${post.postId}. ` + post.title;
   const description =
     post?.body?.length > 90 ? post.body.slice(0, 89) + "..." : post.body;
-    
+
   const handleDetailComment = () => navigate(`/${card}/${post.id}`);
   const handleDeleteComment = (e) => {
     e.stopPropagation();
@@ -26,9 +27,7 @@ const CardComment = ({ post, deletePost }) => {
       size="small"
       extra={<Rate value={post.rate} count={10} disabled />}
       hoverable
-      actions={[
-        <DeleteOutlined onClick={handleDeleteComment} key="delete" />,
-      ]}
+      actions={[<DeleteOutlined onClick={handleDeleteComment} key="delete" />]}
     >
       <div className={classes.body}>
         <Meta

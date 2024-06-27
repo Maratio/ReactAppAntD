@@ -1,4 +1,4 @@
-.list{
+.list {
   margin: 30px;
   display: flex;
   justify-content: center;
@@ -29,19 +29,20 @@
   background-color: transparent;
   padding-bottom: 0px;
   height: 32px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-style: oblique;
 }
 
-.btn-add{
+.btn-add {
   background: #1677ff;
   height: 34px;
 }
 
-.btns-block h2{
+.btns-block h2 {
   position: relative;
   left: 30px;
   bottom: 10px;
-  font-family: 'Times New Roman', Times, serif;
+  font-family: "Times New Roman", Times, serif;
   font-style: oblique;
 }
+
