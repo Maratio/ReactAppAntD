@@ -39,14 +39,14 @@ const FormCommentAdd = ({ closeModal, postId }) => {
       <Form.Item
         name="Title"
         label="Title"
-        rules={[{ max: 50, required: true }]}
+        rules={[{ max: 30, required: true }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         name="Description"
         label="Description"
-        rules={[{ max: 100, required: true }]}
+        rules={[{ max: 500, required: true }]}
       >
         <Input />
       </Form.Item>
