@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardPost from "../components/Card/CardPost.jsx";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
@@ -21,11 +21,17 @@ const CardsPostList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-const updatePostsList = (data) => {
-    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
-    setPagePostsList(response.tripPosts);
-    setRecCount(response.recCount);
-  };
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   function getPosts() {
     getCards(card).then((data) => {
@@ -43,7 +49,7 @@ const updatePostsList = (data) => {
   };
 
 
-  useEffect(getPosts, [pageCurrent, pageSize]);
+  useEffect(getPosts, [pageCurrent, pageSize,updatePostsList]);
 
   return (
     <div className={classes.content}>

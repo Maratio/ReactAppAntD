@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardTrip from "../components/Card/CardTrip";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite";
@@ -16,11 +16,17 @@ const CardsTripList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const updatePostsList = (data) => {
-    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
-    setPagePostsList(response.tripPosts);
-    setRecCount(response.recCount);
-  };
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   const getTrips = () => {
     getCards(card).then((data) => {
@@ -28,7 +34,7 @@ const CardsTripList = () => {
     });
   };
 
-  useEffect(getTrips, [pageCurrent, pageSize]);
+  useEffect(getTrips, [pageCurrent, pageSize,updatePostsList]);
 
   return (
     <div>

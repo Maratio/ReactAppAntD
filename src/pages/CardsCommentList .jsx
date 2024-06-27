@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import {
@@ -28,11 +28,17 @@ const CardsCommentList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const updatePostsList = (data) => {
-    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
-    setPagePostsList(response.tripPosts);
-    setRecCount(response.recCount);
-  };
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   function getComments() {
     if (postId) {
@@ -42,14 +48,15 @@ const CardsCommentList = () => {
     } else {
       getCards(card).then((data) => {
         const arr = data.map((post) => post.postId);
-        console.log(arr);
-        const itemsComment = [...new Set(arr)].map((postId) => {
-          return {
-            key: postId,
-            label: `Заметка #${postId}`,
-            value: `/posts/${postId}/comments`,
-          };
-        });
+        const itemsComment = [...new Set(arr.sort((a, b) => a - b))].map(
+          (postId) => {
+            return {
+              key: postId,
+              label: `Заметка #${postId}`,
+              value: `/posts/${postId}/comments`,
+            };
+          }
+        );
         setItems(itemsComment);
         updatePostsList(data);
       });
@@ -68,7 +75,7 @@ const CardsCommentList = () => {
     navigate(value);
   };
 
-  useEffect(getComments, [postId, pageCurrent, pageSize]);
+  useEffect(getComments, [postId, pageCurrent, pageSize, updatePostsList]);
 
   return (
     <div className={classes.content}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
@@ -19,11 +19,17 @@ const CardsFototList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const updatePostsList = (data) => {
-    const response = getPagesPost({ page: pageCurrent, limit: pageSize }, data);
-    setPagePostsList(response.tripPosts);
-    setRecCount(response.recCount);
-  };
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   function getPosts() {
     getCards(card).then((data) => {
@@ -39,7 +45,7 @@ const CardsFototList = () => {
     });
   };
 
-  useEffect(getPosts, [pageCurrent, pageSize]);
+  useEffect(getPosts, [pageCurrent, pageSize,updatePostsList]);
 
   return (
     <div>
