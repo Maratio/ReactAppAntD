@@ -6,7 +6,7 @@ import MenuSite from "../Menu/MenuSite.jsx";
 
 const { Sider } = Layout;
 
-export const SiderSite = ({ selectedSiderMenuItem }) => {
+export const SiderSite = () => {
   const [collapsed, setCollapsed] = useState(true);
 
   const handlerCollapsed = () => setCollapsed(!collapsed);
@@ -24,7 +24,7 @@ export const SiderSite = ({ selectedSiderMenuItem }) => {
           handlerCollapsed={handlerCollapsed}
           collapsed={collapsed}
         />
-        <MenuSite selectedMenuItem={selectedSiderMenuItem} />
+        <MenuSite/>
       </div>
     </Sider>
   );

@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./Card.module.css";
-import { EditOutlined, DeleteOutlined, MessageOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  MessageOutlined,
+} from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
+import cn from "classnames";
+import appContext from "../../context/appContext";
+
 const { Meta } = Card;
 
 const CardPost = ({ post, deletePost }) => {
+  const { colorTheme } = useContext(appContext);
+  const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
+
   const navigate = useNavigate();
   const title = "N" + post.id + ". " + post.title;
   const description =
@@ -31,7 +41,7 @@ const CardPost = ({ post, deletePost }) => {
   return (
     <Card
       onClick={handleDetailPost}
-      className={classes.card}
+      className={cnCard}
       size="small"
       extra={<Rate value={post.rate} count={10} disabled />}
       hoverable

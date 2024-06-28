@@ -4,7 +4,12 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCard, deleteCommentsWithPost, getCards, getPagesPost } from "../utils/fetch";
+import {
+  deleteCard,
+  deleteCommentsWithPost,
+  getCards,
+  getPagesPost,
+} from "../utils/fetch";
 const caption =
   "Смотрите, добавляйте, оставляйте отзывы, редактируйте, удаляйте Заметки по Маршруту";
 
@@ -35,21 +40,20 @@ const CardsPostList = () => {
 
   function getPosts() {
     getCards(card).then((data) => {
-      updatePostsList(data)
+      updatePostsList(data);
     });
   }
 
   const deletePost = (id) => {
     deleteCard(card, id).then((response) => {
       if (response.status === 204) {
-        deleteCommentsWithPost(id)
+        deleteCommentsWithPost(id);
         getPosts();
       }
     });
   };
 
-
-  useEffect(getPosts, [pageCurrent, pageSize,updatePostsList]);
+  useEffect(getPosts, [pageCurrent, pageSize, updatePostsList]);
 
   return (
     <div className={classes.content}>

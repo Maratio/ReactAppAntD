@@ -6,6 +6,10 @@
   width: 320px;
 }
 
+.othTheme {
+  background-color: aqua;
+}
+
 .body {
   height: 10vw;
   overflow: hidden;

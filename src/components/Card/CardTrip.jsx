@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./Card.module.css";
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
+import cn from "classnames";
+import appContext from "../../context/appContext";
+
 const { Meta } = Card;
 
 const CardTrip = (props) => {
+  const { colorTheme } = useContext(appContext);
+  const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
+
   const navigate = useNavigate();
   const description =
     props.post?.body?.length > 120
@@ -16,7 +22,7 @@ const CardTrip = (props) => {
   return (
     <Card
       onClick={handleDetailTrip}
-      className={classes.card}
+      className={cnCard}
       hoverable
       cover={<img alt="example" src={props.post.url} />}
     >

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
+import cn from "classnames";
 import { Menu } from "antd";
 import {
   CompassOutlined,
@@ -8,7 +9,9 @@ import {
   HomeOutlined,
   FormOutlined,
   MessageOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
+import appContext from "../../context/appContext";
 
 const MenuSite = () => {
   const navigate = useNavigate();
@@ -17,6 +20,11 @@ const MenuSite = () => {
   const handleSelectPosts = () => navigate("/posts");
   const handleSelectPhotos = () => navigate("/photos");
   const handleSelectComments = () => navigate("/comments");
+  const handleSelectStyle = () => setColorTheme(!colorTheme);
+
+  const { colorTheme, setColorTheme } = useContext(appContext);
+
+  const cnMenuSite = cn(classes.menu, { [classes.othTheme]: colorTheme });
 
   const items = [
     {
@@ -49,11 +57,17 @@ const MenuSite = () => {
       label: "Фото",
       onClick: handleSelectPhotos,
     },
+    {
+      key: "6",
+      icon: <WarningOutlined />,
+      label: "Смена стиля",
+      onClick: handleSelectStyle,
+    },
   ];
 
   return (
     <Menu
-      className={classes.menu}
+      className={cnMenuSite}
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1"]}
       mode="inline"

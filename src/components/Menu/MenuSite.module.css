@@ -2,4 +2,9 @@
     position: relative !important;
     bottom: 36px !important;
   }
+
+  .othTheme {
+    background-color: aqua;
+  }
+  
   
