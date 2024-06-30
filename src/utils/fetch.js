@@ -7,8 +7,7 @@ const headers = {
 export async function getCardsSerch(card, data) {
     try {
         const queryParams = new URLSearchParams({ term: data })
-        const response = await fetch(`${BACKEND_URL}/api/posts-search?${queryParams}`, { method: "GET" })
-        console.log(card, data);
+        const response = await fetch(`${BACKEND_URL}/api/${card}-search?${queryParams}`, { method: "GET" })
         if (/^2/.test(response.status))
             return response.json()
         else throw Error()
