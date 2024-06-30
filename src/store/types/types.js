@@ -1,0 +1,3 @@
+
+export const MINUS = 'MINUS'
+export const INCREMENT_CHANGE_VIEW_POSTS = 'INCREMENT_CHANGE_VIEW'
