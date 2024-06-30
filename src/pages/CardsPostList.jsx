@@ -8,10 +8,11 @@ import {
   deleteCard,
   deleteCommentsWithPost,
   getCards,
+  getCardsSerch,
   getPagesPost,
 } from "../utils/fetch";
-const caption =
-  "Смотрите, добавляйте, оставляйте отзывы, редактируйте, удаляйте Заметки по Маршруту";
+import Search from "antd/es/input/Search.js";
+const caption = "Заметки по Маршрутам";
 
 const CardsPostList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -46,9 +47,17 @@ const CardsPostList = () => {
 
   const deletePost = (id) => {
     deleteCard(card, id).then((response) => {
-      if (response.status === 204) {
+      if (response) {
         deleteCommentsWithPost(id);
         getPosts();
+      }
+    });
+  };
+
+  const onSearch = (data) => {
+    getCardsSerch(card, data).then((response) => {
+      if (response.length) {
+        updatePostsList(response);
       }
     });
   };
@@ -66,6 +75,12 @@ const CardsPostList = () => {
           Добавить Заметку
         </Button>
         <h2>{caption}</h2>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+          style={{ width: 200 }}
+        />
       </div>
       <div className={classes.list}>
         {pagePostsList.map(({ userId, id, url, title, body, rate }) => (

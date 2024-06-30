@@ -11,7 +11,6 @@ const { Meta } = Card;
 const card = "comments";
 
 const CardComment = ({ post, deletePost }) => {
-
   const { colorTheme } = useContext(appContext);
   const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
 
@@ -36,13 +35,7 @@ const CardComment = ({ post, deletePost }) => {
       hoverable
       actions={[<DeleteOutlined onClick={handleDeleteComment} key="delete" />]}
     >
-      <div className={classes.body}>
-        <Meta
-          className={classes.meta}
-          title={title}
-          description={description}
-        />
-      </div>
+      <Meta className={classes.meta} title={title} description={description} />
     </Card>
   );
 };

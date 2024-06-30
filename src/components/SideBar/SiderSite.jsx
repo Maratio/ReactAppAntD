@@ -24,7 +24,7 @@ export const SiderSite = () => {
           handlerCollapsed={handlerCollapsed}
           collapsed={collapsed}
         />
-        <MenuSite/>
+        <MenuSite />
       </div>
     </Sider>
   );

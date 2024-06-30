@@ -2,16 +2,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
-const { paginateResults } = require('./utils/utils');
-// const comments = require('./db/db.comments.json');
 const app = express();
 const PORT = process.env.PORT || 5002;
 const POSTS_DB_PATH = path.join(__dirname, './db/db.posts.json')
 const TRIPS_DB_PATH = path.join(__dirname, './db/db.routes.json')
 const PHOTOS_DB_PATH = path.join(__dirname, './db/db.photos.json')
 const COMMENTS_DB_PATH = path.join(__dirname, './db/db.comments.json')
-
-
 
 app.use(cors());
 app.use(express.json());
@@ -275,24 +271,22 @@ app.delete('/api/posts/:id', (req, res) => {
   });
 });
 
+// Получить результаты поиска
+app.get('/api/posts-search', (req, res) => {
+  const searchTerm = req.query.term.toLowerCase()
 
-
-// Получить результаты поиска с пагинацией
-app.get('/api/posts/search', (req, res) => {
-  const searchTerm = req.query.term.toLowerCase();
-  const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 10;
-
-  fs.readFile(path.join(__dirname, './db/db.posts.json'), 'utf8', (err, data) => {
+  fs.readFile(POSTS_DB_PATH, 'utf8', (err, data) => {
     if (err) {
       console.error('Ошибка чтения файла:', err);
       res.status(500).send('Ошибка сервера');
       return;
     }
     const posts = JSON.parse(data).posts;
-    const searchResults = posts.filter(post => post.title.toLowerCase().includes(searchTerm) || post.body.toLowerCase().includes(searchTerm));
-    const paginatedResults = paginateResults(searchResults, page, limit);
-    res.json(paginatedResults);
+    const searchResults = posts.filter(
+      post =>
+        post.title.toLowerCase().includes(searchTerm)
+        || post.body.toLowerCase().includes(searchTerm));
+    res.json(searchResults);
   });
 });
 
@@ -428,9 +422,6 @@ app.delete('/api/comments/:postId/comment', (req, res) => {
     });
   });
 });
-
-
-
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

@@ -10,7 +10,6 @@ import appContext from "../../context/appContext";
 const { Meta } = Card;
 
 const CardFoto = ({ post, deletePost }) => {
-
   const { colorTheme } = useContext(appContext);
   const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
 
@@ -33,9 +32,7 @@ const CardFoto = ({ post, deletePost }) => {
       cover={<img alt="example" src={post.url} />}
       actions={[<DeleteOutlined onClick={handleDeleteFoto} key="delete" />]}
     >
-      <div className={classes.body}>
-        <Meta className={classes.meta} title={title} />
-      </div>
+      <Meta className={classes.meta} title={title} />
     </Card>
   );
 };

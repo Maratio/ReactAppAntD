@@ -58,13 +58,11 @@ const CardPostDetail = () => {
         <MessageOutlined onClick={handleCommentPost} key="message" />,
       ]}
     >
-      <div className={classes.bodyDetail}>
-        <Meta
-          className={classes.metaDetail}
-          title={title}
-          description={dataPost.body}
-        />
-      </div>
+      <Meta
+        className={classes.metaDetail}
+        title={title}
+        description={dataPost.body}
+      />
     </Card>
   );
 };

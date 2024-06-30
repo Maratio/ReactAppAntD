@@ -44,13 +44,11 @@ const CardCommentDetail = () => {
       extra={<Rate value={dataPost.rate} count={10} disabled />}
       actions={[<DeleteOutlined onClick={handleDeleteComment} key="delete" />]}
     >
-      <div className={classes.bodyDetail}>
-        <Meta
-          className={classes.metaDetail}
-          title={title}
-          description={dataPost.body}
-        />
-      </div>
+      <Meta
+        className={classes.metaDetail}
+        title={title}
+        description={dataPost.body}
+      />
     </Card>
   );
 };

@@ -10,6 +10,8 @@ import {
 import CardComment from "../components/Card/CardComment.jsx";
 import { Button, Space, Select, ConfigProvider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+const captionComments = `Все Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
+const card = "comments";
 
 const CardsCommentList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -17,11 +19,9 @@ const CardsCommentList = () => {
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
-  const card = "comments";
   const { postId } = useParams();
   const [items, setItems] = useState([]);
   const caption = `Смотрите, редактируйте, удаляйте, добавляйте ваши Отзывы к Заметке #${postId}`;
-  const captionComments = `Все Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
@@ -65,7 +65,7 @@ const CardsCommentList = () => {
 
   const deleteComment = (id) => {
     deleteCard(card, id).then((response) => {
-      if (response.status === 204) {
+      if (response) {
         getComments();
       }
     });
@@ -95,10 +95,10 @@ const CardsCommentList = () => {
                 theme={{
                   token: {
                     colorBgContainer: "#1677ff",
-                    colorTextPlaceholder:"#fff",
+                    colorTextPlaceholder: "#fff",
                     colorText: "#1677ff",
                     fontWeightStrong: 600,
-                    lineWidth:0,
+                    lineWidth: 0,
                   },
                 }}
               >

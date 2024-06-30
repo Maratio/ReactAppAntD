@@ -52,13 +52,7 @@ const CardPost = ({ post, deletePost }) => {
         <MessageOutlined onClick={handleCommentPost} key="message" />,
       ]}
     >
-      <div className={classes.body}>
-        <Meta
-          className={classes.meta}
-          title={title}
-          description={description}
-        />
-      </div>
+      <Meta className={classes.meta} title={title} description={description} />
     </Card>
   );
 };

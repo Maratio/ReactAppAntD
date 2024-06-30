@@ -38,13 +38,11 @@ const CardFotoDetail = () => {
       cover={<img alt="example" src={dataPost.url} />}
       actions={[<DeleteOutlined onClick={() => deletePost(id)} key="delete" />]}
     >
-      <div className={classes.bodyDetail}>
-        <Meta
-          className={classes.metaDetail}
-          title={title}
-          description={dataPost.body}
-        />
-      </div>
+      <Meta
+        className={classes.metaDetail}
+        title={title}
+        description={dataPost.body}
+      />
     </Card>
   );
 };

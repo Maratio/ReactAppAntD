@@ -2,14 +2,13 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
 import cn from "classnames";
-import { Menu } from "antd";
+import { Menu, Switch } from "antd";
 import {
   CompassOutlined,
   CameraOutlined,
   HomeOutlined,
   FormOutlined,
   MessageOutlined,
-  WarningOutlined,
 } from "@ant-design/icons";
 import appContext from "../../context/appContext";
 
@@ -20,11 +19,12 @@ const MenuSite = () => {
   const handleSelectPosts = () => navigate("/posts");
   const handleSelectPhotos = () => navigate("/photos");
   const handleSelectComments = () => navigate("/comments");
-  const handleSelectStyle = () => setColorTheme(!colorTheme);
-
   const { colorTheme, setColorTheme } = useContext(appContext);
-
   const cnMenuSite = cn(classes.menu, { [classes.othTheme]: colorTheme });
+
+  const onChange = (checked) => {
+    setColorTheme(checked);
+  };
 
   const items = [
     {
@@ -57,11 +57,11 @@ const MenuSite = () => {
       label: "Фото",
       onClick: handleSelectPhotos,
     },
+   
     {
       key: "6",
-      icon: <WarningOutlined />,
+      icon: <Switch size="small"  onChange={onChange} />,
       label: "Смена стиля",
-      onClick: handleSelectStyle,
     },
   ];
 

@@ -13,20 +13,18 @@ const ModalPostAdd = () => {
   };
 
   return (
-    <>
-      <Modal
-        title={title}
-        centered
-        open={open}
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-        onOk={handleModalClose}
-        onCancel={handleModalClose}
-        width={1000}
-      >
-        <FormPostAdd closeModal={setOpen} />
-      </Modal>
-    </>
+    <Modal
+      title={title}
+      centered
+      open={open}
+      cancelButtonProps={{ style: { display: "none" } }}
+      okButtonProps={{ style: { display: "none" } }}
+      onOk={handleModalClose}
+      onCancel={handleModalClose}
+      width={1000}
+    >
+      <FormPostAdd closeModal={setOpen} />
+    </Modal>
   );
 };
 

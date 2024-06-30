@@ -11,19 +11,17 @@ export default function ModalLogin() {
     navigate("/");
   };
   return (
-    <>
-      <Modal
-        title="Введите логин и пароль"
-        centered
-        open={open}
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-        onOk={handleModalClose}
-        onCancel={handleModalClose}
-        width={500}
-      >
-        <FormLogin closeModal={setOpen} />
-      </Modal>
-    </>
+    <Modal
+      title="Введите логин и пароль"
+      centered
+      open={open}
+      cancelButtonProps={{ style: { display: "none" } }}
+      okButtonProps={{ style: { display: "none" } }}
+      onOk={handleModalClose}
+      onCancel={handleModalClose}
+      width={500}
+    >
+      <FormLogin closeModal={setOpen} />
+    </Modal>
   );
 }
