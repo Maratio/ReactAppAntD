@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
-import { counterReducer } from "./counterReducers";
 import { todoReducer } from "./todoReducer";
 import { photoReducer } from "./photoReducer";
+import { themeReducer } from "./themeReducer";
 
 
 export const rootReducer = combineReducers({
-    counter: counterReducer,
+    themeReducer,
     todos: todoReducer,
     photoReducer: photoReducer
     // photos: photosReducer

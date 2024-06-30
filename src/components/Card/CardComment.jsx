@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import classes from "./Card.module.css";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
-import appContext from "../../context/appContext";
 import cn from "classnames";
+import { useSelector } from "react-redux";
 
 const { Meta } = Card;
 const card = "comments";
 
 const CardComment = ({ post, deletePost }) => {
-  const { colorTheme } = useContext(appContext);
-  const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
+  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const cnCard = cn(classes.card, classes[`${colorTheme}`]);
 
   const navigate = useNavigate();
   const title =

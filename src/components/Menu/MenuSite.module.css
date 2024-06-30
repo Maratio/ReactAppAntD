@@ -3,8 +3,16 @@
     bottom: 36px !important;
   }
 
-  .othTheme {
+  .aqua {
     background-color: aqua;
+  }
+
+  .white {
+    background-color: white;
+  }
+
+  .orange{
+    background-color: orange;
   }
   
   

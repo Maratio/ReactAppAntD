@@ -5,8 +5,16 @@
   width: 320px;
 }
 
-.othTheme {
+.aqua {
   background-color: aqua;
+}
+
+.white {
+  background-color: white;
+}
+
+.orange{
+  background-color: orange;
 }
 
 .meta {
