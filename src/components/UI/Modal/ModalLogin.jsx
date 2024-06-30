@@ -1,7 +1,15 @@
 import { Modal } from "antd";
 import FormLogin from "../Form/FormLogin";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-export default function ModalLogin({ open, handleLogin, onCancel }) {
+export default function ModalLogin() {
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate("/");
+  };
   return (
     <>
       <Modal
@@ -10,11 +18,11 @@ export default function ModalLogin({ open, handleLogin, onCancel }) {
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={handleLogin}
-        onCancel={onCancel}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={500}
       >
-        <FormLogin saveInfoAddPost={handleLogin} closeModal={onCancel} />
+        <FormLogin closeModal={setOpen} />
       </Modal>
     </>
   );

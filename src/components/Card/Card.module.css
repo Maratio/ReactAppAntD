@@ -1,0 +1,43 @@
+
+.card {
+  padding: 10px;
+  overflow: hidden;
+  height: 100%;
+  width: 300px;
+}
+
+.body {
+  height: 10vw;
+  overflow: hidden;
+}
+
+.meta {
+  height: 100%;
+}
+
+.card img {
+  width: 50vw;
+  height: 50vh;
+  margin: 0 auto;
+}
+
+.bodyDetail{
+  height: auto;
+  width: auto;
+  
+}
+
+.metaDetail{
+  height: auto;
+  width: auto;
+}
+
+.cardDetail{
+ width: 50vw;
+}
+
+.cardDetail img {
+ height: 50vh;
+}
+
+

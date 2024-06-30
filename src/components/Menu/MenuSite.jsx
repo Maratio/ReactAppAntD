@@ -1,42 +1,51 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
 import { Menu } from "antd";
 import {
-  ContainerOutlined,
-  DesktopOutlined,
-  MailOutlined,
-  PieChartOutlined,
+  CompassOutlined,
+  CameraOutlined,
+  HomeOutlined,
+  FormOutlined,
 } from "@ant-design/icons";
 
-const MenuSite = ({ selectedMenuItem }) => {
+const MenuSite = () => {
+  const navigate = useNavigate();
+  const handleSelectHome = () => navigate("/");
+  const handleSelectTrips = () => navigate("/trips");
+  const handleSelectPosts = () => navigate("/posts");
+  const handleSelectPhotos = () => navigate("/photos");
+
   const items = [
     {
       key: "1",
-      icon: <PieChartOutlined />,
-      label: "Маршруты",
-      onClick: () => selectedMenuItem("Маршруты"),
+      icon: <HomeOutlined />,
+      label: "Главная",
+      onClick: handleSelectHome,
     },
     {
       key: "2",
-      icon: <DesktopOutlined />,
-      label: "Заметки",
-      onClick: () => selectedMenuItem("Заметки"),
+      icon: <CompassOutlined />,
+      label: "Маршруты",
+      onClick: handleSelectTrips,
     },
     {
       key: "3",
-      icon: <ContainerOutlined />,
-      label: "Option 3",
+      icon: <FormOutlined />,
+      label: "Заметки",
+      onClick: handleSelectPosts,
     },
     {
       key: "4",
-      icon: <MailOutlined />,
-      label: "Option 4",
+      icon: <CameraOutlined />,
+      label: "Фото",
+      onClick: handleSelectPhotos,
     },
   ];
 
   return (
     <Menu
-    className={classes.menu}
+      className={classes.menu}
       defaultSelectedKeys={["1"]}
       defaultOpenKeys={["sub1"]}
       mode="inline"

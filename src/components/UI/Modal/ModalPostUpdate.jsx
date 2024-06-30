@@ -1,27 +1,43 @@
 import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
+import {useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getCardDetail } from "../../../utils/fetch.js";
+const card = "posts";
 
-const ModalPostUpdate = ({
-  resetEnableUpdateFormPost,
-  enableUpdateFormPost,
-  updatePost,
-}) => {
+const ModalPostUpdate = () => {
+  const [open, setOpen] = useState(true);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const [dataPost, setDataPost] = useState(false);
+
+  function getPost() {
+    getCardDetail(card, setDataPost, id);
+  }
+
+  
+  const handleModalClose = () => {
+    setOpen(false);
+    navigate(-1)
+  };
+
+  useEffect(getPost, [id]);
+
   return (
     <>
       <Modal
-        title="Обнови данные по Заметке"
+        title={`Обнови данные по Заметке #${id}`}
         centered
-        open={enableUpdateFormPost}
+        open={open}
         cancelButtonProps={{ style: { display: "none" } }}
         okButtonProps={{ style: { display: "none" } }}
-        onOk={() => resetEnableUpdateFormPost()}
-        onCancel={() => resetEnableUpdateFormPost()}
+        onOk={handleModalClose}
+        onCancel={handleModalClose}
         width={1000}
       >
-        <FormPostUpdate
-          updatePost={updatePost}
-          closeModal={resetEnableUpdateFormPost}
-        />
+        {dataPost && (
+          <FormPostUpdate closeModal={setOpen} id={id} dataPost={dataPost} />
+        )}
       </Modal>
     </>
   );

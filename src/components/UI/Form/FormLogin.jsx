@@ -1,31 +1,22 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
-const SubmitButton = ({ form, children, closeModal }) => {
-  const [submittable, setSubmittable] = React.useState(false);
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../../../customHooks/useAuth.js";
+import SubmitButtonForm from "../Button/SubmitButtonForm.jsx";
 
-  // Watch all values
-  const values = Form.useWatch([], form);
-  React.useEffect(() => {
-    form
-      .validateFields({
-        validateOnly: true,
-      })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
-  }, [form, values]);
-  return (
-    <Button
-      onClick={() => closeModal()}
-      type="primary"
-      htmlType="submit"
-      disabled={!submittable}
-    >
-      {children}
-    </Button>
-  );
-};
+const FormLogin = ({ closeModal }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const auth = useAuth();
 
-const FormLogin = ({ saveInfoLogin, closeModal }) => {
+  const from = location.state?.from?.pathname || "/";
+
+  const saveInfoLogin = ({ userName }) => {
+    auth.signin(userName, () => {
+      navigate(from, { replace: true });
+    });
+  };
+
   const [formLogin] = Form.useForm();
 
   return (
@@ -67,9 +58,9 @@ const FormLogin = ({ saveInfoLogin, closeModal }) => {
       </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButton closeModal={closeModal} form={formLogin}>
+          <SubmitButtonForm closeModal={closeModal} form={formLogin}>
             Submit
-          </SubmitButton>
+          </SubmitButtonForm>
           <Button htmlType="reset">Reset</Button>
         </Space>
       </Form.Item>

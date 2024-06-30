@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import FormPostAdd from "../Form/FormPostAdd.jsx";
 import { useNavigate } from "react-router-dom";
+import FormFotoAdd from "../Form/FormFotoAdd.jsx";
 
-const ModalPostAdd = () => {
+const ModalFotoAdd = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const handleModalClose = () => {
@@ -14,7 +14,7 @@ const ModalPostAdd = () => {
   return (
     <>
       <Modal
-        title="Заполни данные и добавь Заметку"
+        title="Заполни данные и добавь Фото"
         centered
         open={open}
         cancelButtonProps={{ style: { display: "none" } }}
@@ -23,10 +23,10 @@ const ModalPostAdd = () => {
         onCancel={handleModalClose}
         width={1000}
       >
-        <FormPostAdd closeModal={setOpen} />
+        <FormFotoAdd closeModal={setOpen} />
       </Modal>
     </>
   );
 };
 
-export default ModalPostAdd;
+export default ModalFotoAdd;

@@ -1,24 +1,22 @@
 import React from "react";
+import classes from "../../pages/ContentSite.module.css";
 import { HeaderSite } from "../Header/HeaderSite.jsx";
 import { FooterSite } from "../Footer/FooterSite.jsx";
 import { Flex, Layout } from "antd";
-import LayoutSiderAndContent from "./LayoutSiderAndContent.jsx";
-
-const layoutStyle = {
-  borderRadius: 8,
-  overflow: "hidden",
-  width: "100vw",
-  maxWidth: "100vw",
-  height: "auto",
-};
+import { Outlet } from "react-router-dom";
+import { SiderSite } from "../SideBar/SiderSite.jsx";
+import { Content } from "antd/es/layout/layout.js";
 
 export const LayoutSite = () => {
   return (
-    <Flex gap="middle" wrap>
-      <Layout style={layoutStyle}>
+    <Flex gap="middle" wrap style={{minHeight: '100%'}}> 
+      <Layout className={classes.layout}>
         <HeaderSite />
-        <Layout>
-          <LayoutSiderAndContent />
+        <Layout >
+          <SiderSite />
+          <Content className={classes.content}>
+            <Outlet />
+          </Content>
         </Layout>
         <FooterSite />
       </Layout>

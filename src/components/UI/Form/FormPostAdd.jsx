@@ -1,31 +1,19 @@
 import React from "react";
 import { Button, Form, Input, Space } from "antd";
-const SubmitButton = ({ form, children, closeModal }) => {
-  const [submittable, setSubmittable] = React.useState(false);
+import { useNavigate } from "react-router-dom";
+import SubmitButtonForm from "../Button/SubmitButtonForm";
+import { addCard } from "../../../utils/fetch";
+import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
 
-  // Watch all values
-  const values = Form.useWatch([], form);
-  React.useEffect(() => {
-    form
-      .validateFields({
-        validateOnly: true,
-      })
-      .then(() => setSubmittable(true))
-      .catch(() => setSubmittable(false));
-  }, [form, values]);
-  return (
-    <Button
-      onClick={() => closeModal(false)}
-      type="primary"
-      htmlType="submit"
-      disabled={!submittable}
-    >
-      {children}
-    </Button>
-  );
-};
+const card = "posts";
 
-const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
+const FormPostAdd = ({ closeModal }) => {
+  const navigate = useNavigate();
+
+  function addPost({ Title, Img_url, Description }) {
+    addCard({Title, Img_url, navigate, card, Description});
+  }
+
   const [formAdd] = Form.useForm();
   return (
     <Form
@@ -36,7 +24,7 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
       initialValues={{
         remember: true,
       }}
-      onFinish={saveInfoAddPost}
+      onFinish={addPost}
     >
       <Form.Item
         name="Title"
@@ -66,16 +54,17 @@ const FormPostAdd = ({ saveInfoAddPost, closeModal }) => {
         rules={[
           {
             required: true,
+            pattern: PATTERN_URL,
           },
         ]}
       >
-        <Input />
+        <Input placeholder={PLACEHOLDER_URL} />
       </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButton closeModal={closeModal} form={formAdd}>
+          <SubmitButtonForm closeModal={closeModal} form={formAdd}>
             Submit
-          </SubmitButton>
+          </SubmitButtonForm>
           <Button htmlType="reset">Reset</Button>
         </Space>
       </Form.Item>

@@ -20,7 +20,7 @@ export const SiderSite = ({ selectedSiderMenuItem }) => {
     >
       <div style={{ width: "auto" }}>
         <BtnMenuSite
-          className={classes['btn-menu']}
+          className={classes["btn-menu"]}
           handlerCollapsed={handlerCollapsed}
           collapsed={collapsed}
         />

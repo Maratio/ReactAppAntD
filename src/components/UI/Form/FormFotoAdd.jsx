@@ -1,43 +1,34 @@
+import React from "react";
 import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
-import { updateCard } from "../../../utils/fetch";
+import { addCard } from "../../../utils/fetch";
+import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
 
-const FormPostUpdate = ({ closeModal, id, dataPost }) => {
+const card = "photos";
+
+const FormFotoAdd = ({ closeModal }) => {
   const navigate = useNavigate();
-  const [formUpdate] = Form.useForm();
 
-  function updatePost({ Title, Description, Img_url }){
-    updateCard(Title, Description, Img_url, navigate, id )
+  function addFoto({ Title, Img_url }) {
+    addCard({Title, Img_url, navigate, card});
   }
 
+  const [formAdd] = Form.useForm();
   return (
     <Form
-      form={formUpdate}
+      form={formAdd}
       name="validateOnly"
       layout="vertical"
       autoComplete="off"
       initialValues={{
-        Title: `${dataPost.title}`,
-        Description: `${dataPost.body}`,
-        Img_url: `${dataPost.url}`,
+        remember: true,
       }}
-      onFinish={updatePost}
+      onFinish={addFoto}
     >
       <Form.Item
         name="Title"
         label="Title"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="Description"
-        label="Description"
         rules={[
           {
             required: true,
@@ -52,14 +43,15 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
         rules={[
           {
             required: true,
+            pattern: PATTERN_URL,
           },
         ]}
       >
-        <Input />
+        <Input placeholder={PLACEHOLDER_URL} />
       </Form.Item>
       <Form.Item>
         <Space>
-          <SubmitButtonForm closeModal={closeModal} form={formUpdate}>
+          <SubmitButtonForm closeModal={closeModal} form={formAdd}>
             Submit
           </SubmitButtonForm>
           <Button htmlType="reset">Reset</Button>
@@ -69,4 +61,4 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
   );
 };
 
-export default FormPostUpdate;
+export default FormFotoAdd;

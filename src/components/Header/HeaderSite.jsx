@@ -1,15 +1,15 @@
 import React from "react";
 import classes from "./HeaderSite.module.css";
 import { Layout } from "antd";
-import { Button, Space, Typography } from "antd";
-import { useState } from "react";
+import { Space, Typography } from "antd";
 import Logo from "../Logo/Logo";
 import MenuHeader from "../Menu/MenuHeader";
-import ModalLogin from "../UI/Modal/ModalLogin";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../customHooks/useAuth";
 
 const { Header } = Layout;
 
-const menuItems = [
+const menuHeaderItems = [
   {
     name: "О нас",
     url: "about",
@@ -18,53 +18,45 @@ const menuItems = [
     name: "Контакты",
     url: "contacts",
   },
+];
+
+const menuHeaderAuthItems = [
+  ...menuHeaderItems,
   {
-    name: "FAQ",
-    url: "faq",
+    name: "Профиль",
+    url: "profile",
   },
 ];
 
-export const HeaderSite = ({ authUser, onLogin, onLogout }) => {
-  const userName = authUser
-    ? `${authUser.firstName} ${authUser.lastName}`
-    : "Вы гость";
+export const HeaderSite = () => {
+  const auth = useAuth();
+  const navigate = useNavigate();
+  const handleLogout = () => auth.signout(() => navigate("/"));
 
-  const buttonCaption = authUser ? "Выйти" : "Войти";
+  const userName = auth.user ? auth.user : "Вы гость";
 
-  const [openModalLogin, setOpenModalLogin] = useState(false);
-
-  function handleLoginLogout(e) {
-    if (authUser) {
-      onLogout();
-    } else {
-      setOpenModalLogin(true);
-    }
-  }
-
-  function handleLogin(e) {
-    onLogin(e.userName, e.password);
-    setOpenModalLogin(false);
-  }
+  const linkCaption = auth.user ? "Выйти" : "Войти";
 
   return (
     <Header className={classes.header}>
       <Logo />
       <Space>
-        <MenuHeader items={menuItems} />
+        {auth.user ? (
+          <MenuHeader items={menuHeaderAuthItems} />
+        ) : (
+          <MenuHeader items={menuHeaderItems} />
+        )}
         <Typography.Text className={classes.user}>{userName}</Typography.Text>
-        <Button
-          className={classes.btnLogin}
-          type="primary"
-          onClick={handleLoginLogout}
-        >
-          {buttonCaption}
-        </Button>
+        {linkCaption === "Войти" ? (
+          <Link className={classes.btnLogin} to="/login">
+            {linkCaption}
+          </Link>
+        ) : (
+          <Link className={classes.btnLogin} onClick={handleLogout}>
+            {linkCaption}
+          </Link>
+        )}
       </Space>
-      <ModalLogin
-        open={openModalLogin}
-        handleLogin={handleLogin}
-        onCancel={() => setOpenModalLogin(false)}
-      />
     </Header>
   );
 };
