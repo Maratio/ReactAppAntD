@@ -7,6 +7,7 @@ import {
   CameraOutlined,
   HomeOutlined,
   FormOutlined,
+  MessageOutlined,
 } from "@ant-design/icons";
 
 const MenuSite = () => {
@@ -15,6 +16,7 @@ const MenuSite = () => {
   const handleSelectTrips = () => navigate("/trips");
   const handleSelectPosts = () => navigate("/posts");
   const handleSelectPhotos = () => navigate("/photos");
+  const handleSelectComments = () => navigate("/comments");
 
   const items = [
     {
@@ -37,6 +39,12 @@ const MenuSite = () => {
     },
     {
       key: "4",
+      icon: <MessageOutlined />,
+      label: "Отзывы на Заметки",
+      onClick: handleSelectComments,
+    },
+    {
+      key: "5",
       icon: <CameraOutlined />,
       label: "Фото",
       onClick: handleSelectPhotos,

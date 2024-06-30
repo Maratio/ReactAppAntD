@@ -1,26 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CardTrip from "../components/Card/CardTrip";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite";
-import { getCards } from "../utils/fetch";
+import { getCards, getPagesPost } from "../utils/fetch";
 
 const CardsTripList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
-  const [pageTripsList, setPageTripsList] = useState([]);
+  const [pagePostsList, setPagePostsList] = useState([]);
+  const card = "routes";
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
-  const card = "routes";
+
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   const getTrips = () => {
-    getCards(card, setPageTripsList, setRecCount, pageCurrent, pageSize);
+    getCards(card).then((data) => {
+      updatePostsList(data);
+    });
   };
 
-  useEffect(getTrips, [pageCurrent, pageSize]);
+  useEffect(getTrips, [pageCurrent, pageSize,updatePostsList]);
 
   return (
     <div>
@@ -30,7 +44,7 @@ const CardsTripList = () => {
         </h2>
       </div>
       <div className={classes.list}>
-        {pageTripsList.map(({ userId, id, url, title, body }) => (
+        {pagePostsList.map(({ userId, id, url, title, body }) => (
           <div key={id}>
             <CardTrip post={{ userId, id, url, title, body }} />
           </div>

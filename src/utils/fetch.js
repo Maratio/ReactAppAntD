@@ -4,33 +4,51 @@ const headers = {
     "Content-Type": "application/json",
 }
 
+export async function deleteCard(card, postId) {
+    try {
+         const response = await fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
+         return response
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
 
-export function deleteCard(card, postId, setPagePostsList, setRecCount, pageCurrent, pageSize) {
-    fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
-        .then((response) => {
-            if (response.status === 204) {
-                getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
-            }
-        })
-        .catch((err) => console.error("error >>>>>", err));
 };
 
-export function getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize) {
-    fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
-        .then((response) => {
-            if (response.status === 200) {
-                response.json().then((data) => {
-                    const response = getPagesPost(
-                        { page: pageCurrent, limit: pageSize },
-                        data
-                    );
-                    setPagePostsList(response.tripPosts);
-                    setRecCount(response.recCount);
-                });
-            }
-        })
-        .catch((err) => console.error("error >>>>>", err));
+export async function deleteCommentsWithPost(postId) {
+    try {
+         const response = await fetch(`${BACKEND_URL}/api/comments/${postId}/comment?`, { method: "DELETE" })
+         const result = await response.json
+         return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
+
+};
+
+export async function getCards(card) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/${card}?`, { method: "GET" })
+        const result = await response.json()
+        return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
 }
+
+export async function getCardsFilter(card, postId) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/posts/${postId}/${card}?`, { method: "GET" })
+        const result = await response.json()
+        return result
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+    }
+}
+
 
 export function getPagesPost({ limit = 5, page = 1 }, data) {
     return {
@@ -55,7 +73,10 @@ export function deleteCardDetail(id, card, navigate) {
     fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "DELETE" })
         .then((response) => {
             if (response.status === 204) {
-                navigate(`/${card}`)
+                navigate(-1)
+            }
+            if(card === "posts"){
+                deleteCommentsWithPost(id)
             }
         })
         .catch((err) => console.error("error >>>>>", err));
@@ -69,6 +90,7 @@ export function addCard(req) {
             title: req.Title,
             body: req.Description,
             url: req.Img_url,
+            rate: req.Rating
         }),
     })
         .then((response) => {
@@ -79,19 +101,40 @@ export function addCard(req) {
         .catch((err) => console.error("error >>>>>", err));
 };
 
-export function updateCard(Title, Description, Img_url, navigate, id) {
-    fetch(`${BACKEND_URL}/api/posts/${id}?`, {
+export function addCardComment(req) {
+    fetch(`${BACKEND_URL}/api/posts/${req.postId}/${req.card}?`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+            title: req.Title,
+            body: req.Description,
+            rate: req.Rating,
+            postId: req.postId
+        }),
+    })
+        .then((response) => {
+            if (response.status === 201) {
+                req.navigate(-1)
+            }
+        })
+        .catch((err) => console.error("error >>>>>", err));
+};
+
+
+export function updateCard(req) {
+    fetch(`${BACKEND_URL}/api/posts/${req.id}?`, {
         method: "PUT",
         headers,
         body: JSON.stringify({
-            title: Title,
-            body: Description,
-            url: Img_url,
+            title: req.Title,
+            body: req.Description,
+            url: req.Img_url,
+            rate: req.Rating
         }),
     })
         .then((response) => {
             if (response.status === 200) {
-                navigate(-1);
+                req.navigate(-1);
             }
         })
         .catch((err) => console.error("error >>>>>", err));

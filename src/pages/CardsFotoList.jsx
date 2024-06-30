@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCard, getCards} from "../utils/fetch";
+import { deleteCard, getCards, getPagesPost } from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
 
 const CardsFototList = () => {
@@ -12,30 +12,40 @@ const CardsFototList = () => {
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
+  const card = "photos";
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const card = "photos";
+  const updatePostsList = useCallback(
+    (data) => {
+      const response = getPagesPost(
+        { page: pageCurrent, limit: pageSize },
+        data
+      );
+      setPagePostsList(response.tripPosts);
+      setRecCount(response.recCount);
+    },
+    [pageCurrent, pageSize]
+  );
 
   function getPosts() {
-    getCards(card, setPagePostsList, setRecCount, pageCurrent, pageSize);
+    getCards(card).then((data) => {
+      updatePostsList(data);
+    });
   }
 
   const deletePost = (id) => {
-    deleteCard(
-      card,
-      id,
-      setPagePostsList,
-      setRecCount,
-      pageCurrent,
-      pageSize
-    );
+    deleteCard(card, id).then((response) => {
+      if (response.status === 204) {
+        getPosts();
+      }
+    });
   };
 
-  useEffect(getPosts, [pageCurrent, pageSize]);
+  useEffect(getPosts, [pageCurrent, pageSize,updatePostsList]);
 
   return (
     <div>

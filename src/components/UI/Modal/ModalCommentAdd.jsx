@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
 import FormPostAdd from "../Form/FormPostAdd.jsx";
-import { useNavigate } from "react-router-dom";
-const title = "Заполни данные и добавь Заметку по Маршруту";
+import { useNavigate, useParams } from "react-router-dom";
+import FormCommentAdd from "../Form/FormCommentAdd.jsx";
 
-const ModalPostAdd = () => {
+const ModalCommentAdd = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
+  const { postId } = useParams();
+const title = `Заполни данные и добавь отзыв на Заметку #${postId}`;
+
   const handleModalClose = () => {
     setOpen(false);
     navigate(-1);
@@ -24,10 +27,10 @@ const ModalPostAdd = () => {
         onCancel={handleModalClose}
         width={1000}
       >
-        <FormPostAdd closeModal={setOpen} />
+        <FormCommentAdd postId = {postId} closeModal={setOpen} />
       </Modal>
     </>
   );
 };
 
-export default ModalPostAdd;
+export default ModalCommentAdd;
