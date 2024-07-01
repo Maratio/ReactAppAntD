@@ -56,7 +56,7 @@ const CardsPostList = () => {
 
   const onSearch = (data) => {
     getCardsSerch(card, data).then((response) => {
-      if (response.length) {
+      if (response) {
         updatePostsList(response);
       }
     });
