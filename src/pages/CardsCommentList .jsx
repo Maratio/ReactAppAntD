@@ -10,7 +10,7 @@ import {
 import CardComment from "../components/Card/CardComment.jsx";
 import { Button, Space, Select, ConfigProvider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-const captionComments = `Все Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
+const captionComments = `Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
 const card = "comments";
 
 const CardsCommentList = () => {

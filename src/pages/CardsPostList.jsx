@@ -12,6 +12,7 @@ import {
   getPagesPost,
 } from "../utils/fetch";
 import Search from "antd/es/input/Search.js";
+import { useDebounce } from "../customHooks/useDebounce.js";
 const caption = "Заметки по Маршрутам";
 
 const CardsPostList = () => {
@@ -19,6 +20,9 @@ const CardsPostList = () => {
   const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const debouncedSearchTerm = useDebounce(searchTerm, 1000);
   const navigate = useNavigate();
   const card = "posts";
 
@@ -54,15 +58,22 @@ const CardsPostList = () => {
     });
   };
 
-  const onSearch = (data) => {
-    getCardsSerch(card, data).then((response) => {
-      if (response) {
-        updatePostsList(response);
-      }
-    });
+  const onSearch = () => {
+    if (debouncedSearchTerm) {
+      setIsSearching(true);
+      getCardsSerch(card, debouncedSearchTerm).then((response) => {
+        if (response) {
+          setIsSearching(false);
+          updatePostsList(response);
+        }
+      });
+    } else getPosts();
   };
 
+  const handleSearch = (e) => setSearchTerm(e.target.value);
+
   useEffect(getPosts, [pageCurrent, pageSize, updatePostsList]);
+  useEffect(onSearch, [debouncedSearchTerm, updatePostsList]);
 
   return (
     <div className={classes.content}>
@@ -76,10 +87,10 @@ const CardsPostList = () => {
         </Button>
         <h2>{caption}</h2>
         <Search
-          placeholder="input search text"
-          onSearch={onSearch}
-          enterButton
+          onChange={handleSearch}
+          placeholder="Введите слово"
           style={{ width: 200 }}
+          loading={isSearching}
         />
       </div>
       <div className={classes.list}>

@@ -10,6 +10,8 @@ import {
   deletePhotosAction,
   fetchPhotosAction,
 } from "../store/actions/photoActions.js";
+const captionPhoto =
+    "Смотрите и добавляйте фотографии своих Маршрутов, также их можно удалять";
 
 const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -56,7 +58,7 @@ const CardsFototList = () => {
         >
           Добавить Фото
         </Button>
-        <h2>Смотрите и добавляйте фотографии своих Маршрутов</h2>
+        <h2>{captionPhoto}</h2>
       </div>
       <div className={classes.list}>
         {pagePostsList.map(({ id, url, albumId, title }) => (
