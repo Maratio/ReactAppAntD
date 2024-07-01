@@ -3,8 +3,13 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { deleteCard, getCards, getPagesPost } from "../utils/fetch";
+import { getPagesPost } from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deletePhotosAction,
+  fetchPhotosAction,
+} from "../store/actions/photoActions.js";
 
 const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -12,40 +17,33 @@ const CardsFototList = () => {
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
-  const card = "photos";
+  const dispatch = useDispatch();
+  const { photos } = useSelector((state) => state.photoReducer);
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const updatePostsList = useCallback(
-    (data) => {
-      const response = getPagesPost(
-        { page: pageCurrent, limit: pageSize },
-        data
-      );
-      setPagePostsList(response.tripPosts);
-      setRecCount(response.recCount);
-    },
-    [pageCurrent, pageSize]
-  );
+  const updatePostsList = useCallback(() => {
+    const response = getPagesPost(
+      { page: pageCurrent, limit: pageSize },
+      photos
+    );
+    setPagePostsList(response.tripPosts);
+    setRecCount(response.recCount);
+  }, [photos, pageCurrent, pageSize]);
 
   function getPosts() {
-    getCards(card).then((data) => {
-      updatePostsList(data);
-    });
+    dispatch(fetchPhotosAction());
   }
 
   const deletePost = (id) => {
-    deleteCard(card, id).then((response) => {
-      if (response) {
-        getPosts();
-      }
-    });
+    dispatch(deletePhotosAction(id));
   };
 
-  useEffect(getPosts, [pageCurrent, pageSize,updatePostsList]);
+  useEffect(getPosts, [dispatch, pageCurrent, pageSize]);
+  useEffect(updatePostsList, [photos, updatePostsList]);
 
   return (
     <div>

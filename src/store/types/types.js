@@ -1,3 +1,4 @@
+export const THEME_COLOR_WHITE = "colorWhite"
+export const THEME_COLOR_AQUA = "colorAqua"
+export const THEME_COLOR_ORANGE = "colorOrange"
 
-export const MINUS = 'MINUS'
-export const INCREMENT_CHANGE_VIEW_POSTS = 'INCREMENT_CHANGE_VIEW'
