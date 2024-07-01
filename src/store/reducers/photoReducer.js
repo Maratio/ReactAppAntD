@@ -13,6 +13,11 @@ export const photoReducer = (state = initialState, action) => {
         photos: state.photos.filter((e) => e.id !== action.payload),
       };
 
+    case "ADD_PHOTO":
+      return {
+        ...state,
+        photos: [...state.photos, action.payload],
+      };
     default:
       return state;
   }

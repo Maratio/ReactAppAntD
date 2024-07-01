@@ -30,6 +30,7 @@ const CardsFototList = () => {
       { page: pageCurrent, limit: pageSize },
       photos
     );
+
     setPagePostsList(response.tripPosts);
     setRecCount(response.recCount);
   }, [photos, pageCurrent, pageSize]);
