@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./MenuSite.module.css";
 import cn from "classnames";
-import { Menu, Switch } from "antd";
+import { Menu } from "antd";
 import {
   CompassOutlined,
   CameraOutlined,
   HomeOutlined,
   FormOutlined,
   MessageOutlined,
+  FormatPainterOutlined,
 } from "@ant-design/icons";
-import appContext from "../../context/appContext";
+import { useDispatch, useSelector } from "react-redux";
+import { changeColorThemeAction } from "../../store/actions/changeColorThemeAction";
 
 const MenuSite = () => {
   const navigate = useNavigate();
@@ -19,11 +21,21 @@ const MenuSite = () => {
   const handleSelectPosts = () => navigate("/posts");
   const handleSelectPhotos = () => navigate("/photos");
   const handleSelectComments = () => navigate("/comments");
-  const { colorTheme, setColorTheme } = useContext(appContext);
-  const cnMenuSite = cn(classes.menu, { [classes.othTheme]: colorTheme });
 
-  const onChange = (checked) => {
-    setColorTheme(checked);
+  const dispatch = useDispatch();
+  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const cnMenuSite = cn(classes.menu, classes[`${colorTheme}`]);
+
+  const handleChangeWhite = () => {
+    dispatch(changeColorThemeAction("white"));
+  };
+
+  const handleChangeAqua = () => {
+    dispatch(changeColorThemeAction("aqua"));
+  };
+
+  const handleChangeOrange = () => {
+    dispatch(changeColorThemeAction("orange"));
   };
 
   const items = [
@@ -57,11 +69,29 @@ const MenuSite = () => {
       label: "Фото",
       onClick: handleSelectPhotos,
     },
-   
+
     {
       key: "6",
-      icon: <Switch size="small"  onChange={onChange} />,
+      icon: <FormatPainterOutlined />,
       label: "Смена стиля",
+      style: { height: "auto" },
+      children: [
+        {
+          key: "7",
+          label: "Стандартный",
+          onClick: handleChangeWhite,
+        },
+        {
+          key: "8",
+          label: "Аква",
+          onClick: handleChangeAqua,
+        },
+        {
+          key: "9",
+          label: "Апельсин",
+          onClick: handleChangeOrange,
+        },
+      ],
     },
   ];
 

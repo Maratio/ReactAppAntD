@@ -112,24 +112,32 @@ export function deleteCardDetail(id, card, navigate) {
         .catch((err) => console.error("error >>>>>", err));
 };
 
-export function addCard(req) {
-    fetch(`${BACKEND_URL}/api/${req.card}?`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-            title: req.Title,
-            body: req.Description,
-            url: req.Img_url,
-            rate: req.Rating
-        }),
-    })
-        .then((response) => {
-            if (/^2/.test(response.status))
-                req.navigate(-1)
-            else throw Error()
+export async function addCard(req) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/${req.card}?`, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({
+                title: req.Title,
+                body: req.Description,
+                url: req.Img_url,
+                rate: req.Rating
+            }),
         })
-        .catch((err) => console.error("error >>>>>", err));
-};
+        if (/^2/.test(response.status)) {
+            req.navigate(-1)
+            return response.json()
+        }
+        else throw Error()
+    }
+    catch (err) {
+        console.error("error >>>>>", err);
+        return {}
+    }
+
+}
+
+
 
 export function addCardComment(req) {
     fetch(`${BACKEND_URL}/api/posts/${req.postId}/${req.card}?`, {

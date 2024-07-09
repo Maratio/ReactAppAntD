@@ -1,17 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Card } from "antd";
 import classes from "./Card.module.css";
 import { getCardDetail } from "../../utils/fetch";
 import cn from "classnames";
-import appContext from "../../context/appContext";
-
+import { useSelector } from "react-redux";
 const { Meta } = Card;
 const card = "routes";
 
 const CardTripDetail = () => {
-  const { colorTheme } = useContext(appContext);
-  const cnCard = cn(classes.cardDetail, { [classes.othTheme]: colorTheme });
+  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const cnCard = cn(classes.cardDetail, classes[`${colorTheme}`]);
 
   const { id } = useParams();
   const [dataPost, setDataPost] = useState("");

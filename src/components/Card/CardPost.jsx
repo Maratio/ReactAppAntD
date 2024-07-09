@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import classes from "./Card.module.css";
 import {
   EditOutlined,
@@ -9,14 +9,12 @@ import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 import cn from "classnames";
-import appContext from "../../context/appContext";
-
+import { useSelector } from "react-redux";
 const { Meta } = Card;
 
 const CardPost = ({ post, deletePost }) => {
-  const { colorTheme } = useContext(appContext);
-  const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
-
+  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const cnCard = cn(classes.card, classes[`${colorTheme}`]);
   const navigate = useNavigate();
   const title = "N" + post.id + ". " + post.title;
   const description =

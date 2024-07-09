@@ -1,16 +1,14 @@
-import React, { useContext } from "react";
+import React from "react";
 import classes from "./Card.module.css";
 import { Card } from "antd";
 import { useNavigate } from "react-router-dom";
 import cn from "classnames";
-import appContext from "../../context/appContext";
-
+import { useSelector } from "react-redux";
 const { Meta } = Card;
 
 const CardTrip = (props) => {
-  const { colorTheme } = useContext(appContext);
-  const cnCard = cn(classes.card, { [classes.othTheme]: colorTheme });
-
+  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const cnCard = cn(classes.card, classes[`${colorTheme}`]);
   const navigate = useNavigate();
   const description =
     props.post?.body?.length > 120
