@@ -26,7 +26,6 @@ export const spareRoutes = [
   { path: '/about', element: <About /> },
   { path: '/contacts', element: <Contacts /> },
   { path: '/profile', element: <Profile /> },
-
 ]
 
 
@@ -44,7 +43,4 @@ export const authRoutes = [
   { path: '/posts/:postId/comments', element: <CardsCommentList /> },
   { path: '/comments/:postId/new', element: <ModalCommentAdd /> },
   { path: '/comments', element: <CardsCommentList /> },
-
-
-
 ]

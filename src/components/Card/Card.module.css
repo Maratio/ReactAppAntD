@@ -1,4 +1,3 @@
-
 .card {
   padding: 10px;
   overflow: hidden;
@@ -6,13 +5,13 @@
   width: 320px;
 }
 
-.body {
-  height: 10vw;
-  overflow: hidden;
+.othTheme {
+  background-color: aqua;
 }
 
 .meta {
-  height: 100%;
+  height: 20vh;
+  overflow: hidden;
 }
 
 .card img {
@@ -21,24 +20,16 @@
   margin: 0 auto;
 }
 
-.bodyDetail{
-  height: auto;
-  width: auto;
-  
-}
-
-.metaDetail{
+.metaDetail {
   height: auto;
   width: auto;
 }
 
-.cardDetail{
- width: 50%;
- min-height: 100% !important;
+.cardDetail {
+  width: 50%;
+  min-height: 100% !important;
 }
 
 .cardDetail img {
- height: 50vh;
+  height: 50vh;
 }
-
-

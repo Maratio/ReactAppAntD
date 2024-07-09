@@ -12,20 +12,18 @@ const ModalFotoAdd = () => {
   };
 
   return (
-    <>
-      <Modal
-        title="Заполни данные и добавь Фото"
-        centered
-        open={open}
-        cancelButtonProps={{ style: { display: "none" } }}
-        okButtonProps={{ style: { display: "none" } }}
-        onOk={handleModalClose}
-        onCancel={handleModalClose}
-        width={1000}
-      >
-        <FormFotoAdd closeModal={setOpen} />
-      </Modal>
-    </>
+    <Modal
+      title="Заполни данные и добавь Фото"
+      centered
+      open={open}
+      cancelButtonProps={{ style: { display: "none" } }}
+      okButtonProps={{ style: { display: "none" } }}
+      onOk={handleModalClose}
+      onCancel={handleModalClose}
+      width={1000}
+    >
+      <FormFotoAdd closeModal={setOpen} />
+    </Modal>
   );
 };
 
