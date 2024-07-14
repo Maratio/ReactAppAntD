@@ -2,26 +2,33 @@ import { Modal } from "antd";
 import FormPostUpdate from "../Form/FormPostUpdate..jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getCardDetail } from "../../../utils/fetch.js";
-const card = "posts";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchOnePostAction,
+  resetStateItemAction,
+} from "../../../storeToolkit/services/postsSlice.js";
 
 const ModalPostUpdate = () => {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [dataPost, setDataPost] = useState(false);
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.posts.item);
   const title = `Обнови данные по Заметке #${id}`;
 
   function getPost() {
-    getCardDetail(card, setDataPost, id);
+    console.log({ post });
+    console.log({ id });
+    dispatch(fetchOnePostAction(id));
   }
 
   const handleModalClose = () => {
     setOpen(false);
+    dispatch(resetStateItemAction());
     navigate(-1);
   };
 
-  useEffect(getPost, [id]);
+  useEffect(getPost, [id, dispatch]);
 
   return (
     <Modal
@@ -34,8 +41,8 @@ const ModalPostUpdate = () => {
       onCancel={handleModalClose}
       width={1000}
     >
-      {dataPost && (
-        <FormPostUpdate closeModal={setOpen} id={id} dataPost={dataPost} />
+      {Object.keys(post).length !== 0 && (
+        <FormPostUpdate closeModal={setOpen} id={id} post={post} />
       )}
     </Modal>
   );

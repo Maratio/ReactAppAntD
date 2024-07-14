@@ -3,8 +3,8 @@ import { Button, Form, Input, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
-import { addPhotosAction } from "../../../store/actions/photoActions";
 import { useDispatch } from "react-redux";
+import { addPhotosAction } from "../../../storeToolkit/services/photosSlice";
 
 const FormFotoAdd = ({ closeModal }) => {
   const navigate = useNavigate();

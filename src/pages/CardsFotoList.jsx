@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deletePhotosAction,
   fetchPhotosAction,
-} from "../store/actions/photoActions.js";
+} from "../storeToolkit/services/photosSlice.js";
 const captionPhoto =
-    "Смотрите и добавляйте фотографии своих Маршрутов, также их можно удалять";
+  "Смотрите и добавляйте фотографии своих Маршрутов, также их можно удалять";
 
 const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -20,7 +20,7 @@ const CardsFototList = () => {
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { photos } = useSelector((state) => state.photoReducer);
+  const photos = useSelector((state) => state.photos.items);
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
@@ -37,16 +37,16 @@ const CardsFototList = () => {
     setRecCount(response.recCount);
   }, [photos, pageCurrent, pageSize]);
 
-  function getPosts() {
+  const getPosts = () => {
     dispatch(fetchPhotosAction());
-  }
+  };
 
   const deletePost = (id) => {
     dispatch(deletePhotosAction(id));
   };
 
-  useEffect(getPosts, [dispatch, pageCurrent, pageSize]);
-  useEffect(updatePostsList, [photos, updatePostsList]);
+  useEffect(getPosts, [dispatch]);
+  useEffect(updatePostsList, [updatePostsList]);
 
   return (
     <div>

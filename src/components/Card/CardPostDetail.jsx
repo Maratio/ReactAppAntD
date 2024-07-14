@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import classes from "./Card.module.css";
 import {
@@ -7,23 +7,24 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import { Card, Rate } from "antd";
-import { deleteCardDetail, getCardDetail } from "../../utils/fetch";
+import { deleteCardDetail } from "../../utils/fetch";
 import cn from "classnames";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOnePostAction, resetStateItemAction } from "../../storeToolkit/services/postsSlice";
 const { Meta } = Card;
 const card = "posts";
 
 const CardPostDetail = () => {
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnCard = cn(classes.cardDetail, classes[`${colorTheme}`]);
-
+  const dispatch = useDispatch();
+  const post = useSelector((state) => state.posts.item);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [dataPost, setDataPost] = useState("");
-  const title = "N" + dataPost.id + ". " + dataPost.title;
+  const title = `N${post.id}. ${post.title}`;
 
   function getPost() {
-    getCardDetail(card, setDataPost, id);
+    dispatch(fetchOnePostAction(id));
   }
 
   const deletePost = (id) => {
@@ -31,6 +32,7 @@ const CardPostDetail = () => {
   };
 
   const handleEditPost = () => {
+    dispatch(resetStateItemAction());
     navigate(`/posts/${id}/update`);
   };
 
@@ -43,14 +45,14 @@ const CardPostDetail = () => {
     navigate(`/posts/${id}/comments`);
   };
 
-  useEffect(getPost, [id]);
+  useEffect(getPost, [id, dispatch]);
 
   return (
     <Card
       className={cnCard}
       size="small"
-      extra={<Rate value={dataPost.rate} count={10} disabled />}
-      cover={<img alt="example" src={dataPost.url} />}
+      extra={<Rate value={post.rate} count={10} disabled />}
+      cover={<img alt="example" src={post.url} />}
       actions={[
         <EditOutlined onClick={handleEditPost} key="edit" />,
         <DeleteOutlined onClick={handleDeletePost} key="delete" />,
@@ -60,7 +62,7 @@ const CardPostDetail = () => {
       <Meta
         className={classes.metaDetail}
         title={title}
-        description={dataPost.body}
+        description={post.body}
       />
     </Card>
   );
