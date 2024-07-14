@@ -10,19 +10,10 @@
   overflow: hidden;
 }
 
-.card {
-  height: auto;
-  width: auto;
-}
-
-.img {
-  height: 100px;
-  width: 100px;
-}
-
 .layout {
-  border-radius: 8 ;
-  overflow: hidden ;
-  width: 100% ;
-  min-height: 100vh ;
+  border-radius: 8;
+  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 0;
 }

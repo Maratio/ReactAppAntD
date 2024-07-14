@@ -13,7 +13,7 @@
   background-color: white;
 }
 
-.orange{
+.orange {
   background-color: orange;
 }
 
@@ -34,7 +34,8 @@
 }
 
 .cardDetail {
-  width: 50%;
+  border: solid 5px #1677ff;
+  width: 100%;
   min-height: 100% !important;
 }
 
