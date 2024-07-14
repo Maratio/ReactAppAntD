@@ -146,6 +146,23 @@ app.delete('/api/photos/:id', (req, res) => {
   });
 });
 
+// Получить результаты поиска в фотографиях
+app.get('/api/photos-search', (req, res) => {
+  const searchTerm = req.query.term.toLowerCase()
+
+  fs.readFile(PHOTOS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const photos = JSON.parse(data).photos;
+    const searchResults = photos.filter(
+      post =>
+        post.title.toLowerCase().includes(searchTerm))
+    res.json(searchResults);
+  });
+});
 
 // Получить один пост по ID
 app.get('/api/posts/:id', (req, res) => {
@@ -271,7 +288,7 @@ app.delete('/api/posts/:id', (req, res) => {
   });
 });
 
-// Получить результаты поиска
+// Получить результаты поиска в постах
 app.get('/api/posts-search', (req, res) => {
   const searchTerm = req.query.term.toLowerCase()
 
@@ -289,6 +306,7 @@ app.get('/api/posts-search', (req, res) => {
     res.json(searchResults);
   });
 });
+
 
 // Получить все комментарии
 app.get('/api/comments', (req, res) => {
@@ -422,6 +440,26 @@ app.delete('/api/comments/:postId/comment', (req, res) => {
     });
   });
 });
+
+// Получить результаты поиска в комментариях
+app.get('/api/comments-search', (req, res) => {
+  const searchTerm = req.query.term.toLowerCase()
+
+  fs.readFile(COMMENTS_DB_PATH, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Ошибка чтения файла:', err);
+      res.status(500).send('Ошибка сервера');
+      return;
+    }
+    const comments = JSON.parse(data).comments;
+    const searchResults = comments.filter(
+      post =>
+        post.title.toLowerCase().includes(searchTerm)
+        || post.body.toLowerCase().includes(searchTerm));
+    res.json(searchResults);
+  });
+});
+
 
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);

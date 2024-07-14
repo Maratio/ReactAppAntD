@@ -3,15 +3,16 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getPagesPost } from "../utils/fetch";
+import { getCardsSearch, getPagesPost } from "../utils/fetch";
 import CardFoto from "../components/Card/CardFoto.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deletePhotosAction,
   fetchPhotosAction,
 } from "../storeToolkit/services/photosSlice.js";
+import Search from "antd/es/input/Search.js";
 const captionPhoto =
-  "Смотрите и добавляйте фотографии своих Маршрутов, также их можно удалять";
+  "Фотографии Маршрутов";
 
 const CardsFototList = () => {
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -27,10 +28,10 @@ const CardsFototList = () => {
     if (pageSize !== newPageSize) setPageSize(newPageSize);
   }
 
-  const updatePostsList = useCallback(() => {
+  const updatePostsList = useCallback((data = photos) => {
     const response = getPagesPost(
       { page: pageCurrent, limit: pageSize },
-      photos
+      data
     );
 
     setPagePostsList(response.tripPosts);
@@ -43,6 +44,14 @@ const CardsFototList = () => {
 
   const deletePost = (id) => {
     dispatch(deletePhotosAction(id));
+  };
+
+  const onSearch = (data) => {
+    getCardsSearch("photos", data).then((response) => {
+      if (response) {
+        updatePostsList(response);
+      }
+    });
   };
 
   useEffect(getPosts, [dispatch]);
@@ -59,6 +68,12 @@ const CardsFototList = () => {
           Добавить Фото
         </Button>
         <h2>{captionPhoto}</h2>
+        <Search
+          placeholder="input search text"
+          onSearch={onSearch}
+          enterButton
+          style={{ width: 200 }}
+        />
       </div>
       <div className={classes.list}>
         {pagePostsList.map(({ id, url, albumId, title }) => (
