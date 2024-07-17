@@ -5,12 +5,14 @@ import {
   deleteCard,
   getCards,
   getCardsFilter,
+  getCardsSearch,
   getPagesPost,
 } from "../utils/fetch.js";
 import CardComment from "../components/Card/CardComment.jsx";
 import { Button, Space, Select, ConfigProvider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-const captionComments = `Отзывы на Заметки, для фильтрации по Заметкам используйте выпадающий список`;
+import Search from "antd/es/input/Search.js";
+const captionComments = `Отзывы на Заметки`;
 const card = "comments";
 
 const CardsCommentList = () => {
@@ -21,7 +23,7 @@ const CardsCommentList = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const [items, setItems] = useState([]);
-  const caption = `Смотрите, редактируйте, удаляйте, добавляйте ваши Отзывы к Заметке #${postId}`;
+  const caption = `Отзывы к Заметке #${postId}`;
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
     if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
@@ -75,6 +77,14 @@ const CardsCommentList = () => {
     navigate(value);
   };
 
+  const onSearch = (data) => {
+    getCardsSearch(card, data).then((response) => {
+      if (response) {
+        updatePostsList(response);
+      }
+    });
+  };
+
   useEffect(getComments, [postId, pageCurrent, pageSize, updatePostsList]);
 
   return (
@@ -114,7 +124,15 @@ const CardsCommentList = () => {
             </Space>
           </Space>
         )}
-        {postId ? <h2>{caption}</h2> : <h2>{captionComments}</h2>}
+        {postId ? <h2 style={{right:400}}>{caption}</h2> : <h2>{captionComments}</h2>}
+        {!postId && (
+          <Search
+            placeholder="input search text"
+            onSearch={onSearch}
+            enterButton
+            style={{ width: 200 }}
+          />
+        )}
       </div>
       <div className={classes.list}>
         {pagePostsList.map(({ postId, id, title, body, rate }) => (

@@ -11,12 +11,12 @@ const { Meta } = Card;
 const card = "comments";
 
 const CardComment = ({ post, deletePost }) => {
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnCard = cn(classes.card, classes[`${colorTheme}`]);
 
   const navigate = useNavigate();
   const title =
-    "Отзыв N" + post.id + ` на Заметку #${post.postId}. ` + post.title;
+    `Отзыв N${post.id} на Заметку #${post.postId}. ${post.title}`
   const description =
     post?.body?.length > 90 ? post.body.slice(0, 89) + "..." : post.body;
 

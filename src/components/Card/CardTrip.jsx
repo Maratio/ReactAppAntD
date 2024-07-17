@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 const { Meta } = Card;
 
 const CardTrip = (props) => {
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnCard = cn(classes.card, classes[`${colorTheme}`]);
   const navigate = useNavigate();
   const description =

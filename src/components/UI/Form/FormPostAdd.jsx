@@ -2,16 +2,16 @@ import React from "react";
 import { Button, Form, Input, Rate, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 import SubmitButtonForm from "../Button/SubmitButtonForm";
-import { addCard } from "../../../utils/fetch";
 import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
-
-const card = "posts";
+import { addPostsAction } from "../../../storeToolkit/services/postsSlice";
+import { useDispatch } from "react-redux";
 
 const FormPostAdd = ({ closeModal }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function addPost({Rating, Title, Img_url, Description }) {
-    addCard({Rating, Title, Img_url, navigate, card, Description });
+  function addPost({ Rating, Title, Img_url, Description }) {
+    dispatch(addPostsAction({ Rating, Title, Img_url, navigate, Description }));
   }
 
   const [formAdd] = Form.useForm();

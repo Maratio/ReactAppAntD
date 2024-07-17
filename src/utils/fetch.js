@@ -4,7 +4,7 @@ const headers = {
     "Content-Type": "application/json",
 }
 
-export async function getCardsSerch(card, data) {
+export async function getCardsSearch(card, data) {
     try {
         const queryParams = new URLSearchParams({ term: data })
         const response = await fetch(`${BACKEND_URL}/api/${card}-search?${queryParams}`, { method: "GET" })
@@ -18,11 +18,13 @@ export async function getCardsSerch(card, data) {
     }
 }
 
-export async function deleteCard(card, postId) {
+export async function deleteCard(card, id) {
     try {
-        const response = await fetch(`${BACKEND_URL}/api/${card}/${postId}?`, { method: "DELETE" })
-        if (/^2/.test(response.status))
+        const response = await fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "DELETE" })
+        if (/^2/.test(response.status)) {
+            if (card === "posts") { await deleteCommentsWithPost(id) }
             return response
+        }
         else throw Error()
     }
     catch (err) {
@@ -32,7 +34,7 @@ export async function deleteCard(card, postId) {
 
 };
 
-export async function deleteCommentsWithPost(postId) {
+async function deleteCommentsWithPost(postId) {
     try {
         const response = await fetch(`${BACKEND_URL}/api/comments/${postId}/comment?`, { method: "DELETE" })
         if (/^2/.test(response.status))
@@ -79,23 +81,18 @@ export function getPagesPost({ limit = 5, page = 1 }, data) {
     };
 }
 
-export function getCardDetail(card, setDataPost, id) {
-    fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "GET" })
-        .then((response) => {
-            if (/^2/.test(response.status)) {
-                response.json().then((data) => {
-                    setDataPost(data);
-                });
-            }
-            else throw Error()
-        })
-        .catch(
-            (err) => {
-                console.error("error >>>>>", err)
-                return []
-            }
-        );
-
+export async function getCardDetail(card, id) {
+    try {
+        const response = await fetch(`${BACKEND_URL}/api/${card}/${id}?`, { method: "GET" })
+        if (/^2/.test(response.status)) {
+            return response.json()
+        }
+        else throw Error()
+    }
+    catch (err) {
+        console.error("error >>>>>", err)
+        return []
+    }
 }
 
 export function deleteCardDetail(id, card, navigate) {

@@ -12,7 +12,7 @@ import {
   FormatPainterOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { changeColorThemeAction } from "../../store/actions/changeColorThemeAction";
+import { themeChange } from "../../storeToolkit/services/themeSlice";
 
 const MenuSite = () => {
   const navigate = useNavigate();
@@ -23,19 +23,19 @@ const MenuSite = () => {
   const handleSelectComments = () => navigate("/comments");
 
   const dispatch = useDispatch();
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnMenuSite = cn(classes.menu, classes[`${colorTheme}`]);
 
   const handleChangeWhite = () => {
-    dispatch(changeColorThemeAction("white"));
+    dispatch(themeChange("white"));
   };
 
   const handleChangeAqua = () => {
-    dispatch(changeColorThemeAction("aqua"));
+    dispatch(themeChange("aqua"));
   };
 
   const handleChangeOrange = () => {
-    dispatch(changeColorThemeAction("orange"));
+    dispatch(themeChange("orange"));
   };
 
   const items = [

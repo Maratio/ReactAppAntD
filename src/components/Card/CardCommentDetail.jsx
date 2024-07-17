@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import classes from "./Card.module.css";
 import { DeleteOutlined } from "@ant-design/icons";
 import { Card, Rate } from "antd";
-import { deleteCardDetail, getCardDetail } from "../../utils/fetch";
+import { deleteCardDetail } from "../../utils/fetch";
 import cn from "classnames";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOneCommentsAction } from "../../storeToolkit/services/commentsSlice";
 const { Meta } = Card;
 const card = "comments";
 
 const CardCommentDetail = () => {
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnCard = cn(classes.cardDetail, classes[`${colorTheme}`]);
   const navigate = useNavigate();
   const { id } = useParams();
-  const [dataPost, setDataPost] = useState("");
-  const title =
-    "Отзыв N" +
-    dataPost.id +
-    ` на Заметку #${dataPost.postId}. ` +
-    dataPost.title;
+  const dispatch = useDispatch();
+  const comment = useSelector((state) => state.comments.item);
+  const title = `Отзыв N${comment.id} на Заметку #${comment.postId}. ${comment.title}`;
 
   function getComment() {
-    getCardDetail(card, setDataPost, id);
+    dispatch(fetchOneCommentsAction(id));
   }
 
   const deleteComment = (id) => {
@@ -33,19 +31,19 @@ const CardCommentDetail = () => {
     deleteComment(id);
   };
 
-  useEffect(getComment, [id]);
+  useEffect(getComment, [id, dispatch]);
 
   return (
     <Card
       className={cnCard}
       size="small"
-      extra={<Rate value={dataPost.rate} count={10} disabled />}
+      extra={<Rate value={comment.rate} count={10} disabled />}
       actions={[<DeleteOutlined onClick={handleDeleteComment} key="delete" />]}
     >
       <Meta
         className={classes.metaDetail}
         title={title}
-        description={dataPost.body}
+        description={comment.body}
       />
     </Card>
   );

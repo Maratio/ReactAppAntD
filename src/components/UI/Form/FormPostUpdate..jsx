@@ -4,7 +4,7 @@ import SubmitButtonForm from "../Button/SubmitButtonForm";
 import { updateCard } from "../../../utils/fetch";
 import { PATTERN_URL, PLACEHOLDER_URL } from "../../../utils/constants";
 
-const FormPostUpdate = ({ closeModal, id, dataPost }) => {
+const FormPostUpdate = ({ closeModal, id, post }) => {
   const navigate = useNavigate();
   const [formUpdate] = Form.useForm();
 
@@ -19,10 +19,10 @@ const FormPostUpdate = ({ closeModal, id, dataPost }) => {
       layout="vertical"
       autoComplete="off"
       initialValues={{
-        Rating: `${dataPost.rate}`,
-        Title: `${dataPost.title}`,
-        Description: `${dataPost.body}`,
-        Img_url: `${dataPost.url}`,
+        Rating: `${post.rate}`,
+        Title: `${post.title}`,
+        Description: `${post.body}`,
+        Img_url: `${post.url}`,
       }}
       onFinish={updatePost}
     >

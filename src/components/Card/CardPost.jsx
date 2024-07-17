@@ -9,16 +9,19 @@ import { Card } from "antd";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 import cn from "classnames";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetStateItemAction } from "../../storeToolkit/services/postsSlice";
 const { Meta } = Card;
 
 const CardPost = ({ post, deletePost }) => {
-  const colorTheme = useSelector((state) => state.themeReducer.colorTheme);
+  const colorTheme = useSelector((state) => state.theme.colorTheme);
   const cnCard = cn(classes.card, classes[`${colorTheme}`]);
   const navigate = useNavigate();
   const title = "N" + post.id + ". " + post.title;
   const description =
     post?.body?.length > 90 ? post.body.slice(0, 89) + "..." : post.body;
+  const dispatch = useDispatch();
+    
 
   const handleDetailPost = () => navigate(`/posts/${post.id}`);
   const handleDeletePost = (e) => {
@@ -28,6 +31,7 @@ const CardPost = ({ post, deletePost }) => {
 
   const handleEditPost = (e) => {
     e.stopPropagation();
+    dispatch(resetStateItemAction());
     navigate(`/posts/${post.id}/update`);
   };
 

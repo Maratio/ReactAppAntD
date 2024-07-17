@@ -13,7 +13,7 @@
   background-color: white;
 }
 
-.orange{
+.orange {
   background-color: orange;
 }
 
@@ -24,16 +24,18 @@
 
 .card img {
   width: 50vw;
-  height: 50vh;
+  height: 30vh;
   margin: 0 auto;
 }
 
 .metaDetail {
-  height: auto;
-  width: auto;
+  height: 20vh;
 }
 
 .cardDetail {
+  border: solid 5px #1677ff;
+  margin-left: auto;
+  margin-right: auto;
   width: 50%;
   min-height: 100% !important;
 }

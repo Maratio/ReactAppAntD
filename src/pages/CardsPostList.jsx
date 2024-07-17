@@ -4,15 +4,14 @@ import classes from "./CardsList.module.css";
 import PaginationSite from "../components/UI/Pagination/PaginationSite.jsx";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  deleteCard,
-  deleteCommentsWithPost,
-  getCards,
-  getCardsSerch,
-  getPagesPost,
-} from "../utils/fetch";
+import { getCardsSearch, getPagesPost } from "../utils/fetch";
 import Search from "antd/es/input/Search.js";
 import { useDebounce } from "../customHooks/useDebounce.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  deletePostsAction,
+  fetchPostsAction,
+} from "../storeToolkit/services/postsSlice.js";
 const caption = "Заметки по Маршрутам";
 
 const CardsPostList = () => {
@@ -24,6 +23,8 @@ const CardsPostList = () => {
   const [isSearching, setIsSearching] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm, 1000);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts.items);
   const card = "posts";
 
   function handleChangePaginator(newPageCurrent, newPageSize) {
@@ -32,7 +33,7 @@ const CardsPostList = () => {
   }
 
   const updatePostsList = useCallback(
-    (data) => {
+    (data = posts) => {
       const response = getPagesPost(
         { page: pageCurrent, limit: pageSize },
         data
@@ -40,39 +41,33 @@ const CardsPostList = () => {
       setPagePostsList(response.tripPosts);
       setRecCount(response.recCount);
     },
-    [pageCurrent, pageSize]
+    [posts, pageCurrent, pageSize]
   );
 
-  function getPosts() {
-    getCards(card).then((data) => {
-      updatePostsList(data);
-    });
-  }
+  const getPosts = () => {
+    dispatch(fetchPostsAction());
+  };
 
   const deletePost = (id) => {
-    deleteCard(card, id).then((response) => {
-      if (response) {
-        deleteCommentsWithPost(id);
-        getPosts();
-      }
-    });
+    dispatch(deletePostsAction(id));
   };
 
   const onSearch = () => {
     if (debouncedSearchTerm) {
       setIsSearching(true);
-      getCardsSerch(card, debouncedSearchTerm).then((response) => {
+      getCardsSearch(card, debouncedSearchTerm).then((response) => {
         if (response) {
           setIsSearching(false);
           updatePostsList(response);
         }
       });
-    } else getPosts();
+    }
+    updatePostsList();
   };
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
-  useEffect(getPosts, [pageCurrent, pageSize, updatePostsList]);
+  useEffect(getPosts, [dispatch]);
   useEffect(onSearch, [debouncedSearchTerm, updatePostsList]);
 
   return (
