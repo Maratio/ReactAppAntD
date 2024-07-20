@@ -47,7 +47,7 @@ const FormPostUpdate = ({ closeModal, id, post }) => {
       <Form.Item
         name="Description"
         label="Description"
-        rules={[{ max: 100, required: true }]}
+        rules={[{ max: 300, required: true }]}
       >
         <Input />
       </Form.Item>

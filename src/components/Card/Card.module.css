@@ -1,6 +1,6 @@
 .card {
   padding: 10px;
-  overflow: hidden;
+  /* overflow: hidden; */
   height: 100%;
   width: 320px;
 }
@@ -18,8 +18,8 @@
 }
 
 .meta {
-  height: 20vh;
-  overflow: hidden;
+  height: 18vh;
+  /* overflow: hidden; */
 }
 
 .card img {
@@ -29,7 +29,8 @@
 }
 
 .metaDetail {
-  height: 20vh;
+  
+  height: 18vh;
 }
 
 .cardDetail {
