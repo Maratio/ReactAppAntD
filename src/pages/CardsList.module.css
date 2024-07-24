@@ -10,7 +10,7 @@
 }
 
 .btns-block {
-  margin: 0px;
+  margin: 5px;
   display: flex;
   justify-content: space-between;
   flex-direction: row;

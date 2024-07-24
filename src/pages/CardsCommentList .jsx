@@ -124,7 +124,7 @@ const CardsCommentList = () => {
             </Space>
           </Space>
         )}
-        {postId ? <h2 style={{right:400}}>{caption}</h2> : <h2>{captionComments}</h2>}
+        {postId ? <h2 style={{right:600}}>{caption}</h2> : <h2>{captionComments}</h2>}
         {!postId && (
           <Search
             placeholder="input search text"
