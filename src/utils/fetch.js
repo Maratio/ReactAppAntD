@@ -8,8 +8,7 @@ export async function getCardsSearch(card, data) {
     try {
         const queryParams = new URLSearchParams({ term: data })
         const response = await fetch(`${BACKEND_URL}/api/${card}-search?${queryParams}`, { method: "GET" })
-        if (/^2/.test(response.status))
-            return response.json()
+        if (/^2/.test(response.status)) return response.json()
         else throw Error()
     }
     catch (err) {
@@ -75,6 +74,8 @@ export async function getCardsFilter(card, postId) {
 
 
 export function getPagesPost({ limit = 5, page = 1 }, data) {
+    console.log(page);
+    
     return {
         recCount: data.length,
         tripPosts: data.slice((page - 1) * limit, page * limit),

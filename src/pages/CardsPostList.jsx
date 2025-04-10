@@ -11,7 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deletePostsAction,
   fetchPostsAction,
+  fetchPostsSearchAction,
 } from "../storeToolkit/services/postsSlice.js";
+import usePagination from "../customHooks/usePagination.js";
 const caption = "Заметки по Маршрутам";
 
 const CardsPostList = () => {
@@ -24,7 +26,8 @@ const CardsPostList = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.items);
   const card = "posts";
-  const [pageCurrent, pageSize, handleChangePaginator] = usePagination(isSearching);
+  const [pageCurrent, pageSize, handleChangePaginator] =
+    usePagination(isSearching);
 
   const updatePostsList = useCallback(
     (data = posts) => {
@@ -34,6 +37,7 @@ const CardsPostList = () => {
       );
       setPagePostsList(response.tripPosts);
       setRecCount(response.recCount);
+      setIsSearching(false);
     },
     [posts, pageCurrent, pageSize]
   );
@@ -47,22 +51,22 @@ const CardsPostList = () => {
   };
 
   const onSearch = () => {
-    if (debouncedSearchTerm) {
-      setIsSearching(true);
-      getCardsSearch(card, debouncedSearchTerm).then((response) => {
-        if (response) {
-          setIsSearching(false);
-          updatePostsList(response);
-        }
-      });
+    if (!debouncedSearchTerm) {
+      getPosts();
     }
-    updatePostsList();
+    // setIsSearching(true);
+    else {
+      dispatch(fetchPostsSearchAction(debouncedSearchTerm));
+      // setIsSearching(false);
+      handleChangePaginator(1, 3);
+    }
   };
 
   const handleSearch = (e) => setSearchTerm(e.target.value);
 
-  useEffect(getPosts, [dispatch]);
-  useEffect(onSearch, [debouncedSearchTerm, updatePostsList]);
+  // useEffect(getPosts, [dispatch]);
+  useEffect(onSearch, [debouncedSearchTerm, dispatch]);
+  useEffect(updatePostsList, [updatePostsList, dispatch]);
 
   return (
     <div className={classes.content}>
@@ -103,5 +107,4 @@ const CardsPostList = () => {
     </div>
   );
 };
-
 export default CardsPostList;

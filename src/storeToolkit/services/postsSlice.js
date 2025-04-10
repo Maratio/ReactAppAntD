@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addCard, deleteCard, getCardDetail, getCards } from "../../utils/fetch";
+import { addCard, deleteCard, getCardDetail, getCards, getCardsSearch } from "../../utils/fetch";
 const card = "posts";
 
 
@@ -15,6 +15,20 @@ export const fetchPostsAction = createAsyncThunk(
     }
   }
 );
+
+export const fetchPostsSearchAction = createAsyncThunk(
+  "posts/fetchPostsSearchAction",
+  async (query,rejectWithValue) => {
+    try {
+      return await getCardsSearch(card,query).then((response) => {
+        return response
+      });
+    } catch (error) {
+      return rejectWithValue({ data: error, flag: 'error' });
+    }
+  }
+);
+
 
 export const fetchOnePostAction = createAsyncThunk(
   "posts/fetchOnePostAction",
@@ -74,6 +88,18 @@ const postsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(fetchPostsAction.fulfilled, (state, action) => {
+        console.log(action.payload);
+        
+        state.items = action.payload
+        state.status = "success";
+        state.isLoading = false;
+      })
+      .addCase(fetchPostsSearchAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchPostsSearchAction.fulfilled, (state, action) => {
+        console.log(action.payload);
+
         state.items = action.payload
         state.status = "success";
         state.isLoading = false;

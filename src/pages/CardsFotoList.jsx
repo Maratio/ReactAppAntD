@@ -11,22 +11,20 @@ import {
   fetchPhotosAction,
 } from "../storeToolkit/services/photosSlice.js";
 import Search from "antd/es/input/Search.js";
+import usePagination from "../customHooks/usePagination.js";
 const captionPhoto =
   "Фотографии Маршрутов";
 
 const CardsFototList = () => {
-  const [pageCurrent, setPageCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const photos = useSelector((state) => state.photos.items);
+  const [pageCurrent, pageSize, handleChangePaginator] = usePagination()
 
-  function handleChangePaginator(newPageCurrent, newPageSize) {
-    if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
-    if (pageSize !== newPageSize) setPageSize(newPageSize);
-  }
+ 
 
   const updatePostsList = useCallback((data = photos) => {
     const response = getPagesPost(

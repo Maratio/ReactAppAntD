@@ -5,21 +5,16 @@ import PaginationSite from "../components/UI/Pagination/PaginationSite";
 import { getPagesPost } from "../utils/fetch";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTripsAction } from "../storeToolkit/services/tripsSlice";
+import usePagination from "../customHooks/usePagination";
 const captionTrip =
   "Посетите наши маршруты и поделитесь впечатлениями в разделе Заметки";
 
 const CardsTripList = () => {
-  const [pageCurrent, setPageCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const dispatch = useDispatch();
   const routes = useSelector((state) => state.routes.items);
-
-  function handleChangePaginator(newPageCurrent, newPageSize) {
-    if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
-    if (pageSize !== newPageSize) setPageSize(newPageSize);
-  }
+  const [pageCurrent, pageSize, handleChangePaginator] = usePagination();
 
   const updatePostsList = useCallback(() => {
     const response = getPagesPost(

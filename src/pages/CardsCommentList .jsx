@@ -12,23 +12,18 @@ import CardComment from "../components/Card/CardComment.jsx";
 import { Button, Space, Select, ConfigProvider } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import Search from "antd/es/input/Search.js";
+import usePagination from "../customHooks/usePagination.js";
 const captionComments = `Отзывы на Заметки`;
 const card = "comments";
 
 const CardsCommentList = () => {
-  const [pageCurrent, setPageCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const navigate = useNavigate();
   const { postId } = useParams();
   const [items, setItems] = useState([]);
   const caption = `Отзывы к Заметке #${postId}`;
-
-  function handleChangePaginator(newPageCurrent, newPageSize) {
-    if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
-    if (pageSize !== newPageSize) setPageSize(newPageSize);
-  }
+  const [pageCurrent, pageSize, handleChangePaginator] = usePagination();
 
   const updatePostsList = useCallback(
     (data) => {
@@ -85,7 +80,7 @@ const CardsCommentList = () => {
     });
   };
 
-  useEffect(getComments, [postId, pageCurrent, pageSize, updatePostsList]);
+  useEffect(getComments, [postId, updatePostsList]);
 
   return (
     <div className={classes.content}>
@@ -124,7 +119,11 @@ const CardsCommentList = () => {
             </Space>
           </Space>
         )}
-        {postId ? <h2 style={{right:600}}>{caption}</h2> : <h2>{captionComments}</h2>}
+        {postId ? (
+          <h2 style={{ right: 600 }}>{caption}</h2>
+        ) : (
+          <h2>{captionComments}</h2>
+        )}
         {!postId && (
           <Search
             placeholder="input search text"

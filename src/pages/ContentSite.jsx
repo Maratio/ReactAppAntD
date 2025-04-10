@@ -7,7 +7,7 @@ const ContentSite = () => {
   return (
     <div className={classes["content-auth"]}>
       {
-        auth.user  ? (
+        auth.user ? (
           <h2>
             {" "}
             Приветствуем, {auth.user} !
