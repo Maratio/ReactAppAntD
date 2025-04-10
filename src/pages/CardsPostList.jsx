@@ -15,8 +15,6 @@ import {
 const caption = "Заметки по Маршрутам";
 
 const CardsPostList = () => {
-  const [pageCurrent, setPageCurrent] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
   const [recCount, setRecCount] = useState(0);
   const [pagePostsList, setPagePostsList] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,11 +24,7 @@ const CardsPostList = () => {
   const dispatch = useDispatch();
   const posts = useSelector((state) => state.posts.items);
   const card = "posts";
-
-  function handleChangePaginator(newPageCurrent, newPageSize) {
-    if (pageCurrent !== newPageCurrent) setPageCurrent(newPageCurrent);
-    if (pageSize !== newPageSize) setPageSize(newPageSize);
-  }
+  const [pageCurrent, pageSize, handleChangePaginator] = usePagination(isSearching);
 
   const updatePostsList = useCallback(
     (data = posts) => {
