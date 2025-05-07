@@ -9,7 +9,7 @@ export const FooterSite = () => {
   return (
     <Footer className={classes.footer}>
       <div>
-        Sber React JS course ©{new Date().getFullYear()} Created by Marat
+        React Ant©{new Date().getFullYear()} Created by Marat
         Kamalutdinov
       </div>
     </Footer>
